@@ -1,4 +1,11 @@
-export const handleGoogleLoginSuccess = async (credentialResponse) => {
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {setUser} from "../redux/userSlice";
+
+
+
+export const handleGoogleLoginSuccess = async (credentialResponse, navigate, dispatch) => {
+
   try {
     const token = credentialResponse.credential;
 
@@ -21,6 +28,15 @@ export const handleGoogleLoginSuccess = async (credentialResponse) => {
     }
 
     const data = await response.json();
+    dispatch(
+      setUser({
+        username:data.username,
+        accessToken:data.access_token,
+        refreshToken:data.refresh_token
+      })
+    );
+    navigate("/");
+    
     console.log("API response:", data);
 
     // Handle the response from your API (e.g., store user info, redirect, etc.)
