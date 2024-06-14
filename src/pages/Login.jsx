@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {FaArrowLeft} from "react-icons/fa"; // Import an arrow icon from react-icons
-import GoogleSignIn from "../components/accounts/GoogleSignIn" // Adjust the import according to your project structure
+import {FaArrowLeft} from "react-icons/fa";
+import GoogleSignIn from "../components/accounts/GoogleSignIn" 
 
 
 function SignUpCard() {

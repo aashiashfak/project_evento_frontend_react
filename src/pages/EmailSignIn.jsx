@@ -2,12 +2,16 @@ import React, {useState} from "react";
 import {ClipLoader} from "react-spinners";
 import axiosInstance from "../api/axiosInstance";
 import OtpComponent from "../components/accounts/OtpComponent";
+import {FaArrowLeft} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
+
 
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailLogin = async () => {
     if (email === ""){
@@ -34,7 +38,13 @@ const EmailSignIn = () => {
   return (
     <div className="mt-28 flex justify-center items-center ">
       {!isOtpSent ? (
-        <div className="w-full max-w-md p-6 bg-white rounded shadow-md ">
+        <div className="w-full max-w-md p-6 bg-white rounded shadow-md relative">
+          <button
+            className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
+            onClick={() => navigate("/Login")}
+          >
+            <FaArrowLeft size={20} />
+          </button>
           <h2 className="text-2xl font-semibold text-center text-gray-800 mb-8">
             Login with Email
           </h2>
@@ -55,7 +65,9 @@ const EmailSignIn = () => {
             </button>
           </div>
 
-          {message && <p className="text-red-500 mt-4 text-center">{message}</p>}
+          {message && (
+            <p className="text-red-500 mt-4 text-center">{message}</p>
+          )}
         </div>
       ) : (
         <OtpComponent identifier={"email"} email={email} />

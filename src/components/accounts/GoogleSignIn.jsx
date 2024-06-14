@@ -9,17 +9,23 @@ function GoogleSignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <GoogleLogin
-      onSuccess={async (credentialResponse) => {
-        console.log(credentialResponse);
-        try {
-          const data = await handleGoogleLoginSuccess(credentialResponse,navigate,dispatch);
-        } catch (error) {
-          console.error("Login process failed", error);
-        }
-      }}
-      onError={() => console.log("Login Failed")}
-    />
+    <div >
+      <GoogleLogin
+        onSuccess={async (credentialResponse) => {
+          console.log(credentialResponse);
+          try {
+            const data = await handleGoogleLoginSuccess(
+              credentialResponse,
+              navigate,
+              dispatch
+            );
+          } catch (error) {
+            console.error("Login process failed", error);
+          }
+        }}
+        onError={() => console.log("Login Failed")}
+      />
+    </div>
   );
 }
 
