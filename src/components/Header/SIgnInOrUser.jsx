@@ -19,7 +19,7 @@ const SIgnInOrUser = () => {
         </div>
       ) : (
         <button
-          className="bg-gray-800 text-white sm:px-4 sm:py-2 rounded-lg mt-1 px-2 py-1 "
+          className="bg-gray-800 text-white sm:px-4 sm:py-2 rounded-lg mt-1 px-2 py-1 transition duration-300 ease-in-out transform hover:bg-gray-600 hover:scale-105"
           onClick={() => navigate("/Login")}
         >
           Sign In

@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 
-
-const SearchBar = ({locations}) => {
+const SearchBar = ({locations, onLocationChange}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -19,9 +18,16 @@ const SearchBar = ({locations}) => {
           searchTerm ? "text-blue-500" : "text-gray-400"
         }`}
       />
-      <select className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-lg">
+      <select
+        className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-lg focus:outline-none"
+        onChange={onLocationChange}
+      >
         {locations.map((location) => (
-          <option key={location.id} value={location.name} className="bg-white text-black text-sm sm:text-md hover:bg-gray-200">
+          <option
+            key={location.id}
+            value={location.name}
+            className="bg-white text-black text-sm sm:text-md hover:bg-gray-200"
+          >
             {location.name}
           </option>
         ))}

@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {FaTimes} from "react-icons/fa";
+import {FaArrowLeft} from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 
@@ -17,8 +17,8 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
         onClick={onClose}
       ></div>
       <div className="absolute right-0  top-0 w-1/2 h-full bg-white">
-        <button className="ml-60 mt-6" onClick={onClose}>
-          <FaTimes size={20} />
+        <button className="ml-4 mt-3 mb-5 peer-hover:text-black" onClick={onClose}>
+          <FaArrowLeft size={20} />
         </button>
         <div className="flex flex-col">
           <div>
@@ -28,27 +28,27 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
               </div>
             )}
           </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
             <Link to="/" onClick={onClose}>
               Home
             </Link>
           </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
             <Link to="/about" onClick={onClose}>
               About Us
             </Link>
           </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
             <Link to="/contact" onClick={onClose}>
               Contact us
             </Link>
           </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
             <Link to="/about" onClick={onClose}>
               About Us
             </Link>
           </div>
-          <div className="hover:bg-gray-200 px-5 py-2shadow-sm">
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
             <Link to="/list-your-events" onClick={onClose}>
               List Your Events
             </Link>
