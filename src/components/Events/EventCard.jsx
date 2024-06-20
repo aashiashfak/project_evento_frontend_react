@@ -30,8 +30,8 @@ const EventCard = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="border rounded-lg shadow-md">
-      <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-t-lg">
+    <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
+      <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
         {event_img_1 ? (
           <img
             src={event_img_1}
@@ -42,22 +42,21 @@ const EventCard = ({event}) => {
           <span className="text-gray-500">No image available</span>
         )}
       </div>
-      <div className="p-4 flex justify-between">
+      <div className="py-2 px-4">
         <div>
           <h3 className="font-bold text-lg">{event_name}</h3>
           <h2>{organizer_name}</h2>
           <p>
-            {formattedDate} <span className="font-semibold">|</span> {formattedTime}
+            {formattedDate} <span className="font-semibold">|</span>{" "}
+            {formattedTime}
           </p>
           <p>
             {venue} <span className="font-semibold">|</span> {location}
           </p>
         </div>
-        <div className="mt-9">
-          <button className="bg-violet-700 text-white px-4 py-2 rounded mt-2">
-            Book Now
-          </button>
-        </div>
+        <button className="bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+          Book Now
+        </button>
       </div>
     </div>
   );
