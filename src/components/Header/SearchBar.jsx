@@ -1,8 +1,21 @@
 import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
+import {useDispatch, useSelector} from "react-redux";
+import {setLocationId} from "../../redux/locationSlice";
 
-const SearchBar = ({locations, onLocationChange}) => {
+const SearchBar = ({locations}) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  const storedLocation = useSelector((state)=>state.locations.locationId)
+
+  const handleLocationChange = (event) => {
+      const selectedLocation = locations.find(
+      (location) => location.name === event.target.value
+    );
+    if (selectedLocation) {
+      dispatch(setLocationId(selectedLocation.id));
+    }
+  };
 
   return (
     <div className="flex relative w-full mt-1">
@@ -20,7 +33,11 @@ const SearchBar = ({locations, onLocationChange}) => {
       />
       <select
         className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-lg focus:outline-none"
-        onChange={onLocationChange}
+        onChange={handleLocationChange}
+        value={
+          locations.find((location) => location.id === storedLocation)
+            ?.name || ""
+        }
       >
         {locations.map((location) => (
           <option
