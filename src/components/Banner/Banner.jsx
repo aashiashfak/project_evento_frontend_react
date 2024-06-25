@@ -31,13 +31,16 @@ const Banner = () => {
         swipeable
       >
         {banners.map((banner) => (
-          <div key={banner.id} className="carousel-slide">
+          <div key={banner.id} className="carousel-slide group relative">
             <img
               src={banner.image}
               alt="Banner"
-              className="object-cover w-full h-48 sm:h-64 md:h-72 lg:h-96"
+              className="object-cover w-full h-48 sm:h-64 md:h-72 lg:h-93"
             />
-            <p className="legend">{banner.description}</p>
+
+            <div className="text-sm absolute w-full bottom-0 p-4 bg-black bg-opacity-20 rounded-lg text-white text-opacity-35 transition-opacity duration-300 ease-in-out group-hover:bg-opacity-50 group-hover:text-opacity-100">
+              <p className="text-center">{banner.description}</p>
+            </div>
           </div>
         ))}
       </Carousel>

@@ -24,11 +24,11 @@ const SearchBar = ({locations}) => {
         placeholder="Discover thrilling adventures, electrifying concerts, and scenic hikes..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full flex-grow truncate placeholder-ellipsis placeholder:text-gray-500"
+        className="p-2 text-sm pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full flex-grow truncate placeholder-ellipsis placeholder:text-gray-500"
       />
       <FaSearch
-        className={`absolute right-40 top-1/2 transform -translate-y-1/2 ${
-          searchTerm ? "text-blue-500" : "text-gray-400"
+        className={`absolute right-40 top-1/2 transform -translate-y-1/2  ${
+          searchTerm ? "text-blue-500 cursor-pointer" : "text-gray-400"
         }`}
       />
       <select

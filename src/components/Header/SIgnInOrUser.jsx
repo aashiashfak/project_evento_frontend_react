@@ -15,7 +15,7 @@ const SIgnInOrUser = () => {
           <span className="font-semibold hidden sm:block">
             {user.username || "guest"}
           </span>
-          <FaUser className="text-violet-700" />
+          <FaUser className="text-violet-700 cursor-pointer" />
         </div>
       ) : (
         <button

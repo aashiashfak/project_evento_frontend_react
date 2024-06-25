@@ -24,7 +24,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
           <div>
             {user.accessToken && (
               <div className="px-5 pb-4 text-lg font-semibold">
-                <h1> Hi {user.username}</h1>
+                <h1> Hi {user.username|| "guest"}</h1>
               </div>
             )}
           </div>

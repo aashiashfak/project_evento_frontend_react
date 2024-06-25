@@ -23,13 +23,13 @@ const EventsByLocation = ({locationID}) => {
   }, [locationID]);
 
   return (
-    <div className="bg-white">
-      <h1 className="font-semibold text-violet-700 text-2xl mt-8 ml-8 sm:ml-12 md:ml-16">
+    <div className="">
+      <h1 className="font-semibold text-violet-700 text-2xl mt-8 ml-6 md:ml-14 lg:ml-20">
         {/* Events In {locationName} */} EVENTS BY LOCATION
       </h1>
-      <div className="py-8 px-10 sm:px-14 md:px-20 bg-white overflow-x-auto overflow-y-hidden whitespace-nowrap">
+      <div className="pt-4 pb-6 px-6 md:px-14 lg:px-20 bg-white overflow-x-auto overflow-y-hidden">
         {events.length > 0 ? (
-          <div className="inline-flex space-x-4 pr-10 sm:pr-14 md:pr-20">
+          <div className="inline-flex space-x-4 pr-6 sm:pr-14 md:pr-20">
             {events.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}

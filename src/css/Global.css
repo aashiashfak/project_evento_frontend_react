@@ -1,0 +1,17 @@
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.custom-legend {
+  opacity: 0.8; 
+  transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-slide:hover .custom-legend {
+  opacity: 1;
+}
