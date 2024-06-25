@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const NavHeader = () => {
   return (
-    <div className="hidden sm:flex bg-gray-100 p-2 justify-between w-full shadow-lg sticky top-5">
+    <div className="hidden sm:flex bg-gray-100 p-2 justify-between w-full shadow-lg sticky top-[69px] z-10">
       <div className="flex">
         <Link to="/" className="mx-4">
           Home

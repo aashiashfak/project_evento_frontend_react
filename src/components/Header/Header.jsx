@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import SIgnInOrUser from "./SIgnInOrUser";
@@ -8,8 +8,33 @@ import axiosInstance from "../../api/axiosInstance";
 // import {useDispatch} from "react-redux";
 // import { setLocationId } from "../../redux/locationSlice";
 
-const Header = ({locations}) => {
+const Header = () => {
   const [navVisible, setNavVisible] = useState(false);
+  const [locations, setLocations] = useState([]);
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('enter in heder useEffect')
+    const fetchLocations = async () => {
+      try {
+        const response = await axiosInstance.get("/events/locations/");
+        setLocations(response.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  // const handleLocationChange = (event) => {
+  //   const selectedLocation = locations.find(
+  //     (location) => location.name === event.target.value
+  //   );
+  //   if (selectedLocation) {
+  //     dispatch(setLocationId(selectedLocation.id));
+  //   }
+  // };
 
   return (
     <div className="sticky top-0 z-20 flex flex-col sm:flex-row items-center justify-between px-6 py-3 shadow-md bg-white">
