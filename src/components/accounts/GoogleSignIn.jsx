@@ -11,6 +11,9 @@ function GoogleSignIn() {
   return (
     <div >
       <GoogleLogin
+        text="sign in with Google"
+        width='240px'
+        shape="pill"
         onSuccess={async (credentialResponse) => {
           console.log(credentialResponse);
           try {

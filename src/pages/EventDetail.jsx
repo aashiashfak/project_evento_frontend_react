@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
 import NavHeader from "../components/Header/navHeader/NavHeader";
@@ -7,6 +7,7 @@ import NavHeader from "../components/Header/navHeader/NavHeader";
 const EventDetail = () => {
   const {eventID} = useParams();
   const [eventDetails, setEventDetails] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -29,6 +30,7 @@ const EventDetail = () => {
   }
 
   const {
+    id,
     event_name,
     categories,
     start_date,
@@ -88,7 +90,8 @@ const EventDetail = () => {
                 {venue} | {location}
               </p>
               <p className="mt-2 text-gray-700">{organizer_name}</p>
-              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+              onClick={()=>navigate(`/ticket-types/${id}`)}>
                 Tickets
               </button>
               <p className="mt-2 text-gray-500">

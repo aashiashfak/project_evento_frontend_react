@@ -23,15 +23,17 @@ function SignUpCard() {
           Access. Your Seamless Booking Experience Awaits!"
         </p>
         <div className="flex flex-col items-center space-y-6">
-          <GoogleSignIn />
+          <button className="rounded-full">
+            <GoogleSignIn />
+          </button>
           <button
-            className="bg-white border border-gray-300 py-3 px-6 rounded shadow hover:bg-gray-50 hover:border-violet-700 transition w-64"
+            className="bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60 "
             onClick={() => navigate("/email-signin")}
           >
             <span className="mr-2">@</span> Sign In With Email
           </button>
           <button
-            className="bg-white border border-gray-300 py-3 px-6 rounded shadow hover:bg-gray-50  hover:border-violet-700 transition w-64"
+            className="bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50  hover:border-violet-700 transition w-60"
             onClick={() => navigate("/mobile-signin")}
           >
             <span className="mr-2">📞</span> Sign In with Number
