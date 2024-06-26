@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = ({event}) => {
   const {
@@ -10,6 +11,8 @@ const EventCard = ({event}) => {
     time,
     organizer_name,
   } = event;
+
+  const navigate = useNavigate();
 
   // Format the date
   const eventDate = new Date(start_date);
@@ -54,7 +57,10 @@ const EventCard = ({event}) => {
             {venue} <span className="font-semibold">|</span> {location}
           </p>
         </div>
-        <button className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+        <button
+          className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+          onClick={() => navigate(`/event-details/${event.id}`)}
+        >
           Book Now
         </button>
       </div>

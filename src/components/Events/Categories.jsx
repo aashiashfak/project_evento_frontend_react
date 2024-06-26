@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../../api/axiosInstance";
 import "../../css/Global.css";
+import TextHeading from "../texts/TextHeading";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
 
@@ -19,9 +20,7 @@ const Categories = () => {
 
   return (
     <div className="pb-4">
-      <h1 className="font-semibold text-violet-700 text-2xl ml-6 md:ml-14 lg:ml-20">
-        Categories
-      </h1>
+    <TextHeading Heading='CATEGORIES'/>
       <div className="flex overflow-x-auto space-x-4 pb-4 pt-4 px-6 md:px-14 lg:px-20 hide-scrollbar">
         {categories.map((category) => (
           <div key={category.id} className="flex-none group">
