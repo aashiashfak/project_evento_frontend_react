@@ -2,14 +2,16 @@ import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
 import {setLocationId} from "../../redux/locationSlice";
+import {useNavigate} from "react-router-dom";
 
 const SearchBar = ({locations}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  const storedLocation = useSelector((state)=>state.locations.locationId)
+  const storedLocation = useSelector((state) => state.locations.locationId);
+  const navigate = useNavigate();
 
   const handleLocationChange = (event) => {
-      const selectedLocation = locations.find(
+    const selectedLocation = locations.find(
       (location) => location.name === event.target.value
     );
     if (selectedLocation) {
@@ -17,38 +19,54 @@ const SearchBar = ({locations}) => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search-results?search=${searchTerm}`);
+    }
+  };
+
   return (
-    <div className="flex relative w-full mt-1">
-      <input
-        type="text"
-        placeholder="Discover thrilling adventures, electrifying concerts, and scenic hikes..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 text-sm pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full flex-grow truncate placeholder-ellipsis placeholder:text-gray-500"
-      />
-      <FaSearch
-        className={`absolute right-40 top-1/2 transform -translate-y-1/2  ${
-          searchTerm ? "text-blue-500 cursor-pointer" : "text-gray-400"
-        }`}
-      />
-      <select
-        className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-lg focus:outline-none"
-        onChange={handleLocationChange}
-        value={
-          locations.find((location) => location.id === storedLocation)
-            ?.name || ""
-        }
-      >
-        {locations.map((location) => (
-          <option
-            key={location.id}
-            value={location.name}
-            className="bg-white text-black text-sm sm:text-md hover:bg-gray-200"
+    <div className="flex w-full mt-1">
+      <form onSubmit={handleSubmit} className="flex w-full">
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            placeholder="Discover thrilling adventures, electrifying concerts, and scenic hikes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 text-sm pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full w-full truncate placeholder-ellipsis placeholder:text-gray-500"
+          />
+          <button
+            type="submit"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2"
           >
-            {location.name}
-          </option>
-        ))}
-      </select>
+            <FaSearch
+              className={
+                searchTerm ? "text-blue-500 cursor-pointer" : "text-gray-400"
+              }
+            />
+          </button>
+        </div>
+        <select
+          className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm"
+          onChange={handleLocationChange}
+          value={
+            locations.find((location) => location.id === storedLocation)
+              ?.name || ""
+          }
+        >
+          {locations.map((location) => (
+            <option
+              key={location.id}
+              value={location.name}
+              className="bg-white text-black text-sm sm:text-md hover:bg-gray-200"
+            >
+              {location.name}
+            </option>
+          ))}
+        </select>
+      </form>
     </div>
   );
 };

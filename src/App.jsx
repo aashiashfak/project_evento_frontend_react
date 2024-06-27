@@ -12,6 +12,7 @@ import AllEvents from "./pages/AllEvents";
 import SessionExpired from "./components/Error/SessionExpired";
 import EventDetail from "./pages/EventDetail";
 import TicketTypes from "./pages/TicketTypes";
+import SearchResults from "./pages/SearchResults";
 
 
 
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/session-expired" element={<SessionExpired />} />
         <Route path="event-details/:eventID" element={<EventDetail />}/>
         <Route path="ticket-types/:id" element={<TicketTypes />}/>
+        <Route path="/search-results" element={<SearchResults />}/>
 
       </Routes>
     </Router>
