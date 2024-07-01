@@ -2,7 +2,7 @@ import {configureStore, combineReducers} from "@reduxjs/toolkit";
 import {persistStore, persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./userSlice";
-import locationsReducer from "./locationSlice";
+import locationsReducer from "./locationIDSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,

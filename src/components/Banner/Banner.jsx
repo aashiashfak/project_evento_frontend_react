@@ -39,7 +39,7 @@ const Banner = () => {
             />
 
             <div className="text-sm absolute w-full bottom-0 p-4 bg-black bg-opacity-20 rounded-lg text-white text-opacity-35 transition-opacity duration-300 ease-in-out group-hover:bg-opacity-50 group-hover:text-opacity-100">
-              <p className="text-center">{banner.description}</p>
+              <p className="text-center mb-3">{banner.description}</p>
             </div>
           </div>
         ))}

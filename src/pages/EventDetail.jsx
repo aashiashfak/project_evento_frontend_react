@@ -3,6 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
 import NavHeader from "../components/Header/navHeader/NavHeader";
+import Accordion from "../components/Events/Accordion";
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -90,8 +91,10 @@ const EventDetail = () => {
                 {venue} | {location}
               </p>
               <p className="mt-2 text-gray-700">{organizer_name}</p>
-              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
-              onClick={()=>navigate(`/ticket-types/${id}`)}>
+              <button
+                className="w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                onClick={() => navigate(`/ticket-types/${id}`)}
+              >
                 Tickets
               </button>
               <p className="mt-2 text-gray-500">
@@ -101,22 +104,15 @@ const EventDetail = () => {
           </div>
         </div>
         <div className="mt-4">
-          <details className="mb-2 bg-white shadow-md rounded-lg p-4">
-            <summary className="cursor-pointer text-violet-700">ABOUT</summary>
-            <p>{about}</p>
-          </details>
-          <details className="mb-2 bg-white shadow-md rounded-lg p-4">
-            <summary className="cursor-pointer text-violet-700">
-              INSTRUCTION
-            </summary>
-            <p>{instruction}</p>
-          </details>
-          <details className="mb-2 bg-white shadow-md rounded-lg p-4">
-            <summary className="cursor-pointer text-violet-700">
-              TERMS & CONDITIONS
-            </summary>
-            <p>{terms_and_conditions}</p>
-          </details>
+          <div className="shadow md rounded-lg mb-4">
+            <Accordion title="ABOUT" description={about} />
+          </div>
+          <div className="shadow md rounded-lg mb-4">
+            <Accordion title="INSTRUCTION" description={instruction} />
+          </div>
+          <div className="shadow md rounded-lg ">
+            <Accordion title="TERMS AND CONDITION" description={terms_and_conditions} />
+          </div>
         </div>
       </div>
     </div>

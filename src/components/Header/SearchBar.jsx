@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
-import {setLocationId} from "../../redux/locationSlice";
+import {setLocationId} from "../../redux/locationIDSlice";
 import {useNavigate} from "react-router-dom";
 
 const SearchBar = ({locations}) => {
