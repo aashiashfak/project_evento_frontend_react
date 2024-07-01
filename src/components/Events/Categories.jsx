@@ -2,8 +2,10 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../../api/axiosInstance";
 import "../../css/Global.css";
 import TextHeading from "../texts/TextHeading";
+import { useNavigate } from "react-router-dom";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -38,7 +40,8 @@ const Categories = () => {
             </div>
 
             <div>
-              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+              onClick={()=>navigate(`all-events/${category.name}`)}>
                 Find More
               </button>
             </div>

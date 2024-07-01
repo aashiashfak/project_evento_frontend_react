@@ -30,12 +30,11 @@ const App = () => {
         <Route path="/list-your-events" element={<ListYourEvents />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/all-events" element={<AllEvents />} />
+        <Route path="/all-events/:categoryName?" element={<AllEvents />} />
         <Route path="/session-expired" element={<SessionExpired />} />
-        <Route path="event-details/:eventID" element={<EventDetail />}/>
-        <Route path="ticket-types/:id" element={<TicketTypes />}/>
-        <Route path="/search-results" element={<SearchResults />}/>
-
+        <Route path="event-details/:eventID" element={<EventDetail />} />
+        <Route path="ticket-types/:id" element={<TicketTypes />} />
+        <Route path="/search-results" element={<SearchResults />} />
       </Routes>
     </Router>
   );

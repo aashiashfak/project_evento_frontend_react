@@ -17,20 +17,28 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
         onClick={onClose}
       ></div>
       <div className="absolute right-0  top-0 w-1/2 h-full bg-white">
-        <button className="ml-4 mt-3 mb-5 peer-hover:text-black" onClick={onClose}>
+        <button
+          className="ml-4 mt-3 mb-5 peer-hover:text-black"
+          onClick={onClose}
+        >
           <FaArrowLeft size={20} />
         </button>
         <div className="flex flex-col">
           <div>
             {user.accessToken && (
               <div className="px-5 pb-4 text-lg font-semibold">
-                <h1> Hi {user.username|| "guest"}</h1>
+                <h1> Hi {user.username || "guest"}</h1>
               </div>
             )}
           </div>
           <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
             <Link to="/" onClick={onClose}>
               Home
+            </Link>
+          </div>
+          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
+            <Link to="/all-events" onClick={onClose}>
+              All Events
             </Link>
           </div>
           <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
