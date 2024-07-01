@@ -1,11 +1,20 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {FaArrowLeft} from "react-icons/fa";
-import { useSelector } from "react-redux";
-
+import {useSelector} from "react-redux";
 
 const OffCanvasMenu = ({isVisible, onClose}) => {
-  const user = useSelector((state)=>state.user)
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
+
+  const navItems = [
+    {path: "/", label: "Home"},
+    {path: "/all-events", label: "All Events", isDynamic: true},
+    {path: "/about", label: "About Us"},
+    {path: "/contact", label: "Contact Us"},
+    {path: "/list-your-events", label: "List Your Events"},
+  ];
+
   return (
     <div
       className={`fixed inset-0 z-30 transition-transform transform ${
@@ -16,7 +25,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
         className="absolute inset-0 bg-gray-800 opacity-50"
         onClick={onClose}
       ></div>
-      <div className="absolute right-0  top-0 w-1/2 h-full bg-white">
+      <div className="absolute right-0 top-0 w-1/2 h-full bg-white">
         <button
           className="ml-4 mt-3 mb-5 peer-hover:text-black"
           onClick={onClose}
@@ -24,43 +33,28 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
           <FaArrowLeft size={20} />
         </button>
         <div className="flex flex-col">
-          <div>
-            {user.accessToken && (
-              <div className="px-5 pb-4 text-lg font-semibold">
-                <h1> Hi {user.username || "guest"}</h1>
-              </div>
-            )}
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
-            <Link to="/" onClick={onClose}>
-              Home
-            </Link>
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
-            <Link to="/all-events" onClick={onClose}>
-              All Events
-            </Link>
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
-            <Link to="/about" onClick={onClose}>
-              About Us
-            </Link>
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
-            <Link to="/contact" onClick={onClose}>
-              Contact us
-            </Link>
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm transition duration-300 ease-in-out">
-            <Link to="/about" onClick={onClose}>
-              About Us
-            </Link>
-          </div>
-          <div className="hover:bg-gray-200 px-5 py-2 shadow-sm">
-            <Link to="/list-your-events" onClick={onClose}>
-              List Your Events
-            </Link>
-          </div>
+          {user.accessToken && (
+            <div className="px-5 pb-4 text-lg font-semibold">
+              <h1>Hi {user.username || "guest"}</h1>
+            </div>
+          )}
+          {navItems.map((item) => (
+            <div
+              key={item.path}
+              className={`px-5 py-2 shadow-sm transition duration-300 ease-in-out ${
+                location.pathname === item.path || (item.isDynamic && location.pathname.startsWith(item.path))
+                  ? "bg-violet-700 text-white"
+                  : "hover:bg-gray-200"
+              }`}
+            >
+              <Link
+                to={item.path}
+                onClick={onClose}
+              >
+                {item.label}
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>

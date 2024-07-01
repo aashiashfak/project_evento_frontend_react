@@ -15,6 +15,7 @@ const AllEvents = () => {
  const [initialLoad, setInitialLoad] = useState(true);
 
  
+  console.log('filters.......',filters)
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -47,7 +48,7 @@ const AllEvents = () => {
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    setShowSidebar(false); // Close the sidebar after applying filters
+    setShowSidebar(false); 
   };
 
   const toggleSidebar = () => {
@@ -64,7 +65,7 @@ const AllEvents = () => {
             onClick={toggleSidebar}
             className="bg-violet-700 text-white p-2 rounded-lg shadow-lg hover:bg-violet-600 flex items-center"
           >
-            <FiFilter className="mr-2" /> {/* Add the filter icon */}
+            <FiFilter className="mr-2" /> 
             {showSidebar ? "Hide Filters" : "Show Filters"}
           </button>
         </div>

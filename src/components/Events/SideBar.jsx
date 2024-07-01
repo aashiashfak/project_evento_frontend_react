@@ -12,6 +12,14 @@ const FilterSidebar = ({onFilterChange, closeSidebar, initialCategory}) => {
   const [priceSort, setPriceSort] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
 
+
+   const formatDate = (date) => {
+     const year = date.getFullYear();
+     const month = (date.getMonth() + 1).toString().padStart(2, "0"); 
+     const day = date.getDate().toString().padStart(2, "0");
+     return `${year}-${month}-${day}`;
+   };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -38,10 +46,12 @@ const FilterSidebar = ({onFilterChange, closeSidebar, initialCategory}) => {
     );
   };
 
+  console.log('startDate......',startDate)
+
   const handleApplyFilters = () => {
     const filters = {
       category: selectedCategories.join(","),
-      start_date: startDate ? startDate.toISOString().split("T")[0] : "",
+      start_date: startDate ? formatDate(startDate) : "",
       sort_by_price: priceSort,
       today: timeFilter === "today",
       weekend: timeFilter === "weekend",
