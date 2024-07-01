@@ -3,6 +3,7 @@ import axiosInstance from "../../api/axiosInstance";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FaArrowLeft} from "react-icons/fa";
+import '../../css/DatePickerStyles.css'
 
 const FilterSidebar = ({onFilterChange, closeSidebar, initialCategory}) => {
   const [startDate, setStartDate] = useState(null);
