@@ -6,7 +6,6 @@ const ListYourEvents = () => {
   return (
     <div>
       <Header />
-      <NavHeader />
       <h1>Entered in List Your Events</h1>
     </div>
   );

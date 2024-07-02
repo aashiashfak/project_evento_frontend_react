@@ -17,9 +17,9 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
 
   return (
     <div
-      className={`fixed inset-0 z-30 transition-transform transform ${
+      className={`fixed inset-0 z-50 transition-transform transform ${
         isVisible ? "translate-x-0" : "translate-x-full"
-      } sm:hidden`}
+      } md:hidden`}
     >
       <div
         className="absolute inset-0 bg-gray-800 opacity-50"

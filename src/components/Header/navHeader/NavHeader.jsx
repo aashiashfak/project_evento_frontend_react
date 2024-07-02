@@ -13,7 +13,7 @@ const NavHeader = () => {
   ];
 
   return (
-    <div className="hidden sm:flex bg-gray-100 p-2 justify-between w-full shadow-lg sticky top-[65px] z-10 text-sm">
+    <div className="hidden md:flex justify-between w-full  text-sm">
       <div className="flex">
         {navItems.slice(0, 4).map((item) => (
           <Link

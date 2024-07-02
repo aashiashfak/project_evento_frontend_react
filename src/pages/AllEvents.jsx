@@ -58,7 +58,6 @@ const AllEvents = () => {
   return (
     <div className="relative">
       <Header />
-      <NavHeader />
       <div className="flex">
         <div className="fixed sm:top-28 top-32 left-4 z-50">
           <button

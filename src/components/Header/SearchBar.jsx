@@ -1,14 +1,30 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
 import {setLocationId} from "../../redux/locationIDSlice";
 import {useNavigate} from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance"; 
 
-const SearchBar = ({locations}) => {
+const SearchBar = () => {
+  const [locations, setLocations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const storedLocation = useSelector((state) => state.locations.locationId);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("enter in serchbar useEffect");
+    const fetchLocations = async () => {
+      try {
+        const response = await axiosInstance.get("/events/locations/");
+        setLocations(response.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
 
   const handleLocationChange = (event) => {
     const selectedLocation = locations.find(
@@ -27,15 +43,15 @@ const SearchBar = ({locations}) => {
   };
 
   return (
-    <div className="flex w-full mt-1">
-      <form onSubmit={handleSubmit} className="flex w-full">
+    <div className="flex w-full pb-4 px-8 shadow-lg pt-1 sm:pt-0 sticky top-[71px] sm:top-[72px] z-10 bg-white md:top-[56px]">
+      <form onSubmit={handleSubmit} className="flex w-full ">
         <div className="relative flex-grow">
           <input
             type="text"
             placeholder="Discover thrilling adventures, electrifying concerts, and scenic hikes..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="p-2 text-sm pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full w-full truncate placeholder-ellipsis placeholder:text-gray-500"
+            className="p-2 text-sm pr-14 border focus:outline-none hover:bg-gray-50 focus:bg-gray-200 border-gray-300 rounded-l-full w-full truncate placeholder-ellipsis placeholder:text-gray-500 shadow-md"
           />
           <button
             type="submit"
@@ -49,7 +65,7 @@ const SearchBar = ({locations}) => {
           </button>
         </div>
         <select
-          className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm"
+          className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm shadow-md"
           onChange={handleLocationChange}
           value={
             locations.find((location) => location.id === storedLocation)

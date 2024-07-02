@@ -6,7 +6,6 @@ const AboutUs = () => {
   return (
     <div>
       <Header />
-      <NavHeader />
       <h1>Enter in about us</h1>
     </div>
   );

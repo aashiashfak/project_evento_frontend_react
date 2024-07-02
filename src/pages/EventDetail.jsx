@@ -64,7 +64,6 @@ const EventDetail = () => {
   return (
     <div>
       <Header />
-      <NavHeader />
       <div className="container mx-auto md:px-16 lg:px-20 pt-6 p-4">
         <div className="flex flex-col md:flex-row md:space-x-4">
           <div className="md:w-2/3 mb-4 md:mb-0">

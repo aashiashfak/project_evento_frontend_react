@@ -52,7 +52,6 @@ const TicketTypes = () => {
   return (
     <div>
       <Header />
-      <NavHeader />
       <div className="mx-auto p-6 lg:px-20">
         {ticketTypes.map((ticketType) => (
           <div
