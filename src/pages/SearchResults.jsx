@@ -36,9 +36,13 @@ const SearchResults = () => {
   return (
     <div>
       <Header />
-      <SearchBar/>
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-4 text-violet-700">SEARCH RESULTS</h2>
+      <SearchBar />
+      <div className="pt-4">
+        <div>
+          <h2 className="pl-6 sm:pl-8 md:pl-14 lg:pl-20 md text-xl font-semibold mb-4 text-violet-700">
+            SEARCH RESULTS
+          </h2>
+        </div>
         {events.length > 0 ? (
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:px-20 md:px-14 sm:px-8 px-6">
             {events.map((event) => (

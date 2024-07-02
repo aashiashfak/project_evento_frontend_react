@@ -3,8 +3,8 @@ import {FaSearch} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
 import {setLocationId} from "../../redux/locationIDSlice";
 import {useNavigate} from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance"; 
-import { PiCity } from "react-icons/pi";
+import axiosInstance from "../../api/axiosInstance";
+import {PiCity} from "react-icons/pi";
 
 const SearchBar = () => {
   const [locations, setLocations] = useState([]);
@@ -65,9 +65,9 @@ const SearchBar = () => {
             />
           </button>
         </div>
-        <div className="relative">
+        <div className="relative ">
           <select
-            className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm shadow-md pr-8"
+            className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm shadow-md pr-8 cursor-pointer"
             onChange={handleLocationChange}
             value={
               locations.find((location) => location.id === storedLocation)
@@ -87,7 +87,7 @@ const SearchBar = () => {
               </option>
             ))}
           </select>
-          <PiCity className="absolute top-1/2 right-5 transform -translate-y-1/2 text-white pointer-events-none" />
+          <PiCity className="absolute top-1/2 right-5 transform -translate-y-1/2 text-white cursor-pointer" />
         </div>
       </form>
     </div>
