@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import EventCard from "./EventCard";
 import TextHeading from "../texts/TextHeading";
+import { PiCity } from "react-icons/pi";
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
@@ -31,7 +32,7 @@ const EventsByLocation = ({locationID}) => {
 
   return (
     <div className="mt-6">
-      <TextHeading Heading={`EVENTS IN ${loc.toUpperCase()}`} />
+      <TextHeading Heading={`EVENTS IN ${loc.toUpperCase()}`} icon={PiCity} />
       <div className="pt-4 pb-6 px-6 md:px-14 lg:px-20 bg-white overflow-x-auto overflow-y-hidden">
         {events.length > 0 ? (
           <div className="inline-flex space-x-4 pr-6 sm:pr-14 md:pr-20">

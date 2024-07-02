@@ -66,20 +66,20 @@ const EventDetail = () => {
       <Header />
       <div className="container mx-auto md:px-16 lg:px-20 pt-6 p-4">
         <div className="flex flex-col md:flex-row md:space-x-4">
-          <div className="md:w-2/3 mb-4 md:mb-0">
+          <div className="w-full md:w-2/3 mb-4 md:mb-0 h-80 shadow-md rounded">
             {event_img_1 ? (
               <img
                 src={event_img_1}
                 alt={event_name}
-                className="w-full h-80 rounded-lg shadow-md"
+                className="object-cover rounded shadow-md  w-full h-full"
               />
             ) : (
-              <div className="w-full h-80 bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
+              <div className="w-full h-80 bg-gray-200 flex items-center justify-center rounded shadow-lg">
                 <span className="text-gray-500">No image available</span>
               </div>
             )}
           </div>
-          <div className="md:w-1/3 ">
+          <div className="w-full md:w-1/3 ">
             <div className="bg-white p-4 rounded-lg shadow-md h-80 pt-6">
               <h1 className="text-2xl font-bold mb-2">{event_name}</h1>
               <p className="text-lg text-gray-700">{categories.join(" | ")}</p>
@@ -110,7 +110,10 @@ const EventDetail = () => {
             <Accordion title="INSTRUCTION" description={instruction} />
           </div>
           <div className="shadow md rounded-lg ">
-            <Accordion title="TERMS AND CONDITION" description={terms_and_conditions} />
+            <Accordion
+              title="TERMS AND CONDITION"
+              description={terms_and_conditions}
+            />
           </div>
         </div>
       </div>

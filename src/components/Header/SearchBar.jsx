@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setLocationId} from "../../redux/locationIDSlice";
 import {useNavigate} from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance"; 
+import { PiCity } from "react-icons/pi";
 
 const SearchBar = () => {
   const [locations, setLocations] = useState([]);
@@ -64,24 +65,30 @@ const SearchBar = () => {
             />
           </button>
         </div>
-        <select
-          className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm shadow-md"
-          onChange={handleLocationChange}
-          value={
-            locations.find((location) => location.id === storedLocation)
-              ?.name || ""
-          }
-        >
-          {locations.map((location) => (
-            <option
-              key={location.id}
-              value={location.name}
-              className="bg-white text-black text-sm sm:text-md hover:bg-gray-200"
-            >
-              {location.name}
+        <div className="relative">
+          <select
+            className="p-2 border border-gray-300 bg-violet-700 text-white hover:bg-violet-800 rounded-r-full focus:outline-none text-sm shadow-md pr-8"
+            onChange={handleLocationChange}
+            value={
+              locations.find((location) => location.id === storedLocation)
+                ?.name || ""
+            }
+          >
+            <option value="" disabled>
+              Select a city
             </option>
-          ))}
-        </select>
+            {locations.map((location) => (
+              <option
+                key={location.id}
+                value={location.name}
+                className="bg-white text-black text-sm sm:text-md hover:bg-gray-200"
+              >
+                {location.name}
+              </option>
+            ))}
+          </select>
+          <PiCity className="absolute top-1/2 right-5 transform -translate-y-1/2 text-white pointer-events-none" />
+        </div>
       </form>
     </div>
   );

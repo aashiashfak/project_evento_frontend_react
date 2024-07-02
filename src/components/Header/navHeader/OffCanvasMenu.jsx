@@ -1,6 +1,13 @@
 import React from "react";
 import {Link, useLocation} from "react-router-dom";
-import {FaArrowLeft} from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaHome,
+  FaCalendarAlt,
+  FaInfoCircle,
+  FaEnvelope,
+  FaListAlt,
+} from "react-icons/fa";
 import {useSelector} from "react-redux";
 
 const OffCanvasMenu = ({isVisible, onClose}) => {
@@ -14,6 +21,14 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
     {path: "/contact", label: "Contact Us"},
     {path: "/list-your-events", label: "List Your Events"},
   ];
+
+  const iconMap = {
+    "/": FaHome,
+    "/all-events": FaCalendarAlt,
+    "/about": FaInfoCircle,
+    "/contact": FaEnvelope,
+    "/list-your-events": FaListAlt,
+  };
 
   return (
     <div
@@ -38,23 +53,29 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
               <h1>Hi {user.username || "guest"}</h1>
             </div>
           )}
-          {navItems.map((item) => (
-            <div
-              key={item.path}
-              className={`px-5 py-2 shadow-sm transition duration-300 ease-in-out ${
-                location.pathname === item.path || (item.isDynamic && location.pathname.startsWith(item.path))
-                  ? "bg-violet-700 text-white"
-                  : "hover:bg-gray-200"
-              }`}
-            >
-              <Link
-                to={item.path}
-                onClick={onClose}
+          {navItems.map((item) => {
+            const Icon = iconMap[item.path];
+            return (
+              <div
+                key={item.path}
+                className={`px-5 py-2 shadow-sm transition duration-300 ease-in-out ${
+                  location.pathname === item.path ||
+                  (item.isDynamic && location.pathname.startsWith(item.path))
+                    ? "bg-violet-700 text-white"
+                    : "hover:bg-gray-200"
+                }`}
               >
-                {item.label}
-              </Link>
-            </div>
-          ))}
+                <Link
+                  to={item.path}
+                  onClick={onClose}
+                  className="flex items-center"
+                >
+                  <Icon className="mr-2" />
+                  {item.label}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import axiosInstance from "../../api/axiosInstance";
 import "../../css/Global.css";
 import TextHeading from "../texts/TextHeading";
 import { useNavigate } from "react-router-dom";
+import {BiCategory} from "react-icons/bi";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const Categories = () => {
 
   return (
     <div className="pb-4">
-    <TextHeading Heading='CATEGORIES'/>
+    <TextHeading Heading='CATEGORIES' icon={BiCategory}/>
       <div className="flex overflow-x-auto space-x-4 pb-4 pt-4 px-6 md:px-14 lg:px-20 hide-scrollbar">
         {categories.map((category) => (
           <div key={category.id} className="flex-none group">

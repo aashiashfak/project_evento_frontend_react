@@ -13,6 +13,7 @@ import SessionExpired from "./components/Error/SessionExpired";
 import EventDetail from "./pages/EventDetail";
 import TicketTypes from "./pages/TicketTypes";
 import SearchResults from "./pages/SearchResults";
+import RedirectAuthenticated from "./components/Protecters/RedirectAuthenticated";
 
 
 
@@ -23,7 +24,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/login" element={<RedirectAuthenticated><Login /></RedirectAuthenticated>} />
         <Route path="/email-signin" element={<EmailSignIn />} />
         <Route path="/mobile-signin" element={<MobileSignIn />} />
         <Route path="/otp" element={<OtpComponent />} />
