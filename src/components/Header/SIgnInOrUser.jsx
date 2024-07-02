@@ -12,7 +12,7 @@ const SIgnInOrUser = () => {
     <div>
       {user.accessToken ? (
         <div className="flex items-center space-x-2">
-          <span className="font-semibold hidden sm:block">
+          <span className="font-semibold hidden md:block">
             {user.username || "guest"}
           </span>
           <FaUser className="text-violet-700 cursor-pointer" />

@@ -59,7 +59,7 @@ const AllEvents = () => {
     <div className="relative">
       <Header />
       <div className="flex">
-        <div className="fixed sm:top-28 top-32 left-4 z-50">
+        <div className="fixed sm:top-18 md:top-16 top-20 left-4 z-50">
           <button
             onClick={toggleSidebar}
             className="bg-violet-700 text-white p-2 rounded-lg shadow-lg hover:bg-violet-600 flex items-center"
