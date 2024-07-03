@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../redux/userSlice";
@@ -11,11 +11,29 @@ const OtpComponent = (props) => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(60); // Timer for 1 minute (60 seconds)
+  const [isRunning, setIsRunning] = useState(true); // To control timer state
   const otpRefs = useRef([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log("identifier", identifier);
+  useEffect(() => {
+    let interval;
+    if (isRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsRunning(false);
+    }
+
+    return () => clearInterval(interval);
+  }, [isRunning, timeLeft]);
+
+  const startTimer = () => {
+    setTimeLeft(60);
+    setIsRunning(true);
+  };
 
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
@@ -56,10 +74,8 @@ const OtpComponent = (props) => {
   };
 
   const handleOtpForm = async (event) => {
-    console.log("entered in handling submitted otp");
     event.preventDefault();
     const enteredOtp = otp.join("");
-    console.log(enteredOtp);
     setIsLoading(true);
 
     try {
@@ -73,7 +89,6 @@ const OtpComponent = (props) => {
           }
         );
       } else if (identifier === "phone") {
-        console.log("identifier is phone");
         response = await axiosInstance.post(
           "accounts/phone-otp-verification/",
           {
@@ -84,7 +99,6 @@ const OtpComponent = (props) => {
       }
 
       const userData = response.data;
-      console.log(userData);
       dispatch(
         setUser({
           username: userData.user.username || null,
@@ -101,9 +115,23 @@ const OtpComponent = (props) => {
   };
 
   const handleBackButtonClick = () => {
-    handleOtpSent(false)
+    handleOtpSent(false);
   };
 
+  const handleResendOtp = async () => {
+    setIsLoading(true);
+    try {
+      await axiosInstance.post("accounts/resend-otp/", {
+        email: identifier === "email" ? email : undefined,
+        phone_number: identifier === "phone" ? phone : undefined,
+      });
+      startTimer(); // Reset and start the timer
+    } catch (error) {
+      setMessage(error.response?.data?.error || "Failed to resend OTP");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const isOtpFilled = otp.every((digit) => digit !== "");
 
@@ -151,6 +179,22 @@ const OtpComponent = (props) => {
           {isLoading ? <ClipLoader size={20} color={"#fff"} /> : "Verify OTP"}
         </button>
       </form>
+      <div className="mt-4 text-center">
+        {timeLeft > 0 ? (
+          <p>
+            Expect OTP in {Math.floor(timeLeft / 60)}:
+            {(timeLeft % 60).toString().padStart(2, "0")}
+          </p>
+        ) : (
+          <button
+            onClick={handleResendOtp}
+            className="text-violet-600 hover:text-violet-700 transition"
+            disabled={isLoading}
+          >
+            Resend OTP
+          </button>
+        )}
+      </div>
     </div>
   );
 };
