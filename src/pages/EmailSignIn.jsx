@@ -1,25 +1,36 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {ClipLoader} from "react-spinners";
 import axiosInstance from "../api/axiosInstance";
 import OtpComponent from "../components/accounts/OtpComponent";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 
-
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const navigate = useNavigate();
 
-  const handleEmailLogin = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (email === "") {
-      setMessage("Please enter your email");
-      return;
-    } else if (!emailRegex.test(email)) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const isValid = emailRegex.test(email);
+      setIsEmailValid(isValid);
+      if (email && !isValid) {
+        setMessage("Please enter a valid email address");
+      } else {
+        setMessage("");
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [email]);
+
+  const handleEmailLogin = async () => {
+    if (!isEmailValid) {
       setMessage("Please enter a valid email address");
       return;
     }
@@ -45,36 +56,42 @@ const EmailSignIn = () => {
   return (
     <div className="mt-28 flex justify-center items-center p-4">
       {!isOtpSent ? (
-        <div className="w-full max-w-md p-6 bg-white rounded shadow-md relative">
+        <div className="w-full max-w-md p-10 bg-white rounded-3xl shadow-2xl relative h-96">
           <button
             className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
             onClick={() => navigate("/Login")}
           >
             <FaArrowLeft size={20} />
           </button>
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-8">
+          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-20">
             Login with Email
           </h2>
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mb-6 focus:outline-none"
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setMessage("");
+            }}
+            className={"w-full p-2 border rounded mb-2 focus:outline-none"}
           />
+          <p className="text-red-500 mt-2 mb-4 text-center ">
+            {message}
+          </p>
           <div className="flex justify-center">
             <button
-              className="w-full bg-violet-500 text-white p-3 rounded-lg shadow hover:bg-violet-800"
+              className={`w-full p-3 rounded-lg shadow transition ${
+                isEmailValid
+                  ? "bg-violet-500 text-white hover:bg-violet-800"
+                  : "bg-gray-400 cursor-defualt opacity-30"
+              }`}
               onClick={handleEmailLogin}
-              disabled={isLoading}
+              disabled={!isEmailValid || isLoading}
             >
               {isLoading ? <ClipLoader size={20} color={"#fff"} /> : "Submit"}
             </button>
           </div>
-
-          {message && (
-            <p className="text-red-500 mt-4 text-center">{message}</p>
-          )}
         </div>
       ) : (
         <OtpComponent
