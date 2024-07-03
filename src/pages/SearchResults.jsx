@@ -50,7 +50,7 @@ const SearchResults = () => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">No results found for "{searchTerm}".</p>
+          <p className="text-gray-500 ml-20">No results found for "{searchTerm}".</p>
         )}
       </div>
     </div>

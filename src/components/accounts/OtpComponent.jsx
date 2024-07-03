@@ -135,14 +135,14 @@ const OtpComponent = (props) => {
   };
 
   return (
-    <div className="shadow-md p-6 rounded relative">
+    <div className="rounded-3xl shadow-2xl  h-96 p-6 relative">
       <button
         className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
         onClick={handleBackButtonClick}
       >
         <FaArrowLeft size={20} />
       </button>
-      <div className="mt-2 text-center text-sm text-gray-700 mb-2">
+      <div className="mt-9 text-center text-sm text-gray-700 mb-14">
         <p>OTP sent to {identifier === "phone" ? phone : email}</p>
       </div>
       <form onSubmit={handleOtpForm}>
@@ -171,7 +171,7 @@ const OtpComponent = (props) => {
           className={`w-full py-2 px-4 rounded-md transition duration-200 ${
             isOtpFilled
               ? "bg-violet-600 text-white hover:bg-violet-700"
-              : "bg-gray-400 text-gray-700 cursor-default"
+              : "bg-gray-400 text-gray-700 opacity-30 cursor-default"
           }`}
           disabled={!isOtpFilled || isLoading}
         >
@@ -185,13 +185,16 @@ const OtpComponent = (props) => {
             {(timeLeft % 60).toString().padStart(2, "0")}
           </p>
         ) : (
-          <button
-            onClick={handleResendOtp}
-            className="text-violet-600 hover:text-violet-700 transition"
-            disabled={isLoading}
-          >
-            Resend OTP
-          </button>
+          <div className="flex text-sm">
+            <h1>Didn't Recieve OTP?</h1>
+            <button
+              onClick={handleResendOtp}
+              className="text-violet-600 hover:text-violet-700 transition"
+              disabled={isLoading}
+            >
+              Resend OTP
+            </button>
+          </div>
         )}
       </div>
     </div>

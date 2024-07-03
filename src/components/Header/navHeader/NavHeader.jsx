@@ -7,15 +7,16 @@ const NavHeader = () => {
   const navItems = [
     {path: "/", label: "Home"},
     {path: "/all-events", label: "All Events", isDynamic: true},
-    {path: "/contact", label: "Contact us"},
-    {path: "/about", label: "About Us"},
+    {path: "/contact", label: "Contact"},
+    {path: "/about", label: "About"},
+    {path: "/wish-list", label: "Wishlist "},
     {path: "/list-your-events", label: "List Your Events"},
   ];
 
   return (
     <div className="hidden md:flex justify-between w-full  text-sm">
       <div className="flex">
-        {navItems.slice(0, 4).map((item) => (
+        {navItems.slice(0, 5).map((item) => (
           <Link
             key={item.path}
             to={item.path}

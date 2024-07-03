@@ -7,6 +7,7 @@ import {
   FaInfoCircle,
   FaEnvelope,
   FaListAlt,
+  FaHeart
 } from "react-icons/fa";
 import {useSelector} from "react-redux";
 
@@ -20,6 +21,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
     {path: "/about", label: "About Us"},
     {path: "/contact", label: "Contact Us"},
     {path: "/list-your-events", label: "List Your Events"},
+    {path: "/wish-list", label: "wish-list"},
   ];
 
   const iconMap = {
@@ -28,6 +30,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
     "/about": FaInfoCircle,
     "/contact": FaEnvelope,
     "/list-your-events": FaListAlt,
+    "/wish-list": FaHeart
   };
 
   return (
