@@ -4,9 +4,10 @@ import {useNavigate} from "react-router-dom";
 import {setUser} from "../../redux/userSlice";
 import axiosInstance from "../../api/axiosInstance";
 import {ClipLoader} from "react-spinners";
+import {FaArrowLeft} from "react-icons/fa";
 
 const OtpComponent = (props) => {
-  const {identifier, email, phone} = props
+  const {identifier, email, phone, handleOtpSent} = props;
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,10 +15,7 @@ const OtpComponent = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-  console.log(identifier);
-  console.log(phone)
-
+  console.log("identifier", identifier);
 
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
@@ -58,10 +56,10 @@ const OtpComponent = (props) => {
   };
 
   const handleOtpForm = async (event) => {
-    console.log('entered in handling submitted otp')
+    console.log("entered in handling submitted otp");
     event.preventDefault();
     const enteredOtp = otp.join("");
-    console.log(enteredOtp)
+    console.log(enteredOtp);
     setIsLoading(true);
 
     try {
@@ -70,21 +68,23 @@ const OtpComponent = (props) => {
         response = await axiosInstance.post(
           "accounts/email-otp-verification/",
           {
-            otp: enteredOtp, email: email
+            otp: enteredOtp,
+            email: email,
           }
         );
       } else if (identifier === "phone") {
-        console.log('identifier is phone')
+        console.log("identifier is phone");
         response = await axiosInstance.post(
           "accounts/phone-otp-verification/",
           {
-            otp: enteredOtp, phone_number: phone
+            otp: enteredOtp,
+            phone_number: phone,
           }
         );
       }
 
       const userData = response.data;
-      console.log(userData)
+      console.log(userData);
       dispatch(
         setUser({
           username: userData.user.username || null,
@@ -100,10 +100,26 @@ const OtpComponent = (props) => {
     }
   };
 
+  const handleBackButtonClick = () => {
+    handleOtpSent(false)
+  };
+
+
+  const isOtpFilled = otp.every((digit) => digit !== "");
+
   return (
-    <div className="shadow-md p-6 rounded">
+    <div className="shadow-md p-6 rounded relative">
+      <button
+        className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
+        onClick={handleBackButtonClick}
+      >
+        <FaArrowLeft size={20} />
+      </button>
+      <div className="mt-2 text-center text-sm text-gray-700 mb-2">
+        <p>OTP sent to {identifier === "phone" ? phone : email}</p>
+      </div>
       <form onSubmit={handleOtpForm}>
-        <label className="block text-sm text-gray-700 mb-2">
+        <label className="block text-sm text-black mb-2">
           Enter OTP for verification
         </label>
         <div className="flex space-x-2 mb-4">
@@ -125,8 +141,12 @@ const OtpComponent = (props) => {
         {message && <p className="text-red-500 mb-4">{message}</p>}
         <button
           type="submit"
-          className="w-full bg-violet-600 text-white py-2 px-4 rounded-md hover:bg-violet-700 transition duration-200"
-          disabled={isLoading}
+          className={`w-full py-2 px-4 rounded-md transition duration-200 ${
+            isOtpFilled
+              ? "bg-violet-600 text-white hover:bg-violet-700"
+              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+          }`}
+          disabled={!isOtpFilled || isLoading}
         >
           {isLoading ? <ClipLoader size={20} color={"#fff"} /> : "Verify OTP"}
         </button>

@@ -72,7 +72,11 @@ const MobileSignIn = () => {
           )}
         </div>
       ) : (
-        <OtpComponent identifier="phone" phone={`+91${phone}`} />
+        <OtpComponent
+          identifier="phone"
+          phone={`+91${phone}`}
+          handleOtpSent={setIsOtpSent}
+        />
       )}
     </div>
   );

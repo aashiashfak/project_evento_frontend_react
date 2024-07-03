@@ -14,12 +14,19 @@ const EmailSignIn = () => {
   const navigate = useNavigate();
 
   const handleEmailLogin = async () => {
-    if (email === ""){
-      setMessage('please Enter your Email')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === "") {
+      setMessage("Please enter your email");
+      return;
+    } else if (!emailRegex.test(email)) {
+      setMessage("Please enter a valid email address");
       return;
     }
+
     setIsLoading(true);
     setMessage("");
+
     try {
       const response = await axiosInstance.post("accounts/email-otp-request/", {
         email,
@@ -70,7 +77,11 @@ const EmailSignIn = () => {
           )}
         </div>
       ) : (
-        <OtpComponent identifier={"email"} email={email} />
+        <OtpComponent
+          identifier={"email"}
+          email={email}
+          handleOtpSent={setIsOtpSent}
+        />
       )}
     </div>
   );
