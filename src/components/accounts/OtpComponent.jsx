@@ -11,11 +11,12 @@ const OtpComponent = (props) => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60); // Timer for 1 minute (60 seconds)
-  const [isRunning, setIsRunning] = useState(true); // To control timer state
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [isRunning, setIsRunning] = useState(true);
   const otpRefs = useRef([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isOtpFilled = otp.every((digit) => digit !== "");
 
   useEffect(() => {
     let interval;
@@ -125,15 +126,13 @@ const OtpComponent = (props) => {
         email: identifier === "email" ? email : undefined,
         phone_number: identifier === "phone" ? phone : undefined,
       });
-      startTimer(); // Reset and start the timer
+      startTimer();
     } catch (error) {
       setMessage(error.response?.data?.error || "Failed to resend OTP");
     } finally {
       setIsLoading(false);
     }
   };
-
-  const isOtpFilled = otp.every((digit) => digit !== "");
 
   return (
     <div className="shadow-md p-6 rounded relative">
@@ -172,7 +171,7 @@ const OtpComponent = (props) => {
           className={`w-full py-2 px-4 rounded-md transition duration-200 ${
             isOtpFilled
               ? "bg-violet-600 text-white hover:bg-violet-700"
-              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+              : "bg-gray-400 text-gray-700 cursor-default"
           }`}
           disabled={!isOtpFilled || isLoading}
         >

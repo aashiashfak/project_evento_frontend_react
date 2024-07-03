@@ -43,7 +43,7 @@ const EmailSignIn = () => {
   };
 
   return (
-    <div className="mt-28 flex justify-center items-center ">
+    <div className="mt-28 flex justify-center items-center p-4">
       {!isOtpSent ? (
         <div className="w-full max-w-md p-6 bg-white rounded shadow-md relative">
           <button

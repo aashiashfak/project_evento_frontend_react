@@ -1,15 +1,14 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {FaArrowLeft} from "react-icons/fa";
-import GoogleSignIn from "../components/accounts/GoogleSignIn" 
-
+import GoogleSignIn from "../components/accounts/GoogleSignIn";
+import {CiPhone, CiMail} from "react-icons/ci";
 
 function SignUpCard() {
   const navigate = useNavigate();
-  
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-10 rounded-xl shadow-2xl max-w-lg w-full relative">
         <button
           className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
@@ -27,16 +26,16 @@ function SignUpCard() {
             <GoogleSignIn />
           </button>
           <button
-            className="bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60 "
+            className="flex items-center justify-center bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60"
             onClick={() => navigate("/email-signin")}
           >
-            <span className="mr-2">@</span> Sign In With Email
+            <CiMail className="mr-4 text-xl" /> Sign In With Email
           </button>
           <button
-            className="bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50  hover:border-violet-700 transition w-60"
+            className="flex items-center justify-center bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60"
             onClick={() => navigate("/mobile-signin")}
           >
-            <span className="mr-2">📞</span> Sign In with Number
+            <CiPhone className="mr-4 text-xl" /> Sign In with Phone
           </button>
         </div>
       </div>
