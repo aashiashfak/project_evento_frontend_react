@@ -1,5 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {FaHeart, FaRegHeart} from "react-icons/fa";
+import {useSelector, useDispatch} from "react-redux";
+import axiosInstance from "../../api/axiosInstance";
+import LoginModal from "../accounts/LoginModal";
+import {setWishListItems} from "../../redux/WishListSlice"; 
 
 const EventCardPageView = ({event}) => {
   const {
@@ -14,6 +19,49 @@ const EventCardPageView = ({event}) => {
   } = event;
 
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
+  const dispatch = useDispatch();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  useEffect(() => {
+    // Check if the event is in the wishlist
+    setIsWishlisted(
+      wishlistItems.some((wishlistItem) => wishlistItem.event === id)
+    );
+  }, [wishlistItems, id]);
+
+  const handleWishlistClick = () => {
+    if (!user || !user.accessToken) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    if (isWishlisted) {
+      axiosInstance
+        .delete(`events/wishlist/${id}/`)
+        .then(() => {
+          setIsWishlisted(false);
+          dispatch(
+            setWishListItems(wishlistItems.filter((item) => item.event !== id))
+          );
+        })
+        .catch((error) => {
+          console.error("Error removing from wishlist:", error);
+        });
+    } else {
+      axiosInstance
+        .post(`events/wishlist/${id}/`)
+        .then((response) => {
+          setIsWishlisted(true);
+          dispatch(setWishListItems([...wishlistItems, response.data]));
+        })
+        .catch((error) => {
+          console.error("Error adding to wishlist:", error);
+        });
+    }
+  };
 
   // Format the date
   const eventDate = new Date(start_date);
@@ -35,7 +83,7 @@ const EventCardPageView = ({event}) => {
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md ">
-      <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg ">
+      <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg relative">
         {event_img_1 ? (
           <img
             src={event_img_1}
@@ -45,6 +93,21 @@ const EventCardPageView = ({event}) => {
         ) : (
           <span className="text-gray-500">No image available</span>
         )}
+        <div className="absolute top-2 right-2">
+          {isWishlisted ? (
+            <FaHeart
+              size={24}
+              className="cursor-pointer text-white"
+              onClick={handleWishlistClick}
+            />
+          ) : (
+            <FaRegHeart
+              size={24}
+              className="cursor-pointer text-white"
+              onClick={handleWishlistClick}
+            />
+          )}
+        </div>
       </div>
       <div className="p-4">
         <h3 className="font-bold text-xl mb-2">{event_name}</h3>
@@ -63,6 +126,9 @@ const EventCardPageView = ({event}) => {
           Book Now
         </button>
       </div>
+      {showLoginModal && (
+        <LoginModal onClose={() => setShowLoginModal(false)} />
+      )}
     </div>
   );
 };

@@ -29,7 +29,9 @@ const EventCard = ({event}) => {
     setIsWishlisted(
       wishlistItems.some((wishlistItem) => wishlistItem.event === event.id)
     );
+    console.log("isWIshlisted",isWishlisted);
   }, [wishlistItems, event.id]);
+
 
   const handleWishlistClick = () => {
     if (!user || !user.accessToken) {

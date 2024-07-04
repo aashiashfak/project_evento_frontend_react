@@ -20,14 +20,17 @@ const Homepage = () => {
       axiosInstance
         .get("events/wishlist/")
         .then((response) => {
-          const wishlistItems = response.data;
-          dispatch(setWishListItems(wishlistItems));
+          const responseData = response.data;
+          dispatch(setWishListItems(responseData));
+          console.log('wihslist response data from home page',responseData);
         })
         .catch((error) => {
           console.error("Error fetching wishlist items:", error);
         });
     }
   }, [user, wishlistItems.length, dispatch]);
+
+
 
   return (
     <div className="bg-white">
