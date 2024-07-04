@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
-import LoginModal from "../accounts/LoginModal";
+import LoginModal from "../Protecters/LoginRequireModal";
 import {setWishListItems} from "../../redux/WishListSlice"; 
 
 const EventCardPageView = ({event}) => {

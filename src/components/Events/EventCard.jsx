@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
-import LoginModal from "../accounts/LoginModal";
+import LoginModal from "../Protecters/LoginRequireModal";
 import {setWishListItems} from "../../redux/WishListSlice"; 
 
 const EventCard = ({event}) => {
@@ -91,13 +91,13 @@ const EventCard = ({event}) => {
           {isWishlisted ? (
             <FaHeart
               size={24}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-white "
               onClick={handleWishlistClick}
             />
           ) : (
             <FaRegHeart
               size={24}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-white  "
               onClick={handleWishlistClick}
             />
           )}

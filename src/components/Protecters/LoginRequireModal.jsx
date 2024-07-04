@@ -2,7 +2,7 @@ import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const LoginModal = ({onClose}) => {
+const LoginRequireModal = ({onClose}) => {
     const navigate = useNavigate();
   return (
     <div
@@ -18,7 +18,7 @@ const LoginModal = ({onClose}) => {
         </button>
         <h2 className="text-2xl font-semibold mb-6">Login Required</h2>
         <p className="mb-10">
-          You need to be logged in to add events to your wishlist.
+          You need to be logged in to add events to your wishlist or book tickets of an event
         </p>
         <button
           className="bg-violet-700 text-white px-4 py-2 rounded-lg hover:bg-violet-800"
@@ -31,4 +31,4 @@ const LoginModal = ({onClose}) => {
   );
 };
 
-export default LoginModal;
+export default LoginRequireModal;

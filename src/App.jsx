@@ -15,7 +15,7 @@ import TicketTypes from "./pages/TicketTypes";
 import SearchResults from "./pages/SearchResults";
 import RedirectAuthenticated from "./components/Protecters/RedirectAuthenticated";
 import WishLIst from "./pages/WishLIst";
-
+import RequireAuth from "./components/Protecters/RequireAuth";
 
 
 
@@ -37,7 +37,7 @@ const App = () => {
         <Route path="event-details/:eventID" element={<EventDetail />} />
         <Route path="ticket-types/:id" element={<TicketTypes />} />
         <Route path="/search-results" element={<SearchResults />} />
-        <Route path="/wish-list" element={<WishLIst />} />
+        <Route path="/wish-list" element={<RequireAuth><WishLIst/></RequireAuth>} />
       </Routes>
     </Router>
   );
