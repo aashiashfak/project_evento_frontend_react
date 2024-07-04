@@ -62,7 +62,7 @@ const AllEvents = () => {
         <div className="fixed sm:top-[93px] md:top-[78px] top-[88px] left-4 z-50">
           <button
             onClick={toggleSidebar}
-            className="bg-violet-700 text-white p-2 rounded-lg shadow-lg hover:bg-violet-600 flex items-center"
+            className="bg-violet-700 text-white p-2 rounded-lg shadow-lg opacity-40 hover:bg-violet-600 flex items-center hover:opacity-100"
           >
             <FiFilter className="mr-2" /> 
             {showSidebar ? "Hide Filters" : "Show Filters"}

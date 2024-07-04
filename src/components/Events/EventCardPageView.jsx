@@ -28,7 +28,7 @@ const EventCardPageView = ({event}) => {
   useEffect(() => {
     // Check if the event is in the wishlist
     setIsWishlisted(
-      wishlistItems.some((wishlistItem) => wishlistItem.event === id)
+      wishlistItems.some((wishlistItem) => wishlistItem.event.id === id)
     );
   }, [wishlistItems, id]);
 
@@ -44,7 +44,7 @@ const EventCardPageView = ({event}) => {
         .then(() => {
           setIsWishlisted(false);
           dispatch(
-            setWishListItems(wishlistItems.filter((item) => item.event !== id))
+            setWishListItems(wishlistItems.filter((item) => item.event.id !== id))
           );
         })
         .catch((error) => {
