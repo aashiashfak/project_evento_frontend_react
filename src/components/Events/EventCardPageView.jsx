@@ -82,7 +82,7 @@ const EventCardPageView = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md ">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px]">
       <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg relative">
         {event_img_1 ? (
           <img
@@ -110,18 +110,23 @@ const EventCardPageView = ({event}) => {
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-xl mb-2">{event_name}</h3>
-        <p className="text-gray-600 mb-2">{organizer_name}</p>
-        <p className="text-gray-600 mb-2">
-          {formattedDate} <span className="font-semibold">|</span>{" "}
-          {formattedTime}
-        </p>
-        <p className="text-gray-600 mb-2">
-          {venue} <span className="font-semibold">|</span> {location}
-        </p>
+        <div className="overflow-y-auto max-h-[124px]">
+          <h3 className="font-bold text-lg">{event_name}</h3>
+          <h2>{organizer_name}</h2>
+          <p>
+            {formattedDate} <span className="font-semibold">|</span>{" "}
+            {formattedTime}
+          </p>
+          <p>
+            {venue}
+          </p>
+          <p>
+            {location}
+          </p>
+        </div>
         <button
           className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
-          onClick={() => navigate(`/event-details/${id}`)}
+          onClick={() => navigate(`/event-details/${event.id}`)}
         >
           Book Now
         </button>
