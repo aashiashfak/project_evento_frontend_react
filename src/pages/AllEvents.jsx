@@ -64,7 +64,7 @@ const AllEvents = () => {
             onClick={toggleSidebar}
             className="bg-violet-700 text-white p-2 rounded-lg shadow-lg opacity-40 hover:bg-violet-600 flex items-center hover:opacity-100"
           >
-            <FiFilter className="mr-2" /> 
+            <FiFilter className="mr-2" />
             {showSidebar ? "Hide Filters" : "Show Filters"}
           </button>
         </div>
@@ -92,11 +92,11 @@ const AllEvents = () => {
 
         {/* Event cards */}
         <div
-          className={`flex-1 pt-12 sm:pt-10 px-4 sm:px-8 md:px-16 lg:px-20 ${
+          className={`flex-1 pt-12 sm:pt-10 px-4 sm:px-8 md:px-10 ${
             showSidebar ? "overflow-hidden" : ""
           }`}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-laptop:grid-cols-3 c-desktop:grid-cols-4 gap-4">
             {events.map((event) => (
               <EventCardPageView key={event.id} event={event} />
             ))}

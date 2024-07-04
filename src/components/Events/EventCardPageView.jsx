@@ -82,8 +82,8 @@ const EventCardPageView = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px]">
-      <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg relative">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] ">
+      <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg ">
         {event_img_1 ? (
           <img
             src={event_img_1}
@@ -93,23 +93,24 @@ const EventCardPageView = ({event}) => {
         ) : (
           <span className="text-gray-500">No image available</span>
         )}
-        <div className="absolute top-2 right-2">
+      </div>
+      <div className="p-4 relative">
+        <div className="absolute top-2 right-2 p-2 ">
           {isWishlisted ? (
             <FaHeart
               size={24}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-violet-700"
               onClick={handleWishlistClick}
             />
           ) : (
             <FaRegHeart
               size={24}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-violet-700"
               onClick={handleWishlistClick}
             />
           )}
         </div>
-      </div>
-      <div className="p-4">
+
         <div className="overflow-y-auto max-h-[124px]">
           <h3 className="font-bold text-lg">{event_name}</h3>
           <h2>{organizer_name}</h2>
@@ -117,12 +118,8 @@ const EventCardPageView = ({event}) => {
             {formattedDate} <span className="font-semibold">|</span>{" "}
             {formattedTime}
           </p>
-          <p>
-            {venue}
-          </p>
-          <p>
-            {location}
-          </p>
+          <p>{venue}</p>
+          <p>{location}</p>
         </div>
         <button
           className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"

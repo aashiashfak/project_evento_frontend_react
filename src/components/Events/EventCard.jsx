@@ -25,7 +25,7 @@ const EventCard = ({event}) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-    // Check if the event is in the wishlist
+  
     setIsWishlisted(
       wishlistItems.some((wishlistItem) => wishlistItem.event.id === event.id)
     );
@@ -85,23 +85,8 @@ const EventCard = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="border rounded-lg shadow-md w-64 flex-shrink-0 relative">
+    <div className="border rounded-lg shadow-md w-64 flex-shrink-0 ">
       <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
-        <div className="absolute right-2 top-2">
-          {isWishlisted ? (
-            <FaHeart
-              size={24}
-              className="cursor-pointer text-white "
-              onClick={handleWishlistClick}
-            />
-          ) : (
-            <FaRegHeart
-              size={24}
-              className="cursor-pointer text-white  "
-              onClick={handleWishlistClick}
-            />
-          )}
-        </div>
         {event_img_1 ? (
           <img
             src={event_img_1}
@@ -112,7 +97,22 @@ const EventCard = ({event}) => {
           <span className="text-gray-500">No image available</span>
         )}
       </div>
-      <div className="py-2 px-4">
+      <div className="py-2 px-4 relative">
+        <div className="absolute right-2 top-2">
+          {isWishlisted ? (
+            <FaHeart
+              size={24}
+              className="cursor-pointer text-violet-600 "
+              onClick={handleWishlistClick}
+            />
+          ) : (
+            <FaRegHeart
+              size={24}
+              className="cursor-pointer text-violet-600  "
+              onClick={handleWishlistClick}
+            />
+          )}
+        </div>
         <div>
           <h3 className="font-bold text-lg">{event_name}</h3>
           <h2>{organizer_name}</h2>
