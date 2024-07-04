@@ -1,5 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {FaHeart, FaRegHeart} from "react-icons/fa";
+import {useSelector, useDispatch} from "react-redux";
+import axiosInstance from "../../api/axiosInstance";
+import LoginModal from "../accounts/LoginModal";
+import {setWishListItems} from "../../redux/WishListSlice"; 
 
 const EventCard = ({event}) => {
   const {
@@ -13,6 +18,51 @@ const EventCard = ({event}) => {
   } = event;
 
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
+  const dispatch = useDispatch();
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  useEffect(() => {
+    // Check if the event is in the wishlist
+    setIsWishlisted(
+      wishlistItems.some((wishlistItem) => wishlistItem.event === event.id)
+    );
+  }, [wishlistItems, event.id]);
+
+  const handleWishlistClick = () => {
+    if (!user || !user.accessToken) {
+      setShowLoginModal(true);
+      return;
+    }
+
+    if (isWishlisted) {
+      axiosInstance
+        .delete(`events/wishlist/${event.id}/`)
+        .then(() => {
+          setIsWishlisted(false);
+          dispatch(
+            setWishListItems(
+              wishlistItems.filter((item) => item.event !== event.id)
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error removing from wishlist:", error);
+        });
+    } else {
+      axiosInstance
+        .post(`events/wishlist/${event.id}/`)
+        .then((response) => {
+          setIsWishlisted(true);
+          dispatch(setWishListItems([...wishlistItems, response.data]));
+        })
+        .catch((error) => {
+          console.error("Error adding to wishlist:", error);
+        });
+    }
+  };
 
   // Format the date
   const eventDate = new Date(start_date);
@@ -33,8 +83,23 @@ const EventCard = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
+    <div className="border rounded-lg shadow-md w-64 flex-shrink-0 relative">
       <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
+        <div className="absolute right-2 top-2">
+          {isWishlisted ? (
+            <FaHeart
+              size={24}
+              className="cursor-pointer text-white"
+              onClick={handleWishlistClick}
+            />
+          ) : (
+            <FaRegHeart
+              size={24}
+              className="cursor-pointer text-white"
+              onClick={handleWishlistClick}
+            />
+          )}
+        </div>
         {event_img_1 ? (
           <img
             src={event_img_1}
@@ -64,6 +129,9 @@ const EventCard = ({event}) => {
           Book Now
         </button>
       </div>
+      {showLoginModal && (
+        <LoginModal onClose={() => setShowLoginModal(false)} />
+      )}
     </div>
   );
 };
