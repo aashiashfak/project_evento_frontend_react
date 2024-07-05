@@ -92,11 +92,11 @@ const AllEvents = () => {
 
         {/* Event cards */}
         <div
-          className={`flex-1 pt-12 sm:pt-10 px-4 sm:px-8 md:px-10 ${
+          className={`flex justify-center flex-wrap pt-12 w-full sm:pt-10 px-8 sm:px-10 md:px-16 lg:px-20 ${
             showSidebar ? "overflow-hidden" : ""
           }`}
         >
-          <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-laptop:grid-cols-3 c-desktop:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
             {events.map((event) => (
               <EventCardPageView key={event.id} event={event} />
             ))}

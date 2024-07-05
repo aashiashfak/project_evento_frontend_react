@@ -8,7 +8,7 @@ export default {
       },
       screens: {
         "c-phone": "510px",
-        "c-tablet": "510px",
+        "c-tablet": "660px",
         "c-laptop": "850px", 
         'c-desktop': '1111px',
       },
