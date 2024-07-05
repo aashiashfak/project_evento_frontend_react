@@ -91,7 +91,7 @@ const   EventCardPageView = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] ">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] min-w-[250px]">
       <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg ">
         {event_img_1 ? (
           <img
@@ -146,8 +146,12 @@ const   EventCardPageView = ({event}) => {
               </div>
             </div>
             <div className="flex">
-               <IoLocationSharp className="mr-1 mt-1"/>
-                {location_url ? <a href={location_url}>See Location</a>:<p>No location</p>}
+              <IoLocationSharp className="mr-1 mt-1" />
+              {location_url ? (
+                <a href={location_url}>Event Location</a>
+              ) : (
+                <p>No location</p>
+              )}
             </div>
           </div>
         </div>

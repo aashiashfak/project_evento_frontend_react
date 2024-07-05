@@ -16,7 +16,7 @@ const WishLIst = () => {
       <Header />
       <div className="relative">
         <div className="flex">
-          <div className="flex justify-center flex-wrap pt-4 w-full  px-8 sm:px-10 md:px-16 lg:px-20">
+          <div className="flex justify-center flex-wrap pt-4 sm:pt-10  w-full  px-8 sm:px-10 md:px-16 lg:px-20">
             <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
               {wishlistItems.length > 0 ? (
                 wishlistItems.map((item) => (

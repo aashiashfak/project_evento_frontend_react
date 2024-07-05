@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {FaHeart, FaRegHeart} from "react-icons/fa";
+import {FaHeart, FaRegHeart, FaShareAlt} from "react-icons/fa";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
 import Accordion from "../components/Events/Accordion";
 import {setWishListItems} from "../redux/WishListSlice";
 import LoginRequireModal from "../components/Protecters/LoginRequireModal";
+import {FaCalendarDays, FaClock} from "react-icons/fa6";
+import {TbBuildingCircus} from "react-icons/tb";
+import {PiCity} from "react-icons/pi";
+import {IoLocationSharp} from "react-icons/io5";
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -71,6 +75,33 @@ const EventDetail = () => {
     }
   };
 
+  const handleShareClick = () => {
+    const shareData = {
+      title: eventDetails.event_name,
+      text: `${eventDetails.event_name}\n${formattedDate} at ${formattedTime}`,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      navigator
+        .share(shareData)
+        .then(() => {
+          console.log("Shared successfully!");
+        })
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      navigator.clipboard
+        .writeText(
+          `${eventDetails.event_name}\n${formattedDate} at ${formattedTime}\n${window.location.href}`
+        )
+        .then(() => {
+          console.log("copied to clipboard");
+        })
+        .catch((error) => console.log("Error copying to clipboard", error));
+    }
+  };
+
+
   if (!eventDetails) {
     return <div>Loading...</div>;
   }
@@ -89,6 +120,7 @@ const EventDetail = () => {
     terms_and_conditions,
     ticket_types,
     time,
+    location_url,
   } = eventDetails;
 
   const eventDate = new Date(start_date);
@@ -105,12 +137,25 @@ const EventDetail = () => {
     hour12: true,
   });
 
+ const generateEmbedUrl = (url) => {
+    const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
+    const match = url.match(regex);
+    if (match) {
+      const latitude = match[1];
+      const longitude = match[2];
+      return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBCZsKGqzSmrvA9sLOLAb9_VeIo_LTN5Po&q=${latitude},${longitude}&zoom=14`;
+    }
+    return url; 
+  };
+
+ const googleMapsEmbedUrl = generateEmbedUrl(location_url);
+
   return (
     <div>
       <Header />
-      <div className="container mx-auto md:px-16 lg:px-20 pt-6 p-4">
-        <div className="flex flex-col md:flex-row md:space-x-4">
-          <div className="w-full md:w-2/3 mb-4 md:mb-0 h-80 shadow-md rounded ">
+      <div className="container mx-auto sm:px-8 md:px-14 lg:px-16 pt-6 p-4">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 justify-center">
+          <div className="w-full lg:w-2/3 mb-4 lg:mb-0 h-80 shadow-md rounded ">
             {event_img_1 ? (
               <img
                 src={event_img_1}
@@ -123,34 +168,68 @@ const EventDetail = () => {
               </div>
             )}
           </div>
-          <div className="w-full md:w-1/3 relative">
-            <div className="absolute right-2 top-2 ">
-              {isWishlisted ? (
-                <FaHeart
+          <div className="w-full lg:w-1/3 relative ">
+            <div className="absolute right-4 top-7 ">
+              <div className="flex gap-3 text-violet-700">
+                {isWishlisted ? (
+                  <FaHeart
+                    size={24}
+                    className="cursor-pointer"
+                    onClick={handleWishlistClick}
+                  />
+                ) : (
+                  <FaRegHeart
+                    size={24}
+                    className="cursor-pointer"
+                    onClick={handleWishlistClick}
+                  />
+                )}
+                <FaShareAlt
                   size={24}
-                  className="cursor-pointer text-violet-700"
-                  onClick={handleWishlistClick}
+                  className="cursor-pointer"
+                  onClick={handleShareClick}
                 />
-              ) : (
-                <FaRegHeart
-                  size={24}
-                  className="cursor-pointer text-violet-700"
-                  onClick={handleWishlistClick}
-                />
-              )}
+              </div>
+              <div className="absolute hidden sm:block lg:hidden top-9 right-2 w-80">
+                <div className="mt-4 flex text-xl text-violet-700 mb-4 font-semibold">
+                  <IoLocationSharp className="mt-1" size={24} />
+                  <h1>Event Location </h1>
+                </div>
+                <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
+                  <iframe
+                    src={googleMapsEmbedUrl}
+                    frameBorder="0"
+                    className="w-full "
+                    title="Google Maps Location"
+                  ></iframe>
+                </div>
+              </div>
             </div>
             <div className="bg-white p-4 rounded-lg shadow-md h-80 pt-6">
-              <h1 className="text-2xl font-bold mb-2">{event_name}</h1>
-              <p className="text-lg text-gray-700">{categories.join(" | ")}</p>
-              <p className="mt-2">
-                {formattedDate} | {formattedTime}
-              </p>
-              <p className="mt-2">
-                {venue} | {location}
-              </p>
-              <p className="mt-2 text-gray-700">{organizer_name}</p>
+              <h1 className="text-xl font-bold mb-2">{event_name}</h1>
+              <div className="text-gray-600">
+                <div className="flex ">
+                  <FaCalendarDays className="mr-1 mt-1" />
+                  <p className="mr-1">{formattedDate}</p>
+                </div>
+                <div className="flex mt-1">
+                  <FaClock className="mr-1 mt-1" />
+                  <p className="mr-1">{formattedTime}</p>
+                </div>
+                <div className="flex">
+                  <TbBuildingCircus className="mr-1 mt-1" />
+                  <p className="mr-1">{venue}</p>
+                </div>
+                <div className="flex mt-1">
+                  <PiCity className="mr-1 mt-1" />
+                  <p>{location}</p>
+                </div>
+                <p className="mt-1">{categories.join(" | ")}</p>
+                <p className="mt-1">{organizer_name}</p>
+              </div>
+
               <button
-                className="w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                className="w-full sm:w-1/3 lg:w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
                 onClick={() => navigate(`/ticket-types/${id}`)}
               >
                 Tickets
@@ -161,6 +240,21 @@ const EventDetail = () => {
             </div>
           </div>
         </div>
+        <div className="sm:hidden lg:block">
+          <div className="mt-4 flex text-2xl text-violet-700 mb-4 font-semibold">
+            <IoLocationSharp className="mt-1" size={24} />
+            <h1>Event Location </h1>
+          </div>
+          <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
+            <iframe
+              src={googleMapsEmbedUrl}
+              frameBorder="0"
+              className="w-full "
+              title="Google Maps Location"
+            ></iframe>
+          </div>
+        </div>
+
         <div className="mt-4">
           <div className="shadow-md rounded-lg mb-4">
             <Accordion title="ABOUT" description={about} />

@@ -8,6 +8,7 @@ import {setWishListItems} from "../../redux/WishListSlice";
 import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
+import {IoLocationSharp} from "react-icons/io5";
 
 const EventCard = ({event}) => {
   const {
@@ -140,8 +141,14 @@ const EventCard = ({event}) => {
                 <p>{location}</p>
               </div>
             </div>
-
-            {location_url && <a href={location_url}>See Location</a>}
+            <div className="flex">
+              <IoLocationSharp className="mr-1 mt-1" />
+              {location_url ? (
+                <a href={location_url}>Event Location</a>
+              ) : (
+                <p>No location</p>
+              )}
+            </div>
           </div>
         </div>
         <button

@@ -44,13 +44,17 @@ const SearchResults = () => {
           </h2>
         </div>
         {events.length > 0 ? (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:px-20 md:px-14 sm:px-8 px-6">
-            {events.map((event) => (
-              <EventCardPageView key={event.id} event={event} />
-            ))}
+          <div className="flex justify-center flex-wrap pt-4 sm:pt-10  w-full  px-8 sm:px-10 md:px-16 lg:px-20">
+            <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
+              {events.map((event) => (
+                <EventCardPageView key={event.id} event={event} />
+              ))}
+            </div>
           </div>
         ) : (
-          <p className="text-gray-500 ml-20">No results found for "{searchTerm}".</p>
+          <p className="text-gray-500 ml-20">
+            No results found for "{searchTerm}".
+          </p>
         )}
       </div>
     </div>
