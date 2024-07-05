@@ -17,6 +17,7 @@ const EventsByLocation = ({locationID}) => {
           `http://127.0.0.1:8000/events/by_location/${locationID}/`
         );
         setEvents(response.data);
+        console.log("eventsbylocatin.....",response.data)
       } catch (error) {
         console.error("Error fetching events:", error);
       }

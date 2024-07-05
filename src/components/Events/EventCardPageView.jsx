@@ -5,8 +5,15 @@ import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
 import LoginModal from "../Protecters/LoginRequireModal";
 import {setWishListItems} from "../../redux/WishListSlice"; 
+import {FaCalendarDays, FaClock, FaCity} from "react-icons/fa6";
+import {TbBuildingCircus} from "react-icons/tb";
+import {PiCity} from "react-icons/pi";
+import {IoLocationSharp} from "react-icons/io5";
 
-const EventCardPageView = ({event}) => {
+
+
+
+const   EventCardPageView = ({event}) => {
   const {
     id,
     event_name,
@@ -16,8 +23,10 @@ const EventCardPageView = ({event}) => {
     event_img_1,
     time,
     organizer_name,
+    location_url,
   } = event;
-
+  
+  
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
@@ -111,15 +120,36 @@ const EventCardPageView = ({event}) => {
           )}
         </div>
 
-        <div className="overflow-y-auto max-h-[124px]">
+        <div className="overflow-y-auto max-h-[124px] hide-scrollbar">
           <h3 className="font-bold text-lg">{event_name}</h3>
-          <h2>{organizer_name}</h2>
-          <p>
-            {formattedDate} <span className="font-semibold">|</span>{" "}
-            {formattedTime}
-          </p>
-          <p>{venue}</p>
-          <p>{location}</p>
+          <div className=" text-sm text-gray-600">
+            <div className="flex mt-1">
+              <div className="flex ">
+                <FaCalendarDays className="mr-1 mt-1" />
+                <p className="mr-1">{formattedDate}</p>
+                <span className="font-semibold mr-1">|</span>{" "}
+              </div>
+              <div className="flex">
+                <FaClock className="mr-1 mt-1" />
+                <p className="mr-1">{formattedTime}</p>
+              </div>
+            </div>
+            <div className="flex mt-1 mb-2">
+              <div className="flex">
+                <TbBuildingCircus className="mr-1 mt-1" />
+                <p className="mr-1">{venue}</p>
+                <span className="font-semibold mr-1">|</span>{" "}
+              </div>
+              <div className="flex">
+                <PiCity className="mr-1 mt-1" />
+                <p>{location}</p>
+              </div>
+            </div>
+            <div className="flex">
+               <IoLocationSharp className="mr-1 mt-1"/>
+                {location_url ? <a href={location_url}>See Location</a>:<p>No location</p>}
+            </div>
+          </div>
         </div>
         <button
           className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"

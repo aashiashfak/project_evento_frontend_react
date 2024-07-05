@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
-import NavHeader from "../components/Header/navHeader/NavHeader";
 import FilterSidebar from "../components/Events/SideBar";
 import EventCardPageView from "../components/Events/EventCardPageView";
 import {FiFilter} from "react-icons/fi";
 import {useParams} from "react-router-dom";
+import '../../src/css/Global.css'
 
 const AllEvents = () => {
   const [events, setEvents] = useState([]);

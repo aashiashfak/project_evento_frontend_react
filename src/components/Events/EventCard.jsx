@@ -4,7 +4,10 @@ import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
 import LoginModal from "../Protecters/LoginRequireModal";
-import {setWishListItems} from "../../redux/WishListSlice"; 
+import {setWishListItems} from "../../redux/WishListSlice";
+import {FaCalendarDays, FaClock} from "react-icons/fa6";
+import {TbBuildingCircus} from "react-icons/tb";
+import {PiCity} from "react-icons/pi";
 
 const EventCard = ({event}) => {
   const {
@@ -14,9 +17,10 @@ const EventCard = ({event}) => {
     location,
     event_img_1,
     time,
-    organizer_name,
+    location_url,
   } = event;
 
+  console.log("evnetns....", event);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
@@ -25,13 +29,11 @@ const EventCard = ({event}) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
-  
     setIsWishlisted(
       wishlistItems.some((wishlistItem) => wishlistItem.event.id === event.id)
     );
-    console.log("isWIshlisted",isWishlisted);
+    console.log("isWIshlisted", isWishlisted);
   }, [wishlistItems, event.id]);
-
 
   const handleWishlistClick = () => {
     if (!user || !user.accessToken) {
@@ -114,15 +116,33 @@ const EventCard = ({event}) => {
           )}
         </div>
         <div>
-          <h3 className="font-bold text-lg">{event_name}</h3>
-          <h2>{organizer_name}</h2>
-          <p>
-            {formattedDate} <span className="font-semibold">|</span>{" "}
-            {formattedTime}
-          </p>
-          <p>
-            {venue} <span className="font-semibold">|</span> {location}
-          </p>
+          <h3 className="font-bold text-md">{event_name}</h3>
+          <div className=" text-sm text-gray-600">
+            <div className="flex mt-1">
+              <div className="flex ">
+                <FaCalendarDays className="mr-1 mt-1" />
+                <p className="mr-1">{formattedDate}</p>
+                <span className="font-semibold mr-1">|</span>{" "}
+              </div>
+              <div className="flex">
+                <FaClock className="mr-1 mt-1" />
+                <p className="mr-1">{formattedTime}</p>
+              </div>
+            </div>
+            <div className="flex mt-1 mb-2">
+              <div className="flex">
+                <TbBuildingCircus className="mr-1 mt-1" />
+                <p className="mr-1">{venue}</p>
+                <span className="font-semibold mr-1">|</span>{" "}
+              </div>
+              <div className="flex">
+                <PiCity className="mr-1 mt-1" />
+                <p>{location}</p>
+              </div>
+            </div>
+
+            {location_url && <a href={location_url}>See Location</a>}
+          </div>
         </div>
         <button
           className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"

@@ -12,6 +12,7 @@ const TrendingEvents = () => {
       try {
         const response = await axiosInstance.get("events/trending-events/");
         setTrendingEvents(response.data);
+        console.log("trending events......",response.data)
       } catch (error) {
         console.log("Error fetching Trending Events");
       }
