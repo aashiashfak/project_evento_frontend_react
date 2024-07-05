@@ -92,7 +92,7 @@ const AllEvents = () => {
 
         {/* Event cards */}
         <div
-          className={`flex justify-center flex-wrap pt-12 w-full sm:pt-10 px-8 sm:px-10 md:px-16 lg:px-20 ${
+          className={`flex justify-center flex-wrap pt-12 w-full sm:pt-10 px-6 sm:px-10 md:px-16 lg:px-20 ${
             showSidebar ? "overflow-hidden" : ""
           }`}
         >

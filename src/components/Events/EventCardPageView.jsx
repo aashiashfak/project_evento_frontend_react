@@ -91,7 +91,7 @@ const   EventCardPageView = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] min-w-[250px]">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] w-[295px]">
       <div className="h-48 bg-gray-200 flex items-center justify-center rounded-t-lg ">
         {event_img_1 ? (
           <img
