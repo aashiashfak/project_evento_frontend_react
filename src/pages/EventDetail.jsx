@@ -10,7 +10,8 @@ import LoginRequireModal from "../components/Protecters/LoginRequireModal";
 import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
-import {IoLocationSharp} from "react-icons/io5";
+import {IoLocationSharp, IoTicket} from "react-icons/io5";
+
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -253,7 +254,7 @@ const EventDetail = () => {
                 <p className="mt-1">{organizer_name}</p>
               </div>
               <button
-                className={`w-full sm:w-1/3 lg:w-full mt-1 ${
+                className={`w-full sm:w-1/3 lg:w-full mt-1 flex items-center justify-center gap-2 ${
                   isTicketsAvailable
                     ? "bg-violet-700 hover:bg-violet-900"
                     : "bg-gray-400 cursor-default opacity-50"
@@ -265,23 +266,26 @@ const EventDetail = () => {
                 }
                 disabled={!isTicketsAvailable}
               >
-                Tickets
+                <p>View Tickets</p>{" "}
+                <span>
+                  <IoTicket />
+                </span>
               </button>
-              <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm">
+              <p className="text-gray-500 text-sm mb-1">
+                ₹ {minTicketPrice} Onwards
+              </p>
+              <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm mb-2">
                 {ticketStatusText && (
-                  <div className="text-red-500 text-sm">
-                    <div className="w-full">
-                      <h1
-                        className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
-                        style={{width: "max-content"}}
-                      >
-                        {ticketStatusText}
-                      </h1>
-                    </div>
+                  <div className="text-red-500 text-sm w-full">
+                    <h1
+                      className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
+                      style={{width: "max-content"}}
+                    >
+                      {ticketStatusText}
+                    </h1>
                   </div>
                 )}
               </div>
-              <p className="text-gray-500 text-sm mb-2">₹ {minTicketPrice} Onwards</p>
             </div>
           </div>
         </div>
