@@ -137,7 +137,30 @@ const EventDetail = () => {
     hour12: true,
   });
 
+  const totalTickets = ticket_types.reduce(
+    (acc, ticket) => acc + ticket.count,
+    0
+  );
+  const soldTickets = ticket_types.reduce(
+    (acc, ticket) => acc + ticket.sold_count,
+    0
+  );
+  const availableTickets = totalTickets - soldTickets;
+  const minTicketPrice = Math.min(...ticket_types.map((t) => t.price));
+
+  let ticketStatusText = "";
+  let isTicketsAvailable = true;
+
+  if (availableTickets === 0) {
+    ticketStatusText = "No tickets available";
+    isTicketsAvailable = false;
+  } else if (availableTickets < 20) {
+    ticketStatusText = "Only a few left";
+  }
+
+
  const generateEmbedUrl = (url) => {
+  if (!url) return null;
     const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
     const match = url.match(regex);
     if (match) {
@@ -190,20 +213,22 @@ const EventDetail = () => {
                   onClick={handleShareClick}
                 />
               </div>
-              <div className="absolute hidden sm:block lg:hidden top-9 right-2 w-80">
-                <div className="mt-4 flex text-xl text-violet-700 mb-4 font-semibold">
-                  <IoLocationSharp className="mt-1" size={24} />
-                  <h1>Event Location </h1>
+              {location_url && (
+                <div className="absolute hidden sm:block lg:hidden top-9 right-2 w-80">
+                  <div className="mt-4 flex text-xl text-violet-700 mb-4 font-semibold">
+                    <IoLocationSharp className="mt-1" size={24} />
+                    <h1>Event Location </h1>
+                  </div>
+                  <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
+                    <iframe
+                      src={googleMapsEmbedUrl}
+                      frameBorder="0"
+                      className="w-full "
+                      title="Google Maps Location"
+                    ></iframe>
+                  </div>
                 </div>
-                <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
-                  <iframe
-                    src={googleMapsEmbedUrl}
-                    frameBorder="0"
-                    className="w-full "
-                    title="Google Maps Location"
-                  ></iframe>
-                </div>
-              </div>
+              )}
             </div>
             <div className="bg-white p-4 rounded-lg shadow-md h-80 pt-6">
               <h1 className="text-xl font-bold mb-2">{event_name}</h1>
@@ -227,34 +252,55 @@ const EventDetail = () => {
                 <p className="mt-1">{categories.join(" | ")}</p>
                 <p className="mt-1">{organizer_name}</p>
               </div>
-
               <button
-                className="w-full sm:w-1/3 lg:w-full bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
-                onClick={() => navigate(`/ticket-types/${id}`)}
+                className={`w-full sm:w-1/3 lg:w-full mt-1 ${
+                  isTicketsAvailable
+                    ? "bg-violet-700 hover:bg-violet-900"
+                    : "bg-gray-400 cursor-default opacity-50"
+                } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform ${
+                  isTicketsAvailable ? "hover:scale-105" : ""
+                }`}
+                onClick={() =>
+                  isTicketsAvailable && navigate(`/ticket-types/${id}`)
+                }
+                disabled={!isTicketsAvailable}
               >
                 Tickets
               </button>
-              <p className="mt-2 text-gray-500">
-                ₹ {Math.min(...ticket_types.map((t) => t.price))} Onwards
-              </p>
+              <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm">
+                {ticketStatusText && (
+                  <div className="text-red-500 text-sm">
+                    <div className="w-full">
+                      <h1
+                        className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
+                        style={{width: "max-content"}}
+                      >
+                        {ticketStatusText}
+                      </h1>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <p className="text-gray-500 text-sm mb-2">₹ {minTicketPrice} Onwards</p>
             </div>
           </div>
         </div>
-        <div className="sm:hidden lg:block">
-          <div className="mt-4 flex text-2xl text-violet-700 mb-4 font-semibold">
-            <IoLocationSharp className="mt-1" size={24} />
-            <h1>Event Location </h1>
+        {location_url && (
+          <div className="sm:hidden lg:block">
+            <div className="mt-4 flex text-2xl text-violet-700 mb-4 font-semibold">
+              <IoLocationSharp className="mt-1" size={24} />
+              <h1>Event Location </h1>
+            </div>
+            <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
+              <iframe
+                src={googleMapsEmbedUrl}
+                frameBorder="0"
+                className="w-full "
+                title="Google Maps Location"
+              ></iframe>
+            </div>
           </div>
-          <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
-            <iframe
-              src={googleMapsEmbedUrl}
-              frameBorder="0"
-              className="w-full "
-              title="Google Maps Location"
-            ></iframe>
-          </div>
-        </div>
-
+        )}
         <div className="mt-4">
           <div className="shadow-md rounded-lg mb-4">
             <Accordion title="ABOUT" description={about} />

@@ -44,7 +44,7 @@ const SearchResults = () => {
           </h2>
         </div>
         {events.length > 0 ? (
-          <div className="flex justify-center flex-wrap pt-4 sm:pt-10  w-full  px-8 sm:px-10 md:px-16 lg:px-20">
+          <div className="flex justify-center flex-wrap pt-4 sm:pt-4  w-full  px-8 sm:px-10 md:px-16 lg:px-20">
             <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
               {events.map((event) => (
                 <EventCardPageView key={event.id} event={event} />
