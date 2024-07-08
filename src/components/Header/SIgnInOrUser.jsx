@@ -52,7 +52,7 @@ const SignInOrUser = () => {
         </button>
       )}
       <div
-        className={`Profile-drop-down-menu dropdown-menu absolute right-0 mt-2 w-48 bg-gray-200 py-4 rounded-md shadow-lg z-20 ${
+        className={`Profile-drop-down-menu dropdown-menu absolute right-0 mt-2 w-48 bg-gray-200 py-1 rounded-md shadow-lg z-20 ${
           dropdownOpen ? "active" : "inactive"
         }`}
       >

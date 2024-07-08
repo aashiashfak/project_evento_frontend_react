@@ -174,9 +174,9 @@ const EventDetail = () => {
   return (
     <div>
       <Header />
-      <div className="container mx-auto sm:px-8 md:px-14 lg:px-16 pt-6 p-4">
-        <div className="flex flex-col lg:flex-row lg:space-x-4 justify-center">
-          <div className="w-full lg:w-2/3 mb-4 lg:mb-0 h-80 shadow-md rounded ">
+      <div className="container mx-auto sm:px-10 md:px-20 lg:px-28 pt-6 p-4">
+        <div className="">
+          <div className="w-full mb-5  h-80 shadow-md rounded ">
             {event_img_1 ? (
               <img
                 src={event_img_1}
@@ -184,12 +184,12 @@ const EventDetail = () => {
                 className="object-cover rounded shadow-md w-full h-full"
               />
             ) : (
-              <div className="w-full h-80 bg-gray-200 flex items-center justify-center rounded shadow-lg">
+              <div className="w-full h-80 bg-gray-200 flex items-center justify-center rounded shadow-lg mb-5">
                 <span className="text-gray-500">No image available</span>
               </div>
             )}
           </div>
-          <div className="w-full lg:w-1/3 relative ">
+          <div className="w-full relative ">
             <div className="absolute right-4 top-7 ">
               <div className="flex gap-3 text-violet-700">
                 {isWishlisted ? (
@@ -211,24 +211,47 @@ const EventDetail = () => {
                   onClick={handleShareClick}
                 />
               </div>
-              {location_url && (
-                <div className="absolute hidden sm:block lg:hidden top-9 right-2 w-80">
-                  <div className="mt-4 flex text-xl text-violet-700 mb-4 font-semibold">
-                    <IoLocationSharp className="mt-1" size={24} />
-                    <h1>Event Location </h1>
-                  </div>
-                  <div className="flex justify-center aspect-h-9 w-full lg:w-1/3 mb-4 mt-4">
-                    <iframe
-                      src={googleMapsEmbedUrl}
-                      frameBorder="0"
-                      className="w-full "
-                      title="Google Maps Location"
-                    ></iframe>
-                  </div>
+              <div className="absolute top-20 right-2 hidden sm:block w-max">
+                <button
+                  className={`w-full mt-1 flex items-center justify-center gap-2 ${
+                    isTicketsAvailable && status === "active"
+                      ? "bg-violet-700 hover:bg-violet-900 hover:scale-105"
+                      : "bg-gray-400 cursor-default opacity-50"
+                  } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform `}
+                  onClick={() =>
+                    isTicketsAvailable && navigate(`/ticket-types/${id}`)
+                  }
+                  disabled={!isTicketsAvailable || status !== "active"}
+                  data-tooltip-id="my-tooltip"
+                  data-tooltip-content={
+                    status !== "active" ? "This event is not active" : ""
+                  }
+                  data-tooltip-place="bottom"
+                >
+                  <p>View Tickets</p>{" "}
+                  <span>
+                    <IoTicket />
+                  </span>
+                </button>
+                <Tooltip id="my-tooltip" />
+                <p className="text-gray-500 text-sm mb-1">
+                  ₹ {minTicketPrice} Onwards
+                </p>
+                <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm mb-2">
+                  {ticketStatusText && (
+                    <div className="text-red-500 text-sm w-full">
+                      <h1
+                        className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
+                        style={{width: "max-content"}}
+                      >
+                        {ticketStatusText}
+                      </h1>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
-            <div className="bg-white p-4 rounded-lg shadow-md h-80 pt-6">
+            <div className="bg-white p-4 rounded-lg shadow-md  pt-6">
               <h1 className="text-xl font-bold mb-2">{event_name}</h1>
               <div className="text-gray-600">
                 <div className="flex ">
@@ -250,48 +273,50 @@ const EventDetail = () => {
                 <p className="mt-1">{categories.join(" | ")}</p>
                 <p className="mt-1">{organizer_name}</p>
               </div>
-              <button
-                className={`w-full sm:w-1/3 lg:w-full mt-1 flex items-center justify-center gap-2 ${
-                  isTicketsAvailable && status === "active"
-                    ? "bg-violet-700 hover:bg-violet-900 hover:scale-105"
-                    : "bg-gray-400 cursor-default opacity-50"
-                } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform `}
-                onClick={() =>
-                  isTicketsAvailable && navigate(`/ticket-types/${id}`)
-                }
-                disabled={!isTicketsAvailable || status !== "active"}
-                data-tooltip-id="my-tooltip"
-                data-tooltip-content={
-                  status !== "active" ? "This event is not active" : ""
-                }
-                data-tooltip-place="bottom"
-              >
-                <p>View Tickets</p>{" "}
-                <span>
-                  <IoTicket />
-                </span>
-              </button>
-              <Tooltip id="my-tooltip" />
-              <p className="text-gray-500 text-sm mb-1">
-                ₹ {minTicketPrice} Onwards
-              </p>
-              <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm mb-2">
-                {ticketStatusText && (
-                  <div className="text-red-500 text-sm w-full">
-                    <h1
-                      className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
-                      style={{width: "max-content"}}
-                    >
-                      {ticketStatusText}
-                    </h1>
-                  </div>
-                )}
+              <div className="sm:hidden">
+                <button
+                  className={`w-full sm:w-1/3 lg:w-full mt-1 flex items-center justify-center gap-2 ${
+                    isTicketsAvailable && status === "active"
+                      ? "bg-violet-700 hover:bg-violet-900 hover:scale-105"
+                      : "bg-gray-400 cursor-default opacity-50"
+                  } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform `}
+                  onClick={() =>
+                    isTicketsAvailable && navigate(`/ticket-types/${id}`)
+                  }
+                  disabled={!isTicketsAvailable || status !== "active"}
+                  data-tooltip-id="my-tooltip"
+                  data-tooltip-content={
+                    status !== "active" ? "This event is not active" : ""
+                  }
+                  data-tooltip-place="bottom"
+                >
+                  <p>View Tickets</p>{" "}
+                  <span>
+                    <IoTicket />
+                  </span>
+                </button>
+                <Tooltip id="my-tooltip" />
+                <p className="text-gray-500 text-sm mb-1">
+                  ₹ {minTicketPrice} Onwards
+                </p>
+                <div className="mt-2 w-full sm:w-1/3 lg:w-full text-sm mb-2">
+                  {ticketStatusText && (
+                    <div className="text-red-500 text-sm w-full">
+                      <h1
+                        className="bg-red-600 opacity-50 w-auto rounded-lg text-white px-4 "
+                        style={{width: "max-content"}}
+                      >
+                        {ticketStatusText}
+                      </h1>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
         {location_url && (
-          <div className="sm:hidden lg:block">
+          <div className="">
             <div className="mt-4 flex text-2xl text-violet-700 mb-4 font-semibold">
               <IoLocationSharp className="mt-1" size={24} />
               <h1>Event Location </h1>
