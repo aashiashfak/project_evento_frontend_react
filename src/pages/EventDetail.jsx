@@ -11,6 +11,8 @@ import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp, IoTicket} from "react-icons/io5";
+import "react-tooltip/dist/react-tooltip.css";
+import {Tooltip} from "react-tooltip";
 
 
 const EventDetail = () => {
@@ -46,28 +48,22 @@ const EventDetail = () => {
     );
   }, [wishlistItems, eventID]);
 
-
-
   const handleWishlistClick = async () => {
     if (!user || !user.accessToken) {
       setShowLoginModal(true);
       return;
     }
 
-    const ID = parseInt(eventID)
+    const ID = parseInt(eventID);
     try {
       if (isWishlisted) {
         await axiosInstance.delete(`events/wishlist/${ID}/`);
         setIsWishlisted(false);
         dispatch(
-          setWishListItems(
-            wishlistItems.filter((item) => item.event.id !== ID)
-          )
+          setWishListItems(wishlistItems.filter((item) => item.event.id !== ID))
         );
       } else {
-        const response = await axiosInstance.post(
-          `events/wishlist/${ID}/`
-        );
+        const response = await axiosInstance.post(`events/wishlist/${ID}/`);
         setIsWishlisted(true);
         dispatch(setWishListItems([...wishlistItems, response.data]));
       }
@@ -102,7 +98,6 @@ const EventDetail = () => {
     }
   };
 
-
   if (!eventDetails) {
     return <div>Loading...</div>;
   }
@@ -122,6 +117,7 @@ const EventDetail = () => {
     ticket_types,
     time,
     location_url,
+    status,
   } = eventDetails;
 
   const eventDate = new Date(start_date);
@@ -159,9 +155,10 @@ const EventDetail = () => {
     ticketStatusText = "Only a few left";
   }
 
+  console.log("eventDetails", eventDetails);
 
- const generateEmbedUrl = (url) => {
-  if (!url) return null;
+  const generateEmbedUrl = (url) => {
+    if (!url) return null;
     const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
     const match = url.match(regex);
     if (match) {
@@ -169,10 +166,10 @@ const EventDetail = () => {
       const longitude = match[2];
       return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBCZsKGqzSmrvA9sLOLAb9_VeIo_LTN5Po&q=${latitude},${longitude}&zoom=14`;
     }
-    return url; 
+    return url;
   };
 
- const googleMapsEmbedUrl = generateEmbedUrl(location_url);
+  const googleMapsEmbedUrl = generateEmbedUrl(location_url);
 
   return (
     <div>
@@ -255,22 +252,26 @@ const EventDetail = () => {
               </div>
               <button
                 className={`w-full sm:w-1/3 lg:w-full mt-1 flex items-center justify-center gap-2 ${
-                  isTicketsAvailable
-                    ? "bg-violet-700 hover:bg-violet-900"
+                  isTicketsAvailable && status === "active"
+                    ? "bg-violet-700 hover:bg-violet-900 hover:scale-105"
                     : "bg-gray-400 cursor-default opacity-50"
-                } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform ${
-                  isTicketsAvailable ? "hover:scale-105" : ""
-                }`}
+                } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform `}
                 onClick={() =>
                   isTicketsAvailable && navigate(`/ticket-types/${id}`)
                 }
-                disabled={!isTicketsAvailable}
+                disabled={!isTicketsAvailable || status !== "active"}
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={
+                  status !== "active" ? "This event is not active" : ""
+                }
+                data-tooltip-place="bottom"
               >
                 <p>View Tickets</p>{" "}
                 <span>
                   <IoTicket />
                 </span>
               </button>
+              <Tooltip id="my-tooltip" />
               <p className="text-gray-500 text-sm mb-1">
                 ₹ {minTicketPrice} Onwards
               </p>

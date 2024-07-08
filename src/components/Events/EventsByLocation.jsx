@@ -4,6 +4,8 @@ import EventCard from "./EventCard";
 import TextHeading from "../texts/TextHeading";
 import { PiCity } from "react-icons/pi";
 
+
+
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
 

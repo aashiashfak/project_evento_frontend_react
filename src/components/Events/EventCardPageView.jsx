@@ -9,11 +9,13 @@ import {FaCalendarDays, FaClock, FaCity} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
+import "react-tooltip/dist/react-tooltip.css";
+import {Tooltip} from "react-tooltip";
 
 
 
 
-const   EventCardPageView = ({event}) => {
+const EventCardPageView = ({event}) => {
   const {
     id,
     event_name,
@@ -22,14 +24,15 @@ const   EventCardPageView = ({event}) => {
     location,
     event_img_1,
     time,
-    organizer_name,
     location_url,
+    status,
   } = event;
   
   
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
+  console.log(wishlistItems)
   const dispatch = useDispatch();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -119,7 +122,6 @@ const   EventCardPageView = ({event}) => {
             />
           )}
         </div>
-
         <div className="overflow-y-auto max-h-[124px] hide-scrollbar">
           <h3 className="font-bold text-lg">{event_name}</h3>
           <div className=" text-sm text-gray-600">
@@ -156,11 +158,23 @@ const   EventCardPageView = ({event}) => {
           </div>
         </div>
         <button
-          className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+          className={`w-full px-4 py-2 mt-2 text-white rounded-lg ${
+            status === "active"
+              ? "bg-violet-700  transition duration-200  ease-in-out transform hover:bg-violet-900 hover:scale-105"
+              : "bg-gray-400"
+          }  `}
           onClick={() => navigate(`/event-details/${event.id}`)}
+          disabled={status !== "active"}
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={
+            status !== "active" ? "This event is not active" : ""
+          }
+          data-tooltip-place="bottom"
         >
+          {" "}
           Book Now
         </button>
+        <Tooltip id="my-tooltip" />
       </div>
       {showLoginModal && (
         <LoginModal onClose={() => setShowLoginModal(false)} />
