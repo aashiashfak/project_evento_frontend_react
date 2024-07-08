@@ -21,3 +21,15 @@
   transform: translateY(-20px);
   transition: 0.5s ease;
 }
+
+.Profile-drop-down-menu::after {
+  content: "";
+  position: absolute;
+  top: -6px; /* Adjust to position the arrow correctly */
+  right: 10px; /* Adjust to position the arrow correctly */
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #e5e7eb;
+}

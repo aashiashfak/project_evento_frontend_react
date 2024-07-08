@@ -15,7 +15,7 @@ const SignInOrUser = () => {
     let handler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
-        console.log("uuuuuuuuuuuuuuu");
+        console.log(dropdownOpen)
       }
     };
     document.addEventListener("mousedown", handler);
@@ -26,20 +26,22 @@ const SignInOrUser = () => {
   }, []);
 
   const handleToggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+    setDropdownOpen((prev) => !prev); 
   };
 
   return (
-    <div className="relative ">
+    <div className="relative " ref={dropdownRef}>
       {user.accessToken ? (
-        <div
-          className="flex items-center space-x-2 cursor-pointer"
-          onClick={handleToggleDropdown}
-        >
+        <div className="flex items-center space-x-2 ">
           <span className="font-semibold hidden md:block">
             {user.username || "Guest"}
           </span>
-          <FaUser className="text-violet-700" />
+          <div className="p-2 hover:bg-gray-400 rounded-full cursor cursor-pointer transform duration-300 ease-in-out">
+            <FaUser
+              className="text-violet-700 cursor-pointer transform duration-300 ease-in-out "
+              onClick={handleToggleDropdown}
+            />
+          </div>
         </div>
       ) : (
         <button
@@ -50,10 +52,9 @@ const SignInOrUser = () => {
         </button>
       )}
       <div
-        className={`dropdown-menu absolute right-0 mt-2 w-48 bg-gray-200 py-4 rounded-md shadow-lg z-20 ${
+        className={`Profile-drop-down-menu dropdown-menu absolute right-0 mt-2 w-48 bg-gray-200 py-4 rounded-md shadow-lg z-20 ${
           dropdownOpen ? "active" : "inactive"
         }`}
-        ref={dropdownRef}
       >
         <ProfileDropdown />
       </div>
