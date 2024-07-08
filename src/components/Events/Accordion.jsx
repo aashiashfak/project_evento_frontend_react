@@ -24,7 +24,7 @@ const Accordion = ({title, description}) => {
       </button>
       <div
         ref={contentRef}
-        className={`transition-max-height duration-500 ease-in-out overflow-hidden ${
+        className={`duration-500 ease-in-out overflow-hidden ${
           accordion ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
         style={{

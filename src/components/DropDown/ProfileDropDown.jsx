@@ -1,22 +1,47 @@
 import React from "react";
 import DropDownMenu from "./DropDownMenu";
 import {FaUser, FaHeart, FaSignOutAlt} from "react-icons/fa";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { clearUser } from "../../redux/userSlice";
+import { clearWishListItems } from "../../redux/WishListSlice";
 
-const ProfileDropdown = ({username}) => {
-  //   const handleLogout = () => {
-  //     // Handle logout logic here
-  //     navigate("/logout");
-  //   };
+
+const ProfileDropdown = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+   const handleLogout = () => {
+     dispatch(clearUser());
+     dispatch(clearWishListItems())
+     localStorage.setItem("logoutMessage", "true");
+     navigate("/login");
+   };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   return (
-    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-      <div className="px-4 py-2 border-b border-gray-100">
-        <p className="text-gray-700">{username || "Guest"}</p>
-        <p className="text-gray-500 text-sm">Website Designer</p>
+    <div className="text-sm text-gray-600">
+      <div
+        className="px-5 py-3 cursor-pointer"
+        onClick={() => handleNavigation("/user-profile")}
+      >
+        <DropDownMenu icon={<FaUser />} title="My Profile" />
       </div>
-      <DropDownMenu icon={<FaUser />} title="My Profile" />
-      <DropDownMenu icon={<FaHeart />} title="Wishlist" />
-      <DropDownMenu icon={<FaSignOutAlt />} title="Logout" />
+      <hr className="w-[155px] mx-auto bg-white h-px border-none"></hr>
+      <div
+        className="px-5 py-3 cursor-pointer"
+        onClick={() => handleNavigation("/wishlist")}
+      >
+        <DropDownMenu icon={<FaHeart />} title="Wishlist" />
+      </div>
+      <hr className="w-[155px] mx-auto bg-white h-[1.5px] border-none"></hr>
+      <div className="px-5 py-3 cursor-pointer" onClick={handleLogout}>
+        <DropDownMenu icon={<FaSignOutAlt />} title="Logout" />
+      </div>
     </div>
   );
 };

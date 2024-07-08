@@ -1,12 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {FaArrowLeft} from "react-icons/fa";
 import GoogleSignIn from "../components/accounts/GoogleSignIn";
 import {CiPhone, CiMail} from "react-icons/ci";
+import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignUpCard() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkLogoutMessage = async () => {
+      const logoutMessage = localStorage.getItem("logoutMessage");
+      if (logoutMessage) {
+        toast.success("Thank You for Visiting. You have been logged out");
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Add a delay of 500ms
+        localStorage.removeItem("logoutMessage");
+      }
+    };
+
+    checkLogoutMessage();
+  }, []);
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-10 rounded-xl shadow-2xl max-w-lg w-full relative">
@@ -39,6 +54,17 @@ function SignUpCard() {
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
