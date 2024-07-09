@@ -26,6 +26,7 @@ const EventCardPageView = ({event}) => {
     time,
     location_url,
     status,
+    ticket_types,
   } = event;
   
   
@@ -36,6 +37,12 @@ const EventCardPageView = ({event}) => {
   const dispatch = useDispatch();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const minTicketPrice =
+    ticket_types && ticket_types.length > 0
+      ? Math.min(...ticket_types.map((t) => t.price))
+      : null;
+
 
   useEffect(() => {
     // Check if the event is in the wishlist
@@ -175,6 +182,7 @@ const EventCardPageView = ({event}) => {
           Book Now
         </button>
         <Tooltip id="my-tooltip" />
+        <p className="text-sm text-gray-600 mb-1">₹ {minTicketPrice} Onwards</p>
       </div>
       {showLoginModal && (
         <LoginModal onClose={() => setShowLoginModal(false)} />

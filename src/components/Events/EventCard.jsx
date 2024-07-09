@@ -19,6 +19,7 @@ const EventCard = ({event}) => {
     event_img_1,
     time,
     location_url,
+    ticket_types,
   } = event;
 
   console.log("evnetns....", event);
@@ -28,6 +29,10 @@ const EventCard = ({event}) => {
   const dispatch = useDispatch();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const minTicketPrice = ticket_types && ticket_types.length > 0 
+  ? Math.min(...ticket_types.map((t) => t.price))
+  : null;
 
   useEffect(() => {
     setIsWishlisted(
@@ -157,6 +162,7 @@ const EventCard = ({event}) => {
         >
           Book Now
         </button>
+        <p className="text-sm text-gray-600 mb-1">₹ {minTicketPrice} Onwards</p>
       </div>
       {showLoginModal && (
         <LoginModal onClose={() => setShowLoginModal(false)} />
