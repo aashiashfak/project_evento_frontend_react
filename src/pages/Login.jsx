@@ -21,7 +21,7 @@ function SignUpCard() {
 
     checkLogoutMessage();
   }, []);
-  
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-10 rounded-xl shadow-2xl max-w-lg w-full relative">
@@ -44,7 +44,7 @@ function SignUpCard() {
             className="flex items-center justify-center bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60"
             onClick={() => navigate("/email-signin")}
           >
-            <CiMail className="mr-4 text-xl" /> Sign In With Email
+            <CiMail className="mr-4 text-xl" /> Sign In With Email  
           </button>
           <button
             className="flex items-center justify-center bg-white border border-gray-300 py-3 px-6 rounded-full shadow hover:bg-gray-50 hover:border-violet-700 transition w-60"

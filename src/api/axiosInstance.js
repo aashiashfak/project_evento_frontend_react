@@ -1,9 +1,7 @@
 import axios from "axios";
-import {store} from "../../src/redux/store";
-import {setUser, clearUser} from "../../src/redux/userSlice";
-import {clearWishListItems} from "../redux/WishListSlice";
-
-let isRefreshing = false; // State to track refresh attempt
+import {store} from "../../src/redux/store"; 
+import {setUser, clearUser} from "../../src/redux/userSlice"; 
+import { clearWishListItems } from "../redux/WishListSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/",
@@ -38,50 +36,39 @@ axiosInstance.interceptors.response.use(
     const refreshToken = state.user.refreshToken;
 
     if (error.response.status === 401 && !originalRequest._retry) {
-      if (!isRefreshing) {
-        isRefreshing = true; // Set refreshing state
-        originalRequest._retry = true;
+      originalRequest._retry = true;
 
-        if (refreshToken) {
-          try {
-            const response = await axiosInstance.post("api/token/refresh/", {
-              refresh: refreshToken,
-            });
+      if (refreshToken) {
+        try {
+          const response = await axiosInstance.post("api/token/refresh/", {
+            refresh: refreshToken,
+          });
 
-            const newAccessToken = response.data.access;
-            store.dispatch(
-              setUser({
-                username: state.user.username,
-                accessToken: newAccessToken,
-                refreshToken,
-              })
-            );
+          const newAccessToken = response.data.access;
+          store.dispatch(
+            setUser({
+              username: state.user.username,
+              accessToken: newAccessToken,
+              refreshToken,
+            })
+          );
 
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${newAccessToken}`;
-            originalRequest.headers[
-              "Authorization"
-            ] = `Bearer ${newAccessToken}`;
+          axiosInstance.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${newAccessToken}`;
+          originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
-            return axiosInstance(originalRequest);
-          } catch (refreshError) {
-            // Handle refresh error
-            store.dispatch(clearUser());
-            store.dispatch(clearWishListItems());
-            window.location.href = "/session-expired";
-            isRefreshing = false; // Reset refreshing state
-          }
-        } else {
+          return axiosInstance(originalRequest);
+        } catch (refreshError) {
           store.dispatch(clearUser());
-          window.location.href = "/session-expired";
-          isRefreshing = false; // Reset refreshing state
+          store.dispatch(clearWishListItems())
+          window.location.href = "/session-expired"; 
         }
       } else {
-        // Prevent looping and handle session expiration
         store.dispatch(clearUser());
         store.dispatch(clearWishListItems());
-        window.location.href = "/session-expired";
+        window.location.href = "/session-expired"; 
+        
       }
     }
 

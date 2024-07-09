@@ -13,6 +13,7 @@ import {PiCity} from "react-icons/pi";
 import {IoLocationSharp, IoTicket} from "react-icons/io5";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
+import Organizer from "../components/Events/Organizer";
 
 
 const EventDetail = () => {
@@ -111,6 +112,10 @@ const EventDetail = () => {
     venue,
     location,
     organizer_name,
+    organizer_id,
+    organizer_email,
+    organizer_phone,
+    organizer_profile_photo,
     about,
     instruction,
     terms_and_conditions,
@@ -271,7 +276,6 @@ const EventDetail = () => {
                   <p>{location}</p>
                 </div>
                 <p className="mt-1">{categories.join(" | ")}</p>
-                <p className="mt-1">{organizer_name}</p>
               </div>
               <div className="sm:hidden">
                 <button
@@ -331,6 +335,15 @@ const EventDetail = () => {
             </div>
           </div>
         )}
+        <div className="mt-4 flex mb-4">
+          <Organizer
+            vendor_id={organizer_id}
+            email={organizer_email}
+            phone={organizer_phone}
+            name={organizer_name}
+            photo={organizer_profile_photo}
+          />
+        </div>
         <div className="mt-4">
           <div className="shadow-md rounded-lg mb-4">
             <Accordion title="ABOUT" description={about} />
