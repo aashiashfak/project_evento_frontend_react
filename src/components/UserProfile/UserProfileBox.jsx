@@ -4,6 +4,7 @@ import EditModal from "./EditModal"; // Adjust the path as needed
 import Header from "../Header/Header";
 import {useDispatch} from "react-redux";
 import {setUsername} from "../../redux/userSlice";
+import {FaCamera} from "react-icons/fa";
 
 const UserProfileBox = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -15,7 +16,7 @@ const UserProfileBox = () => {
   const [newUsername, setNewUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [profilePicture,setProfilePicture] = useState('')
+  const [profilePicture, setProfilePicture] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const UserProfileBox = () => {
         setUserProfile(response.data);
         setEmail(email);
         setPhoneNumber(phone_number);
-        setProfilePicture(profilePicture)
+        setProfilePicture(profile_picture);
       } catch (error) {
         console.log("Error fetching user profile", error);
       } finally {
@@ -51,7 +52,6 @@ const UserProfileBox = () => {
 
   const handleUsernameSave = async () => {
     try {
-      // Assuming API endpoint for updating username
       await axiosInstance.put("accounts/user-profile/", {
         username: newUsername,
       });
@@ -73,6 +73,32 @@ const UserProfileBox = () => {
     setUserProfile({...userProfile, phone_number: newPhoneNumber});
   };
 
+  const handleProfilePictureChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("profile_picture", file);
+      try {
+        const response = await axiosInstance.put(
+          "accounts/user-profile/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        setProfilePicture(response.data.profile_picture);
+        setUserProfile({
+          ...userProfile,
+          profile_picture: response.data.profile_picture,
+        });
+      } catch (error) {
+        console.error("Error updating profile picture", error);
+      }
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -87,11 +113,11 @@ const UserProfileBox = () => {
           ACCOUNT DETAILS
         </h1>
         <div className="flex flex-col md:flex-row items-center p-4 rounded justify-center shadow-xl">
-          <div className="px-3 mt-4">
-            <div className="py-6 pl-8">
+          <div className="px-3 mt-4 relative">
+            <div className="py-6 m-auto">
               {profile_picture ? (
                 <img
-                  className="w-32 h-32 object-cover rounded-full"
+                  className="w-36 h-36 object-cover rounded-full mb-8"
                   src={profile_picture}
                   alt="Profile"
                 />
@@ -101,6 +127,19 @@ const UserProfileBox = () => {
                 </div>
               )}
             </div>
+            <label
+              htmlFor="profile-picture-upload"
+              className="cursor-pointer absolute bottom-14 right-4 bg-gray-400 opacity-70  p-2 rounded-full hover:opacity-100 transiton duration-300 ease-in-out"
+            >
+              <FaCamera className="text-white" />
+            </label>
+            <input
+              id="profile-picture-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleProfilePictureChange}
+            />
           </div>
           <div className="py-8 px-6 text-gray-600 md:ml-6 w-full md:w-auto">
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
@@ -116,7 +155,6 @@ const UserProfileBox = () => {
                     </button>
                   )}
                 </div>
-
                 {isInlineEdit ? (
                   <div className="flex items-center w-full transition ease-in-out duration-700">
                     <input
@@ -127,12 +165,12 @@ const UserProfileBox = () => {
                     />
                     <button
                       onClick={handleUsernameSave}
-                      className=" text-sm ml-2 bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
+                      className="text-sm ml-2 bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
                     >
                       Save
                     </button>
                     <button
-                      className=" ml-2 text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
+                      className="ml-2 text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
                       onClick={() => setIsInlineEdit(false)}
                     >
                       Close
