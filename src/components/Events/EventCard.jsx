@@ -10,6 +10,7 @@ import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
 
+
 const EventCard = ({event}) => {
   const {
     event_name,

@@ -17,6 +17,7 @@ import RedirectAuthenticated from "./components/Protecters/RedirectAuthenticated
 import WishLIst from "./pages/WishLIst";
 import RequireAuth from "./components/Protecters/RequireAuth";
 import UserProfile from "./pages/UserProfile";
+import ConfirmPayment from "./pages/ConformPayment";
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="event-details/:eventID" element={<EventDetail />} />
         <Route path="ticket-types/:id" element={<TicketTypes />} />
         <Route path="/search-results" element={<SearchResults />} />
+        <Route path="/confirm-payment" element={<ConfirmPayment />} />
         <Route path="/wishlist" element={<RequireAuth><WishLIst/></RequireAuth>} />
         <Route path="/user-profile" element={<RequireAuth><UserProfile/></RequireAuth>} />
 

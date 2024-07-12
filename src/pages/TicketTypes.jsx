@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
 import {ToastContainer, toast} from "react-toastify";
@@ -10,6 +10,7 @@ const TicketTypes = () => {
   const {id: eventId} = useParams();
   const [ticketTypes, setTicketTypes] = useState(null);
   const [ticketCounts, setTicketCounts] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTicketDetails = async () => {
@@ -64,6 +65,23 @@ const TicketTypes = () => {
     });
   };
 
+  const handleBuy = (ticketType) => {
+    const selectedCount = ticketCounts[ticketType.id] || 0;
+    if (selectedCount === 0) {
+      showToast("Please select at least one ticket.");
+      return;
+    }
+
+    navigate("/confirm-payment", {
+      state: {
+        eventId,
+        ticketTypeId: ticketType.id,
+        quantity: selectedCount,
+        price: ticketType.price,
+      },
+    });
+  };
+
   if (!ticketTypes) {
     return <div>Loading...</div>;
   }
@@ -115,7 +133,10 @@ const TicketTypes = () => {
                 <p className="mb-2">
                   Total - ₹ {(ticketType.price * selectedCount).toFixed(2)}
                 </p>
-                <button className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+                <button
+                  className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                  onClick={() => handleBuy(ticketType)}
+                >
                   Buy
                 </button>
               </div>
