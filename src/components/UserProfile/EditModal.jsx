@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axiosInstance from "../../api/axiosInstance";
 import {FaArrowLeft} from "react-icons/fa";
 import ProfileOtpComponent from "./ProfileOtpComponent";
+import {ClipLoader} from "react-spinners";
 
 const EditModal = ({
   isOpen,
@@ -15,6 +16,7 @@ const EditModal = ({
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -39,7 +41,7 @@ const EditModal = ({
         }
       } else if (identifier === "phone") {
         if (!phoneRegex.test(newValue)) {
-          setError("Please enter a valid phone number");
+          setError("Please enter a valid 10 digit phone number");
           setIsValid(false);
         } else {
           setError("");
@@ -52,19 +54,22 @@ const EditModal = ({
 
   const handleSendOtp = async () => {
     setError(""); // Reset error message
+    setIsLoading(true);
     try {
       if (identifier === "email") {
         await axiosInstance.post("accounts/update-email/", {email: newValue});
-        onUpdateEmail(newValue)
+        setIsLoading(false);
       } else if (identifier === "phone") {
         await axiosInstance.post("accounts/update-phone/", {
           phone_number: `${`+91`}${newValue}`,
         });
-        onUpdatePhoneNumber(newValue)
+        setIsLoading(false);
       }
       setIsOtpSent(true);
     } catch (error) {
+      setIsLoading(false);
       if (error.response && error.response.data) {
+        
         setError(
           error.response.data.email ||
             error.response.data.phone_number ||
@@ -83,7 +88,7 @@ const EditModal = ({
 
   return isOpen ? (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50 ">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 h-72 mx-auto relative">
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 h-80 mx-auto relative">
         {isOtpSent ? (
           <ProfileOtpComponent
             identifier={identifier}
@@ -92,7 +97,6 @@ const EditModal = ({
             handleBack={() => setIsOtpSent(false)}
             onUpdatePhoneNumber={onUpdatePhoneNumber}
             onUpdateEmail={onUpdateEmail}
-            
           />
         ) : (
           <>
@@ -126,7 +130,11 @@ const EditModal = ({
               }`}
               disabled={!isValid}
             >
-              Send OTP
+              {isLoading ? (
+                <ClipLoader size={20} color={"#fff"} />
+              ) : (
+                "Verify OTP"
+              )}
             </button>
           </>
         )}

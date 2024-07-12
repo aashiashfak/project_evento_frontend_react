@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import axiosInstance from "../../api/axiosInstance";
 import EditModal from "./EditModal"; // Adjust the path as needed
 import Header from "../Header/Header";
@@ -18,6 +18,8 @@ const UserProfileBox = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const dispatch = useDispatch();
+  const userNameInputRef = useRef();
+  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -43,6 +45,8 @@ const UserProfileBox = () => {
       setIsInlineEdit(true);
       setCurrentValue(value);
       setNewUsername(value);
+      setTimeout(() => userNameInputRef.current.focus(), 0);
+
     } else {
       setModalIdentifier(identifier);
       setCurrentValue(value);
@@ -105,6 +109,8 @@ const UserProfileBox = () => {
 
   const {profile_picture, username} = userProfile || {};
 
+  
+
   return (
     <div>
       <Header />
@@ -141,14 +147,14 @@ const UserProfileBox = () => {
               onChange={handleProfilePictureChange}
             />
           </div>
-          <div className="py-8 px-6 text-gray-600 md:ml-6 w-full md:w-auto">
+          <div className="py-8 px-6 text-gray-600 md:ml-6 w-full md:w-1/3">
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 md:mb-0 mb-1">User Name:</p>
+                  <p className="font-semibold mr-2 mb-1 ">User Name:</p>
                   {!isInlineEdit && (
                     <button
-                      className="block md:hidden text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
+                      className="text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
                       onClick={() => openModal("username", username)}
                     >
                       Edit
@@ -156,12 +162,13 @@ const UserProfileBox = () => {
                   )}
                 </div>
                 {isInlineEdit ? (
-                  <div className="flex items-center w-full transition ease-in-out duration-700">
+                  <div className="flex items-center w-full transition ease-in-out duration-700 ">
                     <input
                       type="text"
                       value={newUsername}
                       onChange={(e) => setNewUsername(e.target.value)}
-                      className="w-full p-[1px] border rounded mb-4 md:mb-0 mr-2 mt-1"
+                      className="w-full py-1 pl-2 shadow-md border rounded mb-4 md:mb-0 mr-2 mt-2"
+                      ref={userNameInputRef}
                     />
                     <button
                       onClick={handleUsernameSave}
@@ -177,61 +184,44 @@ const UserProfileBox = () => {
                     </button>
                   </div>
                 ) : (
-                  <p className="mt-1">{username}</p>
+                  <div className="border border-gray-400 rounded border-opacity-45 shadow-md px-2 py-1">
+                    <p className="">{username}</p>
+                  </div>
                 )}
               </div>
-              {!isInlineEdit && (
-                <button
-                  className="hidden md:block text-sm ml-4 bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-5"
-                  onClick={() => openModal("username", username)}
-                >
-                  Edit
-                </button>
-              )}
+              
             </div>
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 md:mb-0 mb-1">
-                    Email Address:
-                  </p>
+                  <p className="font-semibold mr-2 mb-1">Email Address:</p>
                   <button
-                    className="block md:hidden text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
+                    className="text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
                     onClick={() => openModal("email", email)}
                   >
                     {email ? "Edit" : "Add"}
                   </button>
                 </div>
-                <p className="flex-1">{email || "Not provided"}</p>
+                <div className="border border-gray-400 rounded border-opacity-45 shadow-md px-2 py-1">
+                  <p className="flex-1">{email || "Not provided"}</p>
+                </div>
               </div>
-              <button
-                className="hidden md:block ml-4 text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-5"
-                onClick={() => openModal("email", email)}
-              >
-                {email ? "Edit" : "Add"}
-              </button>
             </div>
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 md:mb-0 mb-1">
-                    Mobile Number:
-                  </p>
+                  <p className="font-semibold mr-2 mb-1">Mobile Number:</p>
                   <button
-                    className="block md:hidden text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
+                    className=" text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
                     onClick={() => openModal("phone", phoneNumber)}
                   >
                     {phoneNumber ? "Edit" : "Add"}
                   </button>
                 </div>
-                <p className="flex-1">{phoneNumber || "Not provided"}</p>
+                <div className="border border-gray-400 rounded border-opacity-45 shadow-md pl-2 py-1">
+                  <p className="flex-1">{phoneNumber || "Not provided"}</p>
+                </div>
               </div>
-              <button
-                className="hidden md:block text-sm ml-4 bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-5"
-                onClick={() => openModal("phone", phoneNumber)}
-              >
-                {phoneNumber ? "Edit" : "Add"}
-              </button>
             </div>
           </div>
         </div>

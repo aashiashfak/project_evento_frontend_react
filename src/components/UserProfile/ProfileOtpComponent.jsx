@@ -90,7 +90,7 @@ const ProfileOtpComponent = ({
             email: value,
           }
         );
-        onUpdateEmail(value)
+        onUpdateEmail(value);
       } else if (identifier === "phone") {
         response = await axiosInstance.post(
           "accounts/verify-update-phone-otp/",
@@ -101,14 +101,18 @@ const ProfileOtpComponent = ({
         );
         onUpdatePhoneNumber(`${"+91"}${value}`);
       }
-
-
-      setMessage("OTP Verified Successfully");
       onOtpVerified();
     } catch (error) {
       if (error.response && error.response.data) {
-        console.log('error response ......',response.data);
-        setError(error.response.data || "Error sending OTP. Please try again.");
+        console.log("responseerror", error.response.data);
+        const nonFieldErrors = error.response.data.non_field_errors;
+        if (nonFieldErrors && nonFieldErrors.length > 0) {
+          setMessage(nonFieldErrors[0]); // Set the specific error message
+        } else {
+          setMessage("Error sending OTP. Please try again.");
+        }
+      } else {
+        setMessage("Error sending OTP. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -117,13 +121,21 @@ const ProfileOtpComponent = ({
 
   const handleResendOtp = async () => {
     setIsLoading(true);
+    setMessage(""); // Clear previous messages
+
     try {
-      await axiosInstance.post("accounts/resend-otp/", {
+      const response = await axiosInstance.post("accounts/resend-otp/", {
         email: identifier === "email" ? value : undefined,
         phone_number: identifier === "phone" ? `${"+91"}${value}` : undefined,
       });
-      startTimer();
+
+      if (response.status === 200) {
+        startTimer();
+      } else {
+        setMessage("Failed to resend OTP");
+      }
     } catch (error) {
+     
       setMessage(error.response?.data?.error || "Failed to resend OTP");
     } finally {
       setIsLoading(false);
