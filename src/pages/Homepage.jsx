@@ -8,6 +8,7 @@ import Categories from "../components/Events/Categories";
 import SearchBar from "../components/Header/SearchBar";
 import axiosInstance from "../api/axiosInstance";
 import {setWishListItems} from "../redux/WishListSlice";
+import Promo from "../components/PromoComponent/Promo";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Homepage = () => {
       <EventsByLocation locationID={locationId} />
       <Categories />
       <TrendingEvents />
+      <Promo/>
     </div>
   );
 };

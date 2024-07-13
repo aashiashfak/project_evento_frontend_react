@@ -3,33 +3,36 @@ import {useLocation} from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Header from "../components/Header/Header";
 import {useSelector} from "react-redux";
+import PageNotFound from "../components/Error/PageNotFound";
 
 const ConfirmPayment = () => {
   const location = useLocation();
-  const {eventId, ticketTypeId, quantity, price} = location.state;
+  const {eventId, ticketTypeId, quantity, price} = location.state || {}; // Use default empty object to avoid destructuring error
   const [eventDetails, setEventDetails] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [foundTicketType, setFoundTicketType] = useState(null);
   const username = useSelector((state) => state.user.username || "guest");
 
   useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `events/event_details/${eventId}/`
-        );
-        const ticketType = response.data.ticket_types.find(
-          (ticket) => ticket.id === ticketTypeId
-        );
-        setEventDetails(response.data);
-        setFoundTicketType(ticketType);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-      }
-    };
+    if (eventId && ticketTypeId) {
+      const fetchEventDetails = async () => {
+        try {
+          const response = await axiosInstance.get(
+            `events/event_details/${eventId}/`
+          );
+          const ticketType = response.data.ticket_types.find(
+            (ticket) => ticket.id === ticketTypeId
+          );
+          setEventDetails(response.data);
+          setFoundTicketType(ticketType);
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching event details:", error);
+        }
+      };
 
-    fetchEventDetails();
+      fetchEventDetails();
+    }
   }, [eventId, ticketTypeId]);
 
   useEffect(() => {
@@ -40,6 +43,10 @@ const ConfirmPayment = () => {
       setTotalPrice((subtotal + bookingFee + tax).toFixed(2));
     }
   }, [eventDetails, quantity, price]);
+
+  if (!eventId || !ticketTypeId) {
+    return <PageNotFound />;
+  }
 
   if (!eventDetails || !foundTicketType) {
     return <div>Loading...</div>;
