@@ -33,7 +33,7 @@ const EventCardPageView = ({event}) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
-  console.log(wishlistItems)
+  // console.log(wishlistItems)
   const dispatch = useDispatch();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);

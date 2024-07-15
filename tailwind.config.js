@@ -12,6 +12,9 @@ export default {
         "c-laptop": "850px", 
         'c-desktop': '1111px',
       },
+       backgroundImage: {
+        'publish-bg': "url('src/assets/EventPromo/publish_events_background.jpg')",
+      },
     },
   },
   plugins: [],

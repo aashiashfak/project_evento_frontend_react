@@ -14,7 +14,7 @@ function SignUpCard() {
       const logoutMessage = localStorage.getItem("logoutMessage");
       if (logoutMessage) {
         toast.success("Thank You for Visiting. You have been logged out");
-        await new Promise((resolve) => setTimeout(resolve, 500)); // Add a delay of 500ms
+        await new Promise((resolve) => setTimeout(resolve, 500)); 
         localStorage.removeItem("logoutMessage");
       }
     };

@@ -81,9 +81,9 @@ const Organizer = ({vendor_id, email, phone, name, photo}) => {
             {accessToken && (
               <button
                 onClick={handleFollowUnfollow}
-                className={`rounded text-sm px-4 py-1 border ${
+                className={`rounded-lg text-sm px-4 py-1 border ${
                   isFollowed
-                    ? "bg-black text-white"
+                    ? "bg-violet-700 text-white"
                     : "bg-white text-black border-violet-700 "
                 }`}
               >

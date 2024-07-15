@@ -17,6 +17,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </GoogleOAuthProvider>
       </PersistGate>
     </Provider>
-    ,
   </React.StrictMode>
 );
+
