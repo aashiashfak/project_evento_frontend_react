@@ -1,48 +1,51 @@
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
 import {setUser} from "../redux/userSlice";
+import axios from "axios";
 
-
-
-export const handleGoogleLoginSuccess = async (credentialResponse, navigate, dispatch) => {
-
+export const handleGoogleLoginSuccess = async (
+  credentialResponse,
+  navigate,
+  dispatch
+) => {
   try {
     const token = credentialResponse.credential;
 
-    // Make a fetch call to your API with the token in the body
-    const response = await fetch(
+    console.log("entered in google login");
+
+    // Make an axios call to your API with the token in the body
+    const response = await axios.post(
       "http://localhost:8000/accounts/google/oauth1/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({access_token: token}), // Use 'access_token' as the key
-      }
+      {access_token: token}, // Use 'access_token' as the key
+      {headers: {"Content-Type": "application/json"}}
     );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("API error:", errorData);
-      throw new Error(`Request failed with status ${response.status}`);
-    }
+    console.log("response is okay");
 
-    const data = await response.json();
+    const data = response.data;
     dispatch(
       setUser({
-        username:data.username,
-        accessToken:data.access_token,
-        refreshToken:data.refresh_token
+        username: data.username,
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
       })
     );
     navigate("/");
-    
+
     console.log("API response:", data);
 
     // Handle the response from your API (e.g., store user info, redirect, etc.)
     return data;
   } catch (error) {
-    console.error("Error during Google authentication:", error);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("API error:", error.response.data);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error during Google authentication:", error.message);
+    }
     throw error; // Re-throw the error after logging it
   }
 };

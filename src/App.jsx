@@ -18,8 +18,8 @@ import WishLIst from "./pages/WishLIst";
 import RequireAuth from "./components/Protecters/RequireAuth";
 import UserProfile from "./pages/UserProfile";
 import ConfirmPayment from "./pages/ConformPayment";
-import {ToastContainer} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 
 
 
@@ -27,17 +27,10 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <Router>
-      <ToastContainer />
+      <ToastContainer/>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route
-          path="/login"
-          element={
-            <RedirectAuthenticated>
-              <Login />
-            </RedirectAuthenticated>
-          }
-        />
+        <Route path="/login" element={<RedirectAuthenticated><Login /></RedirectAuthenticated>} />
         <Route path="/email-signin" element={<EmailSignIn />} />
         <Route path="/mobile-signin" element={<MobileSignIn />} />
         <Route path="/otp" element={<OtpComponent />} />
@@ -50,22 +43,8 @@ const App = () => {
         <Route path="ticket-types/:id" element={<TicketTypes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/confirm-payment" element={<ConfirmPayment />} />
-        <Route
-          path="/wishlist"
-          element={
-            <RequireAuth>
-              <WishLIst />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/user-profile"
-          element={
-            <RequireAuth>
-              <UserProfile />
-            </RequireAuth>
-          }
-        />
+        <Route path="/wishlist" element={<RequireAuth><WishLIst/></RequireAuth>} />
+        <Route path="/user-profile" element={<RequireAuth><UserProfile/></RequireAuth>} />
       </Routes>
     </Router>
   );

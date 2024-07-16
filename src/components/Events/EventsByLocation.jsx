@@ -17,7 +17,7 @@ const EventsByLocation = ({locationID}) => {
         const response = await axios.get(
           `http://127.0.0.1:8000/events/by_location/${locationID}/`
         );
-        setEvents(response.data);
+        setEvents(response.data.slice(0,15));
         console.log("eventsbylocatin.....", response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -32,7 +32,7 @@ const EventsByLocation = ({locationID}) => {
   useEffect(() => {
     if (events.length > 0) {
       const scrollContainer = document.querySelector(".scroll-container");
-      let scrollAmount = 400; // Adjust scroll amount as needed
+      let scrollAmount = 400; 
       let scrollDirection = 1;
 
       const scroll = () => {
@@ -46,17 +46,17 @@ const EventsByLocation = ({locationID}) => {
 
       const intervalId = setInterval(() => {
         scroll();
-        scrollDirection *= -1; // Reverse the scroll direction
-      }, 4000); // Adjust the interval as needed
+        scrollDirection *= -1; 
+      }, 4000); 
 
-      return () => clearInterval(intervalId); // Cleanup interval on component unmount
+      return () => clearInterval(intervalId); 
     }
   }, [events]);
 
   return (
     <div className="mt-6">
       <TextHeading Heading={`EVENTS IN ${loc.toUpperCase()}`} icon={PiCity} />
-      <div className="pt-4 pb-6 px-6 md:px-14 lg:px-20 bg-white overflow-x-auto overflow-y-hidden hide-scrollbar scroll-container scr">
+      <div className="pt-4 pb-6 px-6 md:px-14 lg:px-20 bg-white overflow-x-auto overflow-y-hidden hide-scrollbar scroll-container ">
         {events.length > 0 ? (
           <div className="inline-flex space-x-4 pr-6 sm:pr-14 md:pr-20">
             {events.map((event) => (

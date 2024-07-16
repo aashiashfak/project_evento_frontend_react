@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../../api/axiosInstance";
 import "../../css/Global.css";
 import TextHeading from "../texts/TextHeading";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {BiCategory} from "react-icons/bi";
+
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -21,10 +22,35 @@ const Categories = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    if (categories.length > 0) {
+      const scrollContainer = document.querySelector(".scroll-container-2");
+      let scrollAmount = 400;
+      let scrollDirection = 1;
+
+      const scroll = () => {
+        if (scrollContainer) {
+          scrollContainer.scrollBy({
+            left: scrollAmount * scrollDirection,
+            behavior: "smooth",
+          });
+        }
+      };
+
+      // Added interval for automatic scrolling
+      const intervalId = setInterval(() => {
+        scroll();
+        scrollDirection *= -1;
+      }, 6000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [categories]);
+
   return (
     <div className="pb-4">
-    <TextHeading Heading='CATEGORIES' icon={BiCategory}/>
-      <div className="flex overflow-x-auto space-x-4 pb-4 pt-4 px-6 md:px-14 lg:px-20 hide-scrollbar">
+      <TextHeading Heading="CATEGORIES" icon={BiCategory} />
+      <div className="flex overflow-x-auto space-x-4 pb-4 pt-4 px-6 md:px-14 lg:px-20 hide-scrollbar scroll-container-2">
         {categories.map((category) => (
           <div key={category.id} className="flex-none group">
             <div className=" w-64 bg-white shadow-md rounded-lg overflow-hidden relative">
@@ -41,8 +67,10 @@ const Categories = () => {
             </div>
 
             <div>
-              <button className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
-              onClick={()=>navigate(`all-events/${category.name}`)}>
+              <button
+                className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                onClick={() => navigate(`all-events/${category.name}`)}
+              >
                 Find More
               </button>
             </div>

@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import {useDispatch} from "react-redux";
 import {setUsername} from "../../redux/userSlice";
 import {FaCamera} from "react-icons/fa";
+import {toast} from "react-toastify";
 
 const UserProfileBox = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -19,7 +20,6 @@ const UserProfileBox = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const dispatch = useDispatch();
   const userNameInputRef = useRef();
-  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -46,7 +46,6 @@ const UserProfileBox = () => {
       setCurrentValue(value);
       setNewUsername(value);
       setTimeout(() => userNameInputRef.current.focus(), 0);
-
     } else {
       setModalIdentifier(identifier);
       setCurrentValue(value);
@@ -62,6 +61,16 @@ const UserProfileBox = () => {
       setIsInlineEdit(false);
       setUserProfile({...userProfile, username: newUsername});
       dispatch(setUsername({username: newUsername}));
+      toast.success(`your username Change to ${newUsername}`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        theme: "colored",
+        style: {backgroundColor: "#47B649", color: "white"},
+      });
     } catch (error) {
       console.error("Error updating username", error);
     }
@@ -97,6 +106,16 @@ const UserProfileBox = () => {
           ...userProfile,
           profile_picture: response.data.profile_picture,
         });
+        toast.success(`Profile picture changed succussfully`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          theme: "colored",
+          style: {backgroundColor: "#47B649", color: "white"},
+        });
       } catch (error) {
         console.error("Error updating profile picture", error);
       }
@@ -108,8 +127,6 @@ const UserProfileBox = () => {
   }
 
   const {profile_picture, username} = userProfile || {};
-
-  
 
   return (
     <div>
@@ -189,7 +206,6 @@ const UserProfileBox = () => {
                   </div>
                 )}
               </div>
-              
             </div>
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">

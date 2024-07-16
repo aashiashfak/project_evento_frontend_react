@@ -9,7 +9,7 @@ import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
-import {toast} from "react-toastify"; 
+import {toast} from "react-toastify";
 import "../../css/custom_toast.css";
 
 const EventCard = ({event}) => {
@@ -42,56 +42,50 @@ const EventCard = ({event}) => {
     );
   }, [wishlistItems, event.id]);
 
-  const handleWishlistClick = () => {
+  const handleWishlistClick = async () => {
     if (!user || !user.accessToken) {
       setShowLoginModal(true);
       return;
     }
 
-    if (isWishlisted) {
-      axiosInstance
-        .delete(`events/wishlist/${event.id}/`)
-        .then(() => {
-          setIsWishlisted(false);
-          dispatch(
-            setWishListItems(
-              wishlistItems.filter((item) => item.event.id !== event.id)
-            )
-          );
-          toast.error(`${event_name} removed from wishlist`, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            theme: "colored",
-            style: {backgroundColor: "#EA4C46", color: "white"},
-          });
-        })
-        .catch((error) => {
-          console.error("Error removing from wishlist:", error);
+    try {
+      if (isWishlisted) {
+        await axiosInstance.delete(`events/wishlist/${event.id}/`);
+        setIsWishlisted(false);
+        dispatch(
+          setWishListItems(
+            wishlistItems.filter((item) => item.event.id !== event.id)
+          )
+        );
+        toast.error(`${event_name} removed from wishlist`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          theme: "colored",
+          style: {backgroundColor: "#EA4C46", color: "white"},
         });
-    } else {
-      axiosInstance
-        .post(`events/wishlist/${event.id}/`)
-        .then((response) => {
-          setIsWishlisted(true);
-          dispatch(setWishListItems([...wishlistItems, response.data]));
-          toast.success(`${event_name} added to wishlist`, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            theme: "colored",
-            style: {backgroundColor: "#47B649", color: "white"},
-          });
-        })
-        .catch((error) => {
-          console.error("Error adding to wishlist:", error);
+      } else {
+        const response = await axiosInstance.post(
+          `events/wishlist/${event.id}/`
+        );
+        setIsWishlisted(true);
+        dispatch(setWishListItems([...wishlistItems, response.data]));
+        toast.success(`${event_name} added to wishlist`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          theme: "colored",
+          style: {backgroundColor: "#47B649", color: "white"},
         });
+      }
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
     }
   };
 
@@ -183,11 +177,13 @@ const EventCard = ({event}) => {
         >
           Book Now
         </button>
-        <p className="text-sm text-gray-600 mb-1">₹ {minTicketPrice} Onwards</p>
+        {minTicketPrice && (
+          <p className="text-xs font-semibold mt-2">
+            Ticket starts at {minTicketPrice}
+          </p>
+        )}
       </div>
-      {showLoginModal && (
-        <LoginModal onClose={() => setShowLoginModal(false)} />
-      )}
+      {showLoginModal && <LoginModal setShowModal={setShowLoginModal} />}
     </div>
   );
 };
