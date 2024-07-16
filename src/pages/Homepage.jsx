@@ -6,7 +6,7 @@ import Banner from "../components/Banner/Banner";
 import TrendingEvents from "../components/Events/TrendingEvents";
 import Categories from "../components/Events/Categories";
 import SearchBar from "../components/Header/SearchBar";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utilities/axios/axiosInstance";
 import {setWishListItems} from "../redux/WishListSlice";
 import Promo from "../components/PromoComponent/Promo";
 

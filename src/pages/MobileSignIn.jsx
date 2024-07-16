@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {ClipLoader} from "react-spinners";
-import axiosInstance from "../api/axiosInstance";
 import OtpComponent from "../components/accounts/OtpComponent";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
-import '../css/Global.css'
+import "../css/Global.css";
+import {phoneOtpRequest} from "../api/auth/phoneOtpRequest";
+
 const MobileSignIn = () => {
   const [phone, setPhone] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -20,9 +21,7 @@ const MobileSignIn = () => {
       const isValid = phoneRegex.test(phone);
       setIsPhoneValid(isValid);
       if (phone && !isValid) {
-        setMessage(
-          "Please enter a valid 10-digit phone number"
-        );
+        setMessage("Please enter a valid 10-digit phone number");
       } else {
         setMessage("");
       }
@@ -41,9 +40,7 @@ const MobileSignIn = () => {
     setMessage("");
 
     try {
-      const response = await axiosInstance.post("accounts/phone-otp-request/", {
-        phone_number: `+91${phone}`,
-      });
+      const response = await phoneOtpRequest(phone);
       if (response.status === 200) {
         setIsOtpSent(true);
       }

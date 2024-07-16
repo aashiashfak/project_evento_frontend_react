@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import LoginModal from "../Protecters/LoginRequireModal";
 import {setWishListItems} from "../../redux/WishListSlice";
 import {FaCalendarDays, FaClock, FaCity} from "react-icons/fa6";

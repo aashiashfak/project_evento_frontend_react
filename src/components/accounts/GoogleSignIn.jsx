@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {handleGoogleLoginSuccess} from "../../utilities/utils";
+import {handleGoogleLoginSuccess} from "../../api/auth/googleLogin";
 import {GoogleLogin} from "@react-oauth/google";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";

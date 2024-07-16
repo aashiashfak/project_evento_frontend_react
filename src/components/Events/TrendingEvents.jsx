@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import EventCard from "./EventCard";
 import TextHeading from "../texts/TextHeading";
 import {BsFillLightningFill} from "react-icons/bs";

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utilities/axios/axiosInstance";
 import Header from "../components/Header/Header";
 import FilterSidebar from "../components/Events/SideBar";
 import EventCardPageView from "../components/Events/EventCardPageView";

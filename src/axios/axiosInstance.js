@@ -1,7 +1,7 @@
 import axios from "axios";
-import {store} from "../../src/redux/store"; 
-import {setUser, clearUser} from "../../src/redux/userSlice"; 
-import { clearWishListItems } from "../redux/WishListSlice";
+import {store} from "../../redux/store"; 
+import {setUser, clearUser} from "../../redux/userSlice"; 
+import { clearWishListItems } from "../../redux/WishListSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/",

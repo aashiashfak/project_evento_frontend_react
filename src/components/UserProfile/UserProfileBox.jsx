@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import EditModal from "./EditModal"; // Adjust the path as needed
 import Header from "../Header/Header";
 import {useDispatch} from "react-redux";

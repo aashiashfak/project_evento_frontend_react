@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import {FaArrowLeft} from "react-icons/fa";
 import ProfileOtpComponent from "./ProfileOtpComponent";
 import {ClipLoader} from "react-spinners";

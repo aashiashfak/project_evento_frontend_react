@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import {ClipLoader} from "react-spinners";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import {FaArrowLeft} from "react-icons/fa";
 
 const ProfileOtpComponent = ({

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utilities/axios/axiosInstance";
 import {useLocation} from "react-router-dom";
 import Header from "../components/Header/Header";
 import EventCardPageView from "../components/Events/EventCardPageView";

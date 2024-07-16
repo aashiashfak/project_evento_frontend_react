@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {FaHeart, FaRegHeart, FaShareAlt} from "react-icons/fa";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utilities/axios/axiosInstance";
 import Header from "../components/Header/Header";
 import Accordion from "../components/Events/Accordion";
 import {setWishListItems} from "../redux/WishListSlice";

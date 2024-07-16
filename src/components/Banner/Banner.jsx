@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 
 const Banner = () => {
   const [banners, setBanners] = useState([]);

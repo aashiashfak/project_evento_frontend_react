@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FaArrowLeft} from "react-icons/fa";

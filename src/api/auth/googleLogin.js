@@ -1,4 +1,4 @@
-import {setUser} from "../redux/userSlice";
+import {setUser} from "../../redux/userSlice";
 import axios from "axios";
 
 export const handleGoogleLoginSuccess = async (

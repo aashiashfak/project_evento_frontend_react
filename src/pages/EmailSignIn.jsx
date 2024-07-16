@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import {ClipLoader} from "react-spinners";
-import axiosInstance from "../api/axiosInstance";
 import OtpComponent from "../components/accounts/OtpComponent";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import {emailOtpRequest} from "../api/auth/emailOtpRequest";
 
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");
@@ -39,9 +39,7 @@ const EmailSignIn = () => {
     setMessage("");
 
     try {
-      const response = await axiosInstance.post("accounts/email-otp-request/", {
-        email,
-      });
+      const response = await emailOtpRequest(email);
       if (response.status === 200) {
         setIsOtpSent(true);
       }
@@ -76,9 +74,7 @@ const EmailSignIn = () => {
             }}
             className={"w-full p-2 border rounded mb-2 focus:outline-none"}
           />
-          <p className="text-red-500 mt-2 mb-4 text-center ">
-            {message}
-          </p>
+          <p className="text-red-500 mt-2 mb-4 text-center ">{message}</p>
           <div className="flex justify-center">
             <button
               className={`w-full p-3 rounded-lg shadow transition ${

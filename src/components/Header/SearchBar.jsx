@@ -3,7 +3,7 @@ import {FaSearch} from "react-icons/fa";
 import {useDispatch, useSelector} from "react-redux";
 import {setLocationId} from "../../redux/locationIDSlice";
 import {useNavigate} from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import {PiCity} from "react-icons/pi";
 
 const SearchBar = () => {

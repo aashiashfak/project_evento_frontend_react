@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import {CiPhone, CiMail} from "react-icons/ci";
 
 const Organizer = ({vendor_id, email, phone, name, photo}) => {

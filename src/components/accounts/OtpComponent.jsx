@@ -2,7 +2,8 @@ import React, {useState, useRef, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../redux/userSlice";
-import axiosInstance from "../../api/axiosInstance";
+import {verifyEmailOtp, verifyPhoneOtp} from "../../api/auth/verifyLoginOtp";
+import {resendOtp} from "../../api/auth/resendOtp";
 import {ClipLoader} from "react-spinners";
 import {FaArrowLeft} from "react-icons/fa";
 
@@ -82,21 +83,9 @@ const OtpComponent = (props) => {
     try {
       let response;
       if (identifier === "email") {
-        response = await axiosInstance.post(
-          "accounts/email-otp-verification/",
-          {
-            otp: enteredOtp,
-            email: email,
-          }
-        );
+        response = await verifyEmailOtp(enteredOtp, email);
       } else if (identifier === "phone") {
-        response = await axiosInstance.post(
-          "accounts/phone-otp-verification/",
-          {
-            otp: enteredOtp,
-            phone_number: phone,
-          }
-        );
+        response = await verifyPhoneOtp(enteredOtp, phone);
       }
 
       const userData = response.data;
@@ -122,10 +111,7 @@ const OtpComponent = (props) => {
   const handleResendOtp = async () => {
     setIsLoading(true);
     try {
-      await axiosInstance.post("accounts/resend-otp/", {
-        email: identifier === "email" ? email : undefined,
-        phone_number: identifier === "phone" ? phone : undefined,
-      });
+      await resendOtp(identifier, identifier === "email" ? email : phone);
       startTimer();
     } catch (error) {
       setMessage(error.response?.data?.error || "Failed to resend OTP");
@@ -135,7 +121,7 @@ const OtpComponent = (props) => {
   };
 
   return (
-    <div className="rounded-3xl shadow-2xl  h-96 p-6 relative">
+    <div className="rounded-3xl shadow-2xl h-96 p-6 relative">
       <button
         className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
         onClick={handleBackButtonClick}
@@ -186,7 +172,7 @@ const OtpComponent = (props) => {
           </p>
         ) : (
           <div className="flex text-sm">
-            <h1>Didn't Recieve OTP?</h1>
+            <h1>Didn't Receive OTP?</h1>
             <button
               onClick={handleResendOtp}
               className="text-violet-600 hover:text-violet-700 transition"

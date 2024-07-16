@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axiosInstance from "../../api/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import "../../css/Global.css";
 import TextHeading from "../texts/TextHeading";
 import {useNavigate} from "react-router-dom";

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utilities/axios/axiosInstance";
 import Header from "../components/Header/Header";
 import {useSelector} from "react-redux";
 import PageNotFound from "../components/Error/PageNotFound";
