@@ -15,7 +15,6 @@ const ProfileDropdown = () => {
    const handleLogout = () => {
      dispatch(clearUser());
      dispatch(clearWishListItems())
-     localStorage.setItem("logoutMessage", "true");
      navigate("/login");
    };
 

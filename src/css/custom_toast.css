@@ -1,0 +1,18 @@
+.Toastify__toast {
+  font-size: 0.875rem; /* text-sm */
+  border-radius: 0px; /* rounded-full */
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3); /* Increased box shadow */
+  padding: 4px 8px; /* Reduced top and bottom padding */
+}
+
+.Toastify__toast--success {
+  background-color: #47B649;
+}
+
+.Toastify__toast--error {
+  background-color: #EA4C46;
+}
+
+.Toastify__close-button {
+  display: none; /* Hide the close button */
+}

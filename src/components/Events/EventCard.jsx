@@ -9,7 +9,8 @@ import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
-
+import {toast} from "react-toastify"; 
+import "../../css/custom_toast.css";
 
 const EventCard = ({event}) => {
   const {
@@ -23,7 +24,6 @@ const EventCard = ({event}) => {
     ticket_types,
   } = event;
 
-  console.log("evnetns....", event);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
@@ -31,15 +31,15 @@ const EventCard = ({event}) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const minTicketPrice = ticket_types && ticket_types.length > 0 
-  ? Math.min(...ticket_types.map((t) => t.price))
-  : null;
+  const minTicketPrice =
+    ticket_types && ticket_types.length > 0
+      ? Math.min(...ticket_types.map((t) => t.price))
+      : null;
 
   useEffect(() => {
     setIsWishlisted(
       wishlistItems.some((wishlistItem) => wishlistItem.event.id === event.id)
     );
-    console.log("isWIshlisted", isWishlisted);
   }, [wishlistItems, event.id]);
 
   const handleWishlistClick = () => {
@@ -58,6 +58,16 @@ const EventCard = ({event}) => {
               wishlistItems.filter((item) => item.event.id !== event.id)
             )
           );
+          toast.error(`${event_name} removed from wishlist`, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            theme: "colored",
+            style: {backgroundColor: "#EA4C46", color: "white"},
+          });
         })
         .catch((error) => {
           console.error("Error removing from wishlist:", error);
@@ -68,6 +78,16 @@ const EventCard = ({event}) => {
         .then((response) => {
           setIsWishlisted(true);
           dispatch(setWishListItems([...wishlistItems, response.data]));
+          toast.success(`${event_name} added to wishlist`, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            theme: "colored",
+            style: {backgroundColor: "#47B649", color: "white"},
+          });
         })
         .catch((error) => {
           console.error("Error adding to wishlist:", error);
@@ -94,7 +114,7 @@ const EventCard = ({event}) => {
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
   return (
-    <div className="border rounded-lg shadow-md w-64 flex-shrink-0 ">
+    <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
       <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
         {event_img_1 ? (
           <img
@@ -111,25 +131,25 @@ const EventCard = ({event}) => {
           {isWishlisted ? (
             <FaHeart
               size={24}
-              className="cursor-pointer text-violet-600 "
+              className="cursor-pointer text-violet-600"
               onClick={handleWishlistClick}
             />
           ) : (
             <FaRegHeart
               size={24}
-              className="cursor-pointer text-violet-600  "
+              className="cursor-pointer text-violet-600"
               onClick={handleWishlistClick}
             />
           )}
         </div>
         <div>
           <h3 className="font-bold text-md">{event_name}</h3>
-          <div className=" text-sm text-gray-600">
+          <div className="text-sm text-gray-600">
             <div className="flex mt-1">
-              <div className="flex ">
+              <div className="flex">
                 <FaCalendarDays className="mr-1 mt-1" />
                 <p className="mr-1">{formattedDate}</p>
-                <span className="font-semibold mr-1">|</span>{" "}
+                <span className="font-semibold mr-1">|</span>
               </div>
               <div className="flex">
                 <FaClock className="mr-1 mt-1" />
@@ -140,7 +160,7 @@ const EventCard = ({event}) => {
               <div className="flex">
                 <TbBuildingCircus className="mr-1 mt-1" />
                 <p className="mr-1">{venue}</p>
-                <span className="font-semibold mr-1">|</span>{" "}
+                <span className="font-semibold mr-1">|</span>
               </div>
               <div className="flex">
                 <PiCity className="mr-1 mt-1" />

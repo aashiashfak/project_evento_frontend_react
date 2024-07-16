@@ -4,16 +4,15 @@ import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
 import LoginModal from "../Protecters/LoginRequireModal";
-import {setWishListItems} from "../../redux/WishListSlice"; 
+import {setWishListItems} from "../../redux/WishListSlice";
 import {FaCalendarDays, FaClock, FaCity} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
-
-
-
+import {toast} from "react-toastify";
+import "../../css/custom_toast.css";
 
 const EventCardPageView = ({event}) => {
   const {
@@ -28,8 +27,7 @@ const EventCardPageView = ({event}) => {
     status,
     ticket_types,
   } = event;
-  
-  
+
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
@@ -42,7 +40,6 @@ const EventCardPageView = ({event}) => {
     ticket_types && ticket_types.length > 0
       ? Math.min(...ticket_types.map((t) => t.price))
       : null;
-
 
   useEffect(() => {
     // Check if the event is in the wishlist
@@ -62,8 +59,20 @@ const EventCardPageView = ({event}) => {
         .delete(`events/wishlist/${id}/`)
         .then(() => {
           setIsWishlisted(false);
+          toast.error(`${event_name} removed from wishlist`, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            theme: "colored",
+            style: {backgroundColor: "#EA4C46", color: "white"},
+          });
           dispatch(
-            setWishListItems(wishlistItems.filter((item) => item.event.id !== id))
+            setWishListItems(
+              wishlistItems.filter((item) => item.event.id !== id)
+            )
           );
         })
         .catch((error) => {
@@ -74,6 +83,16 @@ const EventCardPageView = ({event}) => {
         .post(`events/wishlist/${id}/`)
         .then((response) => {
           setIsWishlisted(true);
+          toast.success(`${event_name} added to wishlist`, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            theme: "colored",
+            style: {backgroundColor: "#47B649", color: "white"},
+          });
           dispatch(setWishListItems([...wishlistItems, response.data]));
         })
         .catch((error) => {
