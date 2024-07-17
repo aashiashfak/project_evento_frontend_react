@@ -6,9 +6,9 @@ import Banner from "../components/Banner/Banner";
 import TrendingEvents from "../components/Events/TrendingEvents";
 import Categories from "../components/Events/Categories";
 import SearchBar from "../components/Header/SearchBar";
-import axiosInstance from "../utilities/axios/axiosInstance";
 import {setWishListItems} from "../redux/WishListSlice";
 import Promo from "../components/PromoComponent/Promo";
+import {getWishlistItems} from "../api/events/wishlist";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -17,21 +17,18 @@ const Homepage = () => {
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
 
   useEffect(() => {
-    if (user && user.accessToken && wishlistItems.length === 0) {
-      axiosInstance
-        .get("events/wishlist/")
-        .then((response) => {
-          const responseData = response.data;
+    const fetchwishlist = async () => {
+      if (user && user.accessToken && wishlistItems.length === 0) {
+        try {
+          const responseData = await getWishlistItems();
           dispatch(setWishListItems(responseData));
-          console.log('wihslist response data from home page',responseData);
-        })
-        .catch((error) => {
-          console.error("Error fetching wishlist items:", error);
-        });
-    }
+        } catch (error) {
+          console.log("error fetching wishlist", error);
+        }
+      }
+    };
+    fetchwishlist();
   }, [user, wishlistItems.length, dispatch]);
-
-
 
   return (
     <div className="bg-white">
@@ -41,7 +38,7 @@ const Homepage = () => {
       <EventsByLocation locationID={locationId} />
       <Categories />
       <TrendingEvents />
-      <Promo/>
+      <Promo />
     </div>
   );
 };

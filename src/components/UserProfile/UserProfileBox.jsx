@@ -6,9 +6,14 @@ import {useDispatch} from "react-redux";
 import {setUsername} from "../../redux/userSlice";
 import {FaCamera} from "react-icons/fa";
 import {toast} from "react-toastify";
+import {
+  getUserProfile,
+  updateProfilePicture,
+  updateUsername,
+} from "../../api/userProfile/UserProfileApi";
 
 const UserProfileBox = () => {
-  const [userProfile, setUserProfile] = useState(null);
+  // const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalIdentifier, setModalIdentifier] = useState("");
@@ -18,18 +23,21 @@ const UserProfileBox = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [username,setUsername1] = useState('')
   const dispatch = useDispatch();
   const userNameInputRef = useRef();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosInstance.get("accounts/user-profile/");
-        const {email, phone_number, username, profile_picture} = response.data;
-        setUserProfile(response.data);
+        const responseData = await getUserProfile();
+        const {email, phone_number, username, profile_picture} = responseData;
+        // setUserProfile(responseData);
         setEmail(email);
         setPhoneNumber(phone_number);
         setProfilePicture(profile_picture);
+        setUsername1(username)
+
       } catch (error) {
         console.log("Error fetching user profile", error);
       } finally {
@@ -55,12 +63,10 @@ const UserProfileBox = () => {
 
   const handleUsernameSave = async () => {
     try {
-      await axiosInstance.put("accounts/user-profile/", {
-        username: newUsername,
-      });
+      await updateUsername(newUsername);
       setIsInlineEdit(false);
-      setUserProfile({...userProfile, username: newUsername});
       dispatch(setUsername({username: newUsername}));
+      setUsername1(newUsername)
       toast.success(`your username Change to ${newUsername}`, {
         position: "top-center",
         autoClose: 2000,
@@ -78,12 +84,10 @@ const UserProfileBox = () => {
 
   const handleUpdateEmail = (newEmail) => {
     setEmail(newEmail);
-    setUserProfile({...userProfile, email: newEmail});
   };
 
   const handleUpdatePhoneNumber = (newPhoneNumber) => {
     setPhoneNumber(newPhoneNumber);
-    setUserProfile({...userProfile, phone_number: newPhoneNumber});
   };
 
   const handleProfilePictureChange = async (event) => {
@@ -92,20 +96,9 @@ const UserProfileBox = () => {
       const formData = new FormData();
       formData.append("profile_picture", file);
       try {
-        const response = await axiosInstance.put(
-          "accounts/user-profile/",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        setProfilePicture(response.data.profile_picture);
-        setUserProfile({
-          ...userProfile,
-          profile_picture: response.data.profile_picture,
-        });
+        const response = await updateProfilePicture(formData)
+        console.log(response)
+        setProfilePicture(response);
         toast.success(`Profile picture changed succussfully`, {
           position: "top-center",
           autoClose: 2000,
@@ -126,7 +119,6 @@ const UserProfileBox = () => {
     return <div>Loading...</div>;
   }
 
-  const {profile_picture, username} = userProfile || {};
 
   return (
     <div>
@@ -138,10 +130,10 @@ const UserProfileBox = () => {
         <div className="flex flex-col md:flex-row items-center p-4 rounded justify-center shadow-xl">
           <div className="px-3 mt-4 relative">
             <div className="py-6 m-auto">
-              {profile_picture ? (
+              {profilePicture ? (
                 <img
                   className="w-36 h-36 object-cover rounded-full mb-8"
-                  src={profile_picture}
+                  src={profilePicture}
                   alt="Profile"
                 />
               ) : (
