@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header/Header";
 import {useSelector} from "react-redux";
 import EventCardPageView from "../components/Events/EventCardPageView";
-import TextHeading from "../components/texts/TextHeading";
+
 
 const WishList = () => {
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);

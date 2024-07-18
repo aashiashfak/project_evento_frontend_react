@@ -7,8 +7,12 @@ const RequireAuth = ({children}) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
+  const handleClose = () => {
+    navigate("/");
+  };
+
   if (!user || !user.accessToken) {
-    return <LoginRequireModal onClose={() => navigate("/")} />;
+    return <LoginRequireModal onClose={handleClose} />;
   }
 
   return children;

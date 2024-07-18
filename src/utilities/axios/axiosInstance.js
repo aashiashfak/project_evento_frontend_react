@@ -66,6 +66,7 @@ axiosInstance.interceptors.response.use(
           window.location.href = "/session-expired"; 
         }
       } else {
+        console.log('inside else condition if there no valid refresh token');
         store.dispatch(clearUser());
         store.dispatch(clearWishListItems());
         window.location.href = "/session-expired"; 

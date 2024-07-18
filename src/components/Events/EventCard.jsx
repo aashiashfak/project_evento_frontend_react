@@ -107,6 +107,10 @@ const EventCard = ({event}) => {
   };
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
+  const handleClose = () =>{
+    setShowLoginModal(false)
+  }
+
   return (
     <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
       <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
@@ -183,7 +187,7 @@ const EventCard = ({event}) => {
           </p>
         )}
       </div>
-      {showLoginModal && <LoginModal setShowModal={setShowLoginModal} />}
+      {showLoginModal && <LoginModal onClose={handleClose} />}
     </div>
   );
 };
