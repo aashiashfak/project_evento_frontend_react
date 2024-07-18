@@ -28,6 +28,7 @@ const AdminLogin = () => {
             accessToken:responseData.access_token,
             refreshToken:responseData.refresh_token
         }))
+        navigate('/admin/dashboard');
     }catch(error){
         const errorMessage =
           error.response && error.response.data.non_field_errors
