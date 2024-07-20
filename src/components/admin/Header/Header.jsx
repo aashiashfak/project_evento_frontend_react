@@ -1,12 +1,12 @@
-import React from 'react'
-import Logo from '../../Header/Logo'
+import React from "react";
+import Logo from "../../Header/Logo";
 import {FaBars} from "react-icons/fa";
 
 const Header = ({onToggleSidebar}) => {
   return (
-    <div className="p-6 flex justify-between sticky top-0 shadow-lg">
+    <div className="p-6 flex justify-between sticky top-0 bg-white shadow-lg z-50">
       <div className="flex justify-around gap-4">
-        <div className="block sm:hidden mt-3">
+        <div className="block md:hidden mt-3">
           <FaBars onClick={onToggleSidebar} />
         </div>
         <div>
@@ -22,4 +22,4 @@ const Header = ({onToggleSidebar}) => {
   );
 };
 
-export default Header
+export default Header;
