@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useState } from "react";
+import Header from "../../components/admin/Header/Header";
 
 const AdminDashBoard = () => {
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setSidebarVisible(!isSidebarVisible);
+
+  };
   return (
-    <div className='flex justify-center items-center min-h-screen text-2xl text-violet-700'>
+    <div>
+      <Header onToggleSidebar={handleToggleSidebar}/>
       <h1>Entered in admin dashboard</h1>
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashBoard
+export default AdminDashBoard;

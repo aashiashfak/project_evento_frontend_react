@@ -21,11 +21,13 @@ export const handleGoogleLoginSuccess = async (
     console.log("response is okay");
 
     const data = response.data;
+    console.log('response data google ',data)
     dispatch(
       setUser({
         username: data.username,
         accessToken: data.access_token,
         refreshToken: data.refresh_token,
+        role:data.user.role
       })
     );
     navigate("/");

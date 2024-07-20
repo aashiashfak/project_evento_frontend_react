@@ -26,7 +26,8 @@ const AdminLogin = () => {
         dispatch(setUser({
             username:responseData.user.username,
             accessToken:responseData.access_token,
-            refreshToken:responseData.refresh_token
+            refreshToken:responseData.refresh_token,
+            role:responseData.user.role,
         }))
         navigate('/admin/dashboard');
     }catch(error){

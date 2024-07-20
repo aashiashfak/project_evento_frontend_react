@@ -89,11 +89,13 @@ const OtpComponent = (props) => {
       }
 
       const userData = response.data;
+      console.log('userData....',userData)
       dispatch(
         setUser({
           username: userData.user.username || null,
           accessToken: userData.access_token,
           refreshToken: userData.refresh_token,
+          role:userData.user.role,
         })
       );
       navigate("/");
