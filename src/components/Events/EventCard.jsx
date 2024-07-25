@@ -9,8 +9,7 @@ import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
-import {toast} from "react-toastify";
-import "../../css/custom_toast.css";
+import {showToast} from "../../utilities/tostify/toastUtils";
 
 const EventCard = ({event}) => {
   const {
@@ -57,32 +56,14 @@ const EventCard = ({event}) => {
             wishlistItems.filter((item) => item.event.id !== event.id)
           )
         );
-        toast.error(`${event_name} removed from wishlist`, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "colored",
-          style: {backgroundColor: "#EA4C46", color: "white"},
-        });
+        showToast(`${event_name} removed from wishlist`, "error");
       } else {
         const response = await axiosInstance.post(
           `events/wishlist/${event.id}/`
         );
         setIsWishlisted(true);
         dispatch(setWishListItems([...wishlistItems, response.data]));
-        toast.success(`${event_name} added to wishlist`, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "colored",
-          style: {backgroundColor: "#47B649", color: "white"},
-        });
+        showToast(`${event_name} added to wishlist`, "success");
       }
     } catch (error) {
       console.error("Error updating wishlist:", error);
@@ -107,9 +88,9 @@ const EventCard = ({event}) => {
   };
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
 
-  const handleClose = () =>{
-    setShowLoginModal(false)
-  }
+  const handleClose = () => {
+    setShowLoginModal(false);
+  };
 
   return (
     <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
@@ -182,9 +163,7 @@ const EventCard = ({event}) => {
           Book Now
         </button>
         {minTicketPrice && (
-          <p className="text-sm text-gray-600 ">
-            ₹ {minTicketPrice} Onwards
-          </p>
+          <p className="text-sm text-gray-600 ">₹ {minTicketPrice} Onwards</p>
         )}
       </div>
       {showLoginModal && <LoginModal onClose={handleClose} />}

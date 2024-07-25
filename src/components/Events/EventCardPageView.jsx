@@ -11,8 +11,8 @@ import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
-import {toast} from "react-toastify";
 import "../../css/custom_toast.css";
+import {showToast} from "../../utilities/tostify/toastUtils";
 
 const EventCardPageView = ({event}) => {
   const {
@@ -59,16 +59,7 @@ const EventCardPageView = ({event}) => {
         .delete(`events/wishlist/${id}/`)
         .then(() => {
           setIsWishlisted(false);
-          toast.error(`${event_name} removed from wishlist`, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            theme: "colored",
-            style: {backgroundColor: "#EA4C46", color: "white"},
-          });
+          showToast(`${event_name} removed from wishlist`, "error");
           dispatch(
             setWishListItems(
               wishlistItems.filter((item) => item.event.id !== id)
@@ -83,16 +74,7 @@ const EventCardPageView = ({event}) => {
         .post(`events/wishlist/${id}/`)
         .then((response) => {
           setIsWishlisted(true);
-          toast.success(`${event_name} added to wishlist`, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            theme: "colored",
-            style: {backgroundColor: "#47B649", color: "white"},
-          });
+          showToast(`${event_name} added to wishlist`, "success");
           dispatch(setWishListItems([...wishlistItems, response.data]));
         })
         .catch((error) => {

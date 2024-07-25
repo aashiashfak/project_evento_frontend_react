@@ -14,8 +14,7 @@ import {IoLocationSharp, IoTicket} from "react-icons/io5";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
 import Organizer from "../components/Events/Organizer";
-import { toast } from "react-toastify";
-import "../css/custom_toast.css";
+import {showToast} from "../utilities/tostify/toastUtils";
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -61,32 +60,14 @@ const EventDetail = () => {
       if (isWishlisted) {
         await axiosInstance.delete(`events/wishlist/${ID}/`);
         setIsWishlisted(false);
-        toast.error(`${event_name} removed from wishlist`, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "colored",
-          style: {backgroundColor: "#EA4C46", color: "white"},
-        });
+        showToast(`${event_name} removed from wishlist`, "error");
         dispatch(
           setWishListItems(wishlistItems.filter((item) => item.event.id !== ID))
         );
       } else {
         const response = await axiosInstance.post(`events/wishlist/${ID}/`);
         setIsWishlisted(true);
-        toast.success(`${event_name} added to wishlist`, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "colored",
-          style: {backgroundColor: "#47B649", color: "white"},
-        });
+        showToast(`${event_name} added to wishlist`, "success");
         dispatch(setWishListItems([...wishlistItems, response.data]));
       }
     } catch (error) {
