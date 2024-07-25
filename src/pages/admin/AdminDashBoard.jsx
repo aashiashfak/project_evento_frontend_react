@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from "react";
-import Header from "../../components/admin/Header/Header";
-import Sidebar from "../../components/admin/sidebar/SideBar";
+import {useNavigate} from "react-router-dom";
 import DashboardCard from "../../components/admin/Dashborad/DashboardCard";
 import {
   FaHome,
@@ -11,14 +10,15 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import {fetchDashboardresponse} from "../../api/adminApi/AdminDashboard";
+import "../../css/Global.css";
 
 const AdminDashBoard = () => {
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const scrollContainerRef = useRef(null);
   const [isScrollable, setIsScrollable] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -36,22 +36,18 @@ const AdminDashBoard = () => {
     fetchDashboardData();
   }, []);
 
- useEffect(() => {
-   const checkScrollable = () => {
-     if (scrollContainerRef.current) {
-       const {scrollWidth, clientWidth} = scrollContainerRef.current;
-       setIsScrollable(scrollWidth > clientWidth);
-     }
-   };
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (scrollContainerRef.current) {
+        const {scrollWidth, clientWidth} = scrollContainerRef.current;
+        setIsScrollable(scrollWidth > clientWidth);
+      }
+    };
 
-   checkScrollable();
-   window.addEventListener("resize", checkScrollable);
-   return () => window.removeEventListener("resize", checkScrollable);
- }, [dashboardData]);
-
-  const handleToggleSidebar = () => {
-    setSidebarVisible(!isSidebarVisible);
-  };
+    checkScrollable();
+    window.addEventListener("resize", checkScrollable);
+    return () => window.removeEventListener("resize", checkScrollable);
+  }, [dashboardData]);
 
   const handleScrollLeft = () => {
     scrollContainerRef.current.scrollBy({left: -250, behavior: "smooth"});
@@ -61,64 +57,140 @@ const AdminDashBoard = () => {
     scrollContainerRef.current.scrollBy({left: 250, behavior: "smooth"});
   };
 
+  const calculateTotalTickets = (ticketTypes) => {
+    return ticketTypes.reduce((total, ticket) => total + ticket.count, 0);
+  };
+
+  const calculateTotalSoldTickets = (ticketTypes) => {
+    return ticketTypes.reduce((total, ticket) => total + ticket.sold_count, 0);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
+  const renderStatus = (status) => {
+    switch (status) {
+      case "active":
+        return (
+          <span className="bg-green-500 text-white rounded-full px-2 py-1">
+            Active
+          </span>
+        );
+      case "disabled":
+        return (
+          <span className="bg-gray-500 text-white rounded-full px-2 py-1">
+            Disabled
+          </span>
+        );
+      case "completed":
+        return (
+          <span className="bg-red-500 text-white rounded-full px-2 py-1">
+            Complete
+          </span>
+        );
+      default:
+        return status;
+    }
+  };
+
   return (
-    <div className="flex">
-      <Sidebar isVisible={isSidebarVisible} />
-      <div className="flex-grow flex flex-col h-screen overflow-hidden">
-        <Header onToggleSidebar={handleToggleSidebar} />
-        <div className="flex-grow p-6 overflow-y-auto ml-0 md:ml-64 relative">
-          <div className="flex items-center justify-center">
-            {isScrollable && (
-              <button
-                onClick={handleScrollLeft}
-                className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
-              >
-                <FaChevronLeft />
-              </button>
-            )}
-            <div
-              ref={scrollContainerRef}
-              className="grid grid-flow-col auto-cols-max gap-4 overflow-x-auto pt-2 pb-5 px-4 "
+    <div className="flex-grow flex flex-col overflow-hidden">
+      <div className="flex-grow p-6 relative">
+        <div className="flex items-center justify-center ">
+          {isScrollable && (
+            <button
+              onClick={handleScrollLeft}
+              className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
             >
-              {dashboardData && (
-                <>
-                  <DashboardCard
-                    icon={FaHome}
-                    title="Total Events"
-                    value={dashboardData.total_events}
-                    subValue={`${dashboardData.completed_events} Completed`}
-                  />
-                  <DashboardCard
-                    icon={FaUserTie}
-                    title="Total Organizers"
-                    value={dashboardData.total_vendors}
-                  />
-                  <DashboardCard
-                    icon={FaUsers}
-                    title="Total Users"
-                    value={dashboardData.total_users}
-                  />
-                  <DashboardCard
-                    icon={FaThList}
-                    title="Categories"
-                    value={dashboardData.total_categories}
-                  />
-                </>
-              )}
-            </div>
-            {isScrollable && (
-              <button
-                onClick={handleScrollRight}
-                className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
-              >
-                <FaChevronRight />
-              </button>
+              <FaChevronLeft />
+            </button>
+          )}
+          <div
+            ref={scrollContainerRef}
+            className="grid grid-flow-col auto-cols-max gap-4 overflow-x-auto pt-2 pb-5 px-4 hide-scrollbar"
+          >
+            {dashboardData && (
+              <>
+                <DashboardCard
+                  icon={FaHome}
+                  title="Total Events"
+                  value={dashboardData.total_events}
+                  subValue={`${dashboardData.completed_events} Completed`}
+                />
+                <DashboardCard
+                  icon={FaUserTie}
+                  title="Total Organizers"
+                  value={dashboardData.total_vendors}
+                />
+                <DashboardCard
+                  icon={FaUsers}
+                  title="Total Users"
+                  value={dashboardData.total_users}
+                />
+                <DashboardCard
+                  icon={FaThList}
+                  title="Categories"
+                  value={dashboardData.total_categories}
+                />
+              </>
             )}
           </div>
-          {/* Additional dashboard content can go here */}
+          {isScrollable && (
+            <button
+              onClick={handleScrollRight}
+              className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
+            >
+              <FaChevronRight />
+            </button>
+          )}
+        </div>
+        <div className="mt-2 font-semibold text-violet-700  border-b-2 border-violet-700 w-max pb-1">
+          ALL EVENTS
+        </div>
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-full bg-white border">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 border">Event Name</th>
+                <th className="px-4 py-2 border">Organizer Name</th>
+                <th className="px-4 py-2 border">Start Date</th>
+                <th className="px-4 py-2 border">Location</th>
+                <th className="px-4 py-2 border">Status</th>
+                <th className="px-4 py-2 border">Total Count</th>
+                <th className="px-4 py-2 border">Sold Count</th>
+                <th className="px-4 py-2 border">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dashboardData.new_events.map((event) => (
+                <tr key={event.id} className="border-t">
+                  <td className="px-4 py-2 border">{event.event_name}</td>
+                  <td className="px-4 py-2 border">{event.organizer_name}</td>
+                  <td className="px-4 py-2 border">
+                    {new Date(event.start_date).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-2 border">{event.location}</td>
+                  <td className="px-4 py-2 border text-center">
+                    {renderStatus(event.status)}
+                  </td>
+                  <td className="px-4 py-2 border">
+                    {calculateTotalTickets(event.ticket_types)}
+                  </td>
+                  <td className="px-4 py-2 border">
+                    {calculateTotalSoldTickets(event.ticket_types)}
+                  </td>
+                  <td className="px-4 py-2 border">
+                    <button
+                      className="bg-purple-500 text-white rounded-full px-4 py-1"
+                      onClick={() => navigate(`/event-details/${event.id}`)}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

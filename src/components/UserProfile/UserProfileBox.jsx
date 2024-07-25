@@ -194,7 +194,7 @@ const UserProfileBox = () => {
                   </div>
                 ) : (
                   <div className="border border-gray-400 rounded border-opacity-45 shadow-md px-2 py-1">
-                    <p className="">{username}</p>
+                    <p className="">{username||"Guest"}</p>
                   </div>
                 )}
               </div>

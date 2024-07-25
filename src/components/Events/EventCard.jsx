@@ -182,8 +182,8 @@ const EventCard = ({event}) => {
           Book Now
         </button>
         {minTicketPrice && (
-          <p className="text-xs font-semibold mt-2">
-            Ticket starts at {minTicketPrice}
+          <p className="text-sm text-gray-600 ">
+            ₹ {minTicketPrice} Onwards
           </p>
         )}
       </div>

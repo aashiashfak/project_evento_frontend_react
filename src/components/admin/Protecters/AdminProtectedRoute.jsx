@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {useSelector} from "react-redux";
 import {Navigate} from "react-router-dom";
 
 const AdminProtectedRoute = ({children}) => {
   const user = useSelector((state) => state.user);
+
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setSidebarVisible(!isSidebarVisible);
+  };
+
 
   if (!user.accessToken) {
     return <Navigate to="/admin/login" />;
@@ -15,7 +22,11 @@ const AdminProtectedRoute = ({children}) => {
   }
 
   // If the user is an admin, render the children components
-  return children;
+  return React.cloneElement(children, {
+    isSidebarVisible,
+    onToggleSidebar: handleToggleSidebar,
+  });
 };
 
 export default AdminProtectedRoute;
+
