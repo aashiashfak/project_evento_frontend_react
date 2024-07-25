@@ -28,7 +28,7 @@ export const addCategory = async (categoryData) => {
   }
 };
 
-//PUT or PATCH for editing a category
+//PUT or PATCH request for editing a category
 export const editCategory = async (id, categoryData, method) => {
   try {
     const config = {
@@ -50,3 +50,11 @@ export const editCategory = async (id, categoryData, method) => {
     throw error;
   }
 };
+//DELETE request for deleting Category
+export const deleteCategory = async (id) =>{
+  try{
+    await axiosInstance.delete(`superuser/categories/${id}/`)
+  }catch(error){
+    throw(error)
+  }
+} 

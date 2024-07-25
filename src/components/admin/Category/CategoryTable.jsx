@@ -1,7 +1,7 @@
 import React from "react";
 import {FaEdit, FaTrash} from "react-icons/fa";
 
-const CategoryTable = ({categories, onEditClick}) => {
+const CategoryTable = ({categories, onEditClick, onDeleteClick}) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border">
@@ -30,7 +30,7 @@ const CategoryTable = ({categories, onEditClick}) => {
                 >
                   <FaEdit />
                 </button>
-                <button className="text-red-500">
+                <button className="text-red-500" onClick={() =>onDeleteClick(category.id, category.name)}>
                   <FaTrash />
                 </button>
               </td>
