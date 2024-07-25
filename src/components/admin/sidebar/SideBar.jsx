@@ -10,16 +10,16 @@ import {
 } from "react-icons/fa";
 
 const navItems = [
-  {path: "/dashboard", label: "Dashboard"},
-  {path: "/categories", label: "Categories"},
+  {path: "/admin/dashboard", label: "Dashboard"},
+  {path: "/admin/categories", label: "Categories"},
   {path: "/locations", label: "Locations"},
   {path: "/users", label: "Users"},
   {path: "/organizers", label: "Organizers"},
 ];
 
 const iconMap = {
-  "/dashboard": FaHome,
-  "/categories": FaThList,
+  "/admin/dashboard": FaHome,
+  "/admin/categories": FaThList,
   "/locations": FaMapMarkerAlt,
   "/users": FaUsers,
   "/organizers": FaUserTie,

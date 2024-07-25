@@ -7,16 +7,14 @@ const CategoryTable = ({categories, onEditClick}) => {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="px-4 py-2 border">Category ID</th>
-            <th className="px-4 py-2 border">Category Name</th>
-            <th className="px-4 py-2 border">Thumbnail</th>
+            <th className="px-4 py-2 border">Name</th>
+            <th className="px-4 py-2 border">Image</th>
             <th className="px-4 py-2 border">Action</th>
           </tr>
         </thead>
         <tbody>
           {categories.map((category) => (
             <tr key={category.id} className="border-t">
-              <td className="px-4 py-2 border">{category.id}</td>
               <td className="px-4 py-2 border">{category.name}</td>
               <td className="px-4 py-2 border">
                 <img
@@ -25,7 +23,7 @@ const CategoryTable = ({categories, onEditClick}) => {
                   className="w-16 h-16 object-cover"
                 />
               </td>
-              <td className="px-4 py-2 border flex justify-center space-x-2">
+              <td className="px-4 py-2 mt-4 flex justify-center space-x-2">
                 <button
                   className="text-blue-500"
                   onClick={() => onEditClick(category)}

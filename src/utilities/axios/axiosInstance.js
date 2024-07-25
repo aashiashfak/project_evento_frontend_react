@@ -51,6 +51,7 @@ axiosInstance.interceptors.response.use(
               username: state.user.username,
               accessToken: newAccessToken,
               refreshToken,
+              role: state.user.role,
             })
           );
 
