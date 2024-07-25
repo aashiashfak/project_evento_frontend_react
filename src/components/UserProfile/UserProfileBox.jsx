@@ -1,16 +1,15 @@
 import React, {useState, useEffect, useRef} from "react";
-import axiosInstance from "../../utilities/axios/axiosInstance";
 import EditModal from "./EditModal"; // Adjust the path as needed
 import Header from "../Header/Header";
 import {useDispatch} from "react-redux";
 import {setUsername} from "../../redux/userSlice";
 import {FaCamera} from "react-icons/fa";
-import {toast} from "react-toastify";
 import {
   getUserProfile,
   updateProfilePicture,
   updateUsername,
 } from "../../api/userProfile/UserProfileApi";
+import {showToast} from "../../utilities/tostify/toastUtils";
 
 const UserProfileBox = () => {
   // const [userProfile, setUserProfile] = useState(null);
@@ -67,16 +66,7 @@ const UserProfileBox = () => {
       setIsInlineEdit(false);
       dispatch(setUsername({username: newUsername}));
       setUsername1(newUsername)
-      toast.success(`your username Change to ${newUsername}`, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        theme: "colored",
-        style: {backgroundColor: "#47B649", color: "white"},
-      });
+      showToast(`your username Change to ${newUsername}`,'success');
     } catch (error) {
       console.error("Error updating username", error);
     }
@@ -99,16 +89,7 @@ const UserProfileBox = () => {
         const response = await updateProfilePicture(formData)
         console.log(response)
         setProfilePicture(response);
-        toast.success(`Profile picture changed succussfully`, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "colored",
-          style: {backgroundColor: "#47B649", color: "white"},
-        });
+        showToast("Profile picture changed succussfully",'success');
       } catch (error) {
         console.error("Error updating profile picture", error);
       }
