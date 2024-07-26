@@ -1,18 +1,37 @@
+/* Custom Toastify CSS */
+.Toastify__toast-container {
+  z-index: 1050 !important; /* Ensure Toastify is above other elements */
+}
+
+/* General Toast Styles */
 .Toastify__toast {
   font-size: 0.875rem; /* text-sm */
-  border-radius: 0px; /* rounded-full */
+  border-radius: 8px; /* Optional, can be adjusted */
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3); /* Increased box shadow */
-  padding: 4px 8px; /* Reduced top and bottom padding */
+  padding: 8px 16px; /* Adjust padding for better appearance */
+  color: white; /* Text color */
+  z-index: 1050;
 }
 
+/* Success Toast Styles */
 .Toastify__toast--success {
-  background-color: #47B649;
+  background-color: #47B649; /* Green background */
+  border-left: 4px solid #3b9141; /* Add a border for better distinction */
 }
 
+/* Error Toast Styles */
 .Toastify__toast--error {
-  background-color: #EA4C46;
+  background-color: #EA4C46; /* Red background */
+  border-left: 4px solid #d9413c; /* Add a border for better distinction */
 }
 
+/* Close Button Styles */
 .Toastify__close-button {
   display: none; /* Hide the close button */
+}
+
+/* Progress Bar Styles */
+.Toastify__progress-bar {
+  height: 2px; /* Adjust height of the progress bar */
+  background-color: rgba(255, 255, 255, 0.7); /* Progress bar color */
 }

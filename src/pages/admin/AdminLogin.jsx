@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FaArrowLeft, FaEye, FaEyeSlash} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
-import { LoginRequest } from "../../api/adminApi/LoginReques";
+import { LoginRequest } from "../../api/adminApi/LoginRequest";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice";
 
