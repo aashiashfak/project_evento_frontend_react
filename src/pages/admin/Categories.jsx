@@ -40,11 +40,11 @@ const CategoryList = () => {
     setEditCategory(null);
   };
 
-  const handleDeleteClick = (id, categoryName)=>{
+  const handleDeleteClick = (id, value)=>{
     setDeleteobj({
       id,
-      categoryName,
-    })
+      value,
+    });
     setIsDeleteModalOpen(true)
   }
 
@@ -77,7 +77,7 @@ const CategoryList = () => {
         <DeleteModal
           identifier={"Category"}
           onDeleteModalClose={setIsDeleteModalOpen}
-          setCategories={setCategories}
+          setList={setCategories}
           deleteObj={deleteobj}
           deleteApi={deleteCategory}
         />

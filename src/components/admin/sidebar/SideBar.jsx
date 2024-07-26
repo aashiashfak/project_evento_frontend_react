@@ -12,7 +12,7 @@ import {
 const navItems = [
   {path: "/admin/dashboard", label: "Dashboard"},
   {path: "/admin/categories", label: "Categories"},
-  {path: "/locations", label: "Locations"},
+  {path: "/admin/locations", label: "Locations"},
   {path: "/users", label: "Users"},
   {path: "/organizers", label: "Organizers"},
 ];
@@ -20,7 +20,7 @@ const navItems = [
 const iconMap = {
   "/admin/dashboard": FaHome,
   "/admin/categories": FaThList,
-  "/locations": FaMapMarkerAlt,
+  "/admin/locations": FaMapMarkerAlt,
   "/users": FaUsers,
   "/organizers": FaUserTie,
 };

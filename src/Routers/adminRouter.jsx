@@ -5,6 +5,7 @@ import AdminProtectedRoute from "../components/admin/Protecters/AdminProtectedRo
 import AdminLoginRedirect from "../components/admin/Protecters/AdminLoginRedirect";
 import AdminLayout from "../components/admin/AdminLayout/AdminLayout";
 import CategoryList from "../pages/admin/Categories";
+import Locations from "../pages/admin/Locations";
 
 const AdminRouter = () => {
   return (
@@ -27,6 +28,7 @@ const AdminRouter = () => {
       >
         <Route path="dashboard" element={<AdminDashBoard />} />
         <Route path="categories" element={<CategoryList />} />
+        <Route path="Locations" element={<Locations />} />
       </Route>
     </Routes>
   );
