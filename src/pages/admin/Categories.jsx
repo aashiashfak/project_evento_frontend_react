@@ -50,10 +50,10 @@ const CategoryList = () => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center  bg-violet-700 rounded-t-xl p-4">
+      <div className="flex justify-between items-center  bg-gray-800 rounded-t-xl p-4">
         <h1 className="text-xl font-semibold text-white ">Category List</h1>
         <button
-          className="bg-purple-500 text-white rounded-full px-4 py-1 flex items-center"
+          className="bg-gray-400 bg-opacity-50 text-white rounded-full px-4 py-1 flex items-center"
           onClick={handleAddClick}
         >
           <FaPlus className="mr-2" />

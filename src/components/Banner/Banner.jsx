@@ -9,7 +9,7 @@ const Banner = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await axiosInstance.get("superuser/Banners/");
+        const response = await axiosInstance.get("superuser/banners/");
         setBanners(response.data);
       } catch (error) {
         console.error("Error fetching banners:", error);

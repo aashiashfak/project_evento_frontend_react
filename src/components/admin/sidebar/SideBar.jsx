@@ -8,11 +8,13 @@ import {
   FaUserTie,
   FaRegEdit,
 } from "react-icons/fa";
+import {BiSolidCarousel} from "react-icons/bi";
 
 const navItems = [
   {path: "/admin/dashboard", label: "Dashboard"},
   {path: "/admin/categories", label: "Categories"},
   {path: "/admin/locations", label: "Locations"},
+  {path: "/admin/banners", label: "Banners"},
   {path: "/users", label: "Users"},
   {path: "/organizers", label: "Organizers"},
 ];
@@ -21,6 +23,7 @@ const iconMap = {
   "/admin/dashboard": FaHome,
   "/admin/categories": FaThList,
   "/admin/locations": FaMapMarkerAlt,
+  "/admin/banners": BiSolidCarousel,
   "/users": FaUsers,
   "/organizers": FaUserTie,
 };

@@ -2,10 +2,12 @@ import React from "react";
 
 const DashboardCard = ({icon: Icon, title, value, subValue}) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col w-48">
+    <div className="bg-gray-200 shadow-lg rounded-lg p-4 flex flex-col w-52">
       <div className="flex justify-between">
-        <div className="font-semibold text-gray-500">{title}</div>
-        <Icon className="text-2xl text-purple-600 mb-2" />
+        <div className="font-semibold text-gray-500 mt-1 mr-">{title}</div>
+        <div className="bg-white p-2 rounded-lg">
+          <Icon className="text-2xl text-gray-800  " />
+        </div>
       </div>
 
       <div className="text-2xl font-bold">{value}</div>

@@ -3,7 +3,7 @@ import {FaEdit, FaTrash} from "react-icons/fa";
 
 const CategoryTable = ({categories, onEditClick, onDeleteClick}) => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto shadow-xl">
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
@@ -25,12 +25,11 @@ const CategoryTable = ({categories, onEditClick, onDeleteClick}) => {
               </td>
               <td className="px-4 py-2 mt-4 flex justify-center space-x-2">
                 <button
-                  className="text-blue-500"
                   onClick={() => onEditClick(category)}
                 >
                   <FaEdit />
                 </button>
-                <button className="text-red-500" onClick={() =>onDeleteClick(category.id, category.name)}>
+                <button  onClick={() =>onDeleteClick(category.id, category.name)}>
                   <FaTrash />
                 </button>
               </td>
