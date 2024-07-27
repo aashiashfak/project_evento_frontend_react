@@ -15,8 +15,8 @@ const navItems = [
   {path: "/admin/categories", label: "Categories"},
   {path: "/admin/locations", label: "Locations"},
   {path: "/admin/banners", label: "Banners"},
-  {path: "/users", label: "Users"},
-  {path: "/organizers", label: "Organizers"},
+  {path: "/admin/users", label: "Users"},
+  {path: "/admin/organizers", label: "Organizers"},
 ];
 
 const iconMap = {
@@ -24,8 +24,8 @@ const iconMap = {
   "/admin/categories": FaThList,
   "/admin/locations": FaMapMarkerAlt,
   "/admin/banners": BiSolidCarousel,
-  "/users": FaUsers,
-  "/organizers": FaUserTie,
+  "/admin/users": FaUsers,
+  "/admin/organizers": FaUserTie,
 };
 
 const Sidebar = ({isVisible}) => {

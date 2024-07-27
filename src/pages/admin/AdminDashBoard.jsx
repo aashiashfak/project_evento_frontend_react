@@ -144,13 +144,13 @@ const AdminDashBoard = () => {
             </button>
           )}
         </div>
-        <div className="mt-2 font-semibold text-gray-800  border-b-2 border-gray-800 w-max pb-1">
+        <div className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
           ALL EVENTS
         </div>
-        <div className="mt-6 overflow-x-auto shadow-xl">
+        <div className="mt-4f overflow-x-auto shadow-xl">
           <table className="min-w-full bg-white border">
-            <thead>
-              <tr>
+            <thead className="bg-gray-800 text-white text-left text-sm">
+              <tr className="">
                 <th className="px-4 py-2 border">Event Name</th>
                 <th className="px-4 py-2 border">Organizer Name</th>
                 <th className="px-4 py-2 border">Start Date</th>

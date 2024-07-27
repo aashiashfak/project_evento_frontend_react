@@ -7,6 +7,7 @@ import AdminLayout from "../components/admin/AdminLayout/AdminLayout";
 import CategoryList from "../pages/admin/Categories";
 import Locations from "../pages/admin/Locations";
 import Banner from "../pages/admin/Banner";
+import Users from "../pages/admin/Users";
 
 const AdminRouter = () => {
   return (
@@ -31,6 +32,7 @@ const AdminRouter = () => {
         <Route path="categories" element={<CategoryList />} />
         <Route path="locations" element={<Locations />} />
         <Route path="banners" element={<Banner />} />
+        <Route path="users" element={<Users />} />
       </Route>
     </Routes>
   );
