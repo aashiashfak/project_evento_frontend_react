@@ -34,7 +34,7 @@ const Sidebar = ({isVisible}) => {
 
   return (
     <aside
-      className={`z-30 fixed top-[81px] left-0 w-64 h-[calc(100vh-81px)] bg-gray-800 text-white p-4 transform transition-transform duration-300 ease-in-out ${
+      className={`z-30 fixed top-[81px] left-0 w-64 h-[calc(100vh-81px)] bg-gray-800 text-white p-4 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
         isVisible ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 md:flex-shrink-0`}
     >

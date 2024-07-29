@@ -8,6 +8,7 @@ import CategoryList from "../pages/admin/Categories";
 import Locations from "../pages/admin/Locations";
 import Banner from "../pages/admin/Banner";
 import Users from "../pages/admin/Users";
+import Organizers from "../pages/admin/Organizers";
 
 const AdminRouter = () => {
   return (
@@ -33,6 +34,7 @@ const AdminRouter = () => {
         <Route path="locations" element={<Locations />} />
         <Route path="banners" element={<Banner />} />
         <Route path="users" element={<Users />} />
+        <Route path="organizers" element={<Organizers />} />
       </Route>
     </Routes>
   );

@@ -72,19 +72,19 @@ const AdminDashBoard = () => {
     switch (status) {
       case "active":
         return (
-          <span className="bg-green-500 text-white rounded-full px-2 py-1">
+          <span className="bg-green-500 text-white rounded-full px-2 py-1 w-48">
             Active
           </span>
         );
       case "disabled":
         return (
-          <span className="bg-gray-500 text-white rounded-full px-2 py-1">
+          <span className="bg-gray-500 text-white rounded-full px-2 py-1 w-48">
             Disabled
           </span>
         );
       case "completed":
         return (
-          <span className="bg-red-500 text-white rounded-full px-2 py-1">
+          <span className="bg-red-500 text-white rounded-full px-2 py-1 w-48">
             Complete
           </span>
         );
@@ -170,7 +170,7 @@ const AdminDashBoard = () => {
                     {new Date(event.start_date).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 border">{event.location}</td>
-                  <td className="px-4 py-2 border text-center">
+                  <td className="px-4 py-2 border text-center ">
                     {renderStatus(event.status)}
                   </td>
                   <td className="px-4 py-2 border">
