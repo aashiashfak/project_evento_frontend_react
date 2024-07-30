@@ -28,6 +28,7 @@ const AdminLogin = () => {
             accessToken:responseData.access_token,
             refreshToken:responseData.refresh_token,
             role:responseData.user.role,
+            profilePicture:responseData.user.profile_picture
         }))
         navigate('/admin/dashboard');
     }catch(error){
@@ -78,6 +79,7 @@ const AdminLogin = () => {
               value={password}
               id="password"
               name="password"
+              placeholder="Enter Your Password"
               onChange={(e) => setPassword(e.target.value)}
               required
               className="p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-black pr-10"

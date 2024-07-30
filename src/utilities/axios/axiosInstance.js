@@ -1,8 +1,7 @@
 import axios from "axios";
-import { store } from "../../redux/store";
-import {setUser, clearUser} from "../../redux/userSlice"; 
-import { clearWishListItems } from "../../redux/WishListSlice";
-
+import {store} from "../../redux/store";
+import {setUser, clearUser} from "../../redux/userSlice";
+import {clearWishListItems} from "../../redux/WishListSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/",
@@ -36,14 +35,22 @@ axiosInstance.interceptors.response.use(
     const state = store.getState();
     const refreshToken = state.user.refreshToken;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
+      console.log("access_token expired");
 
       if (refreshToken) {
         try {
-          const response = await axiosInstance.post("api/token/refresh/", {
-            refresh: refreshToken,
-          });
+          const response = await axios.post(
+            "http://localhost:8000/api/token/refresh/",
+            {
+              refresh: refreshToken,
+            }
+          );
 
           const newAccessToken = response.data.access;
           store.dispatch(
@@ -52,6 +59,7 @@ axiosInstance.interceptors.response.use(
               accessToken: newAccessToken,
               refreshToken,
               role: state.user.role,
+              profilePicture:user.profilePicture
             })
           );
 
@@ -62,16 +70,16 @@ axiosInstance.interceptors.response.use(
 
           return axiosInstance(originalRequest);
         } catch (refreshError) {
+          console.log("error in refresh token", refreshError);
           store.dispatch(clearUser());
-          store.dispatch(clearWishListItems())
-          window.location.href = "/session-expired"; 
+          store.dispatch(clearWishListItems());
+          window.location.href = "/session-expired";
         }
       } else {
-        console.log('inside else condition if there no valid refresh token');
+        console.log("inside else condition if there is no valid refresh token");
         store.dispatch(clearUser());
         store.dispatch(clearWishListItems());
-        window.location.href = "/session-expired"; 
-        
+        window.location.href = "/session-expired";
       }
     }
 

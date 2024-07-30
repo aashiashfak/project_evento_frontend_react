@@ -96,6 +96,7 @@ const OtpComponent = (props) => {
           accessToken: userData.access_token,
           refreshToken: userData.refresh_token,
           role:userData.user.role,
+          profilePicture:userData.user.profile_picture
         })
       );
       navigate("/");

@@ -27,7 +27,8 @@ export const handleGoogleLoginSuccess = async (
         username: data.username,
         accessToken: data.access_token,
         refreshToken: data.refresh_token,
-        role:data.user.role
+        role:data.user.role,
+        profilePicture:data.user.profile_picture
       })
     );
     navigate("/");

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   FaUser,
   FaHome,
@@ -9,6 +9,8 @@ import {
   FaRegEdit,
 } from "react-icons/fa";
 import {BiSolidCarousel} from "react-icons/bi";
+import {useSelector} from "react-redux";
+import {useLocation} from "react-router-dom";
 
 const navItems = [
   {path: "/admin/dashboard", label: "Dashboard"},
@@ -29,8 +31,11 @@ const iconMap = {
 };
 
 const Sidebar = ({isVisible}) => {
-  const [profilePicture, setProfilePicture] = useState("");
-  const [username, setUsername] = useState("");
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const baseUrl = "http://localhost:8000/";
+
+  console.log("user from Redux store", user);
 
   return (
     <aside
@@ -40,9 +45,13 @@ const Sidebar = ({isVisible}) => {
     >
       <div className="flex flex-col items-center">
         <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center">
-          {profilePicture ? (
+          {user.profilePicture ? (
             <img
-              src={profilePicture}
+              src={
+                user.profilePicture.startsWith("http")
+                  ? user.profilePicture
+                  : `${baseUrl}${user.profilePicture}`
+              }
               alt="Profile"
               className="w-20 h-20 rounded-full mb-2"
             />
@@ -51,8 +60,10 @@ const Sidebar = ({isVisible}) => {
           )}
         </div>
         <div className="flex gap-2 mt-2">
-          <p className="font-semibold">{username ? username : "guest"}</p>
-          <button className=" text-white rounded">
+          <p className="font-semibold">
+            {user.username ? user.username : "guest"}
+          </p>
+          <button className="text-white rounded">
             <FaRegEdit />
           </button>
         </div>
@@ -61,11 +72,14 @@ const Sidebar = ({isVisible}) => {
         <ul>
           {navItems.map((item) => {
             const Icon = iconMap[item.path];
+            const isActive = location.pathname === item.path;
             return (
               <li key={item.path} className="mb-2">
                 <a
                   href={item.path}
-                  className="flex items-center p-2 text-white hover:bg-gray-700 rounded"
+                  className={`flex items-center p-2 text-white rounded ${
+                    isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                  }`}
                 >
                   <Icon className="mr-2" />
                   {item.label}
