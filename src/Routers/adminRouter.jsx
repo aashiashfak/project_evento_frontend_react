@@ -9,6 +9,7 @@ import Locations from "../pages/admin/Locations";
 import Banner from "../pages/admin/Banner";
 import Users from "../pages/admin/Users";
 import Organizers from "../pages/admin/Organizers";
+import ProfilePage from "../pages/admin/ProfilePage";
 
 const AdminRouter = () => {
   return (
@@ -35,6 +36,7 @@ const AdminRouter = () => {
         <Route path="banners" element={<Banner />} />
         <Route path="users" element={<Users />} />
         <Route path="organizers" element={<Organizers />} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );

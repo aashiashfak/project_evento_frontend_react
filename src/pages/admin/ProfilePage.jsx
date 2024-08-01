@@ -1,12 +1,12 @@
 import React from 'react'
+import UserProfileBox from '../../components/UserProfile/UserProfileBox'
 
 const ProfilePage = () => {
   return (
     <div>
-      Entered in Admin Profile Page
+      <UserProfileBox/>
     </div>
   )
 }
 
 export default ProfilePage
-Entered in Admin Profile Page

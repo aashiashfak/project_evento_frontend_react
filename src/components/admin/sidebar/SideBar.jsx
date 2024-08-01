@@ -10,7 +10,9 @@ import {
 } from "react-icons/fa";
 import {BiSolidCarousel} from "react-icons/bi";
 import {useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 
 const navItems = [
   {path: "/admin/dashboard", label: "Dashboard"},
@@ -34,6 +36,7 @@ const Sidebar = ({isVisible}) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
   const baseUrl = "http://localhost:8000/";
+  const navigate = useNavigate();
 
   console.log("user from Redux store", user);
 
@@ -59,11 +62,14 @@ const Sidebar = ({isVisible}) => {
             <FaUser className="w-12 h-12 text-gray-500 mb-2" />
           )}
         </div>
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 mt-2 items-center">
           <p className="font-semibold">
             {user.username ? user.username : "guest"}
           </p>
-          <button className="text-white rounded">
+          <button
+            className="text-white rounded"
+            onClick={() => navigate("/admin/profile")}
+          >
             <FaRegEdit />
           </button>
         </div>
@@ -75,15 +81,15 @@ const Sidebar = ({isVisible}) => {
             const isActive = location.pathname === item.path;
             return (
               <li key={item.path} className="mb-2">
-                <a
-                  href={item.path}
+                <Link
+                  to={item.path}
                   className={`flex items-center p-2 text-white rounded ${
                     isActive ? "bg-gray-700" : "hover:bg-gray-700"
                   }`}
                 >
                   <Icon className="mr-2" />
                   {item.label}
-                </a>
+                </Link>
               </li>
             );
           })}
@@ -91,6 +97,10 @@ const Sidebar = ({isVisible}) => {
       </nav>
     </aside>
   );
+};
+
+Sidebar.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
 };
 
 export default Sidebar;
