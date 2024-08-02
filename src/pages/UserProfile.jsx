@@ -5,10 +5,11 @@ import UserProfileBox from '../components/UserProfile/UserProfileBox'
 const UserProfile = () => {
   return (
     <div>
-      <UserProfileBox/>
-      <h1>Entered in User profile</h1>
+      <Header />
+      <UserProfileBox />
+      
     </div>
-  )
+  );
 }
 
 export default UserProfile

@@ -59,7 +59,7 @@ axiosInstance.interceptors.response.use(
               accessToken: newAccessToken,
               refreshToken,
               role: state.user.role,
-              profilePicture:user.profilePicture
+              profilePicture:state.user.profilePicture
             })
           );
 

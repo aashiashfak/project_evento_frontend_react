@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
-import EditModal from "./EditModal"; // Adjust the path as needed
-import Header from "../Header/Header";
+import EditModal from "./EditModal";
 import {useDispatch} from "react-redux";
-import {setUsername} from "../../redux/userSlice";
+import {setUsername,setProfileDp} from "../../redux/userSlice";
 import {FaCamera} from "react-icons/fa";
 import {
   getUserProfile,
@@ -89,6 +88,7 @@ const UserProfileBox = () => {
         const response = await updateProfilePicture(formData)
         console.log(response)
         setProfilePicture(response);
+        dispatch(setProfileDp(response))
         showToast("Profile picture changed succussfully",'success');
       } catch (error) {
         console.error("Error updating profile picture", error);
@@ -103,8 +103,7 @@ const UserProfileBox = () => {
 
   return (
     <div>
-      <Header />
-      <div className="px-6 sm:px-10 md:px-16 lg:px-20 mx-auto py-16">
+      <div className="px-6 sm:px-10 md:px-16 lg:px-20 mx-auto py-12">
         <h1 className="text-violet-700 font-semibold text-2xl mb-2">
           ACCOUNT DETAILS
         </h1>
