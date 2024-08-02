@@ -9,6 +9,7 @@ import {
   updateUsername,
 } from "../../api/userProfile/UserProfileApi";
 import {showToast} from "../../utilities/tostify/toastUtils";
+import Header from "../../components/Header/Header";
 
 const UserProfileBox = () => {
   // const [userProfile, setUserProfile] = useState(null);
