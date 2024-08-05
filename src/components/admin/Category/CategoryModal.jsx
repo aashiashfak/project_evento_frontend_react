@@ -86,8 +86,8 @@ const CategoryModal = ({category, onClose, setCategories}) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center min-h-screen z-20">
-      <div className="bg-white p-6 rounded-md w-full max-w-md">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center min-h-screen z-20 ">
+      <div className="bg-white p-6 rounded-md w-full max-w-md ">
         <h2 className="text-xl font-semibold mb-4">
           {category ? "Edit Category" : "Add Category"}
         </h2>

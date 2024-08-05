@@ -137,40 +137,44 @@ const AdminDashBoard = () => {
         </div>
         <div className=" overflow-x-auto shadow-xl overflow-y-auto h-[calc(100vh-170px)]">
           <table className="min-w-full bg-white border text-sm ">
-            <thead className="bg-gray-800 text-white text-left  sticky top-0 z-10 " >
+            <thead className="bg-gray-800 text-white text-left  sticky top-0 z-10 ">
               <tr className="">
-                
-                <th className="px-4 py-2 border">#</th>
-                <th className="px-4 py-2 border">Event Name</th>
-                <th className="px-4 py-2 border">Organizer Name</th>
-                <th className="px-4 py-2 border">Start Date</th>
-                <th className="px-4 py-2 border">Location</th>
-                <th className="px-4 py-2 border">Status</th>
-                <th className="px-4 py-2 border">Total Count</th>
-                <th className="px-4 py-2 border">Sold Count</th>
-                <th className="px-4 py-2 border">Action</th>
+                <th className="px-4 py-2 ">#</th>
+                <th className="px-4 py-2 ">Event Name</th>
+                <th className="px-4 py-2 ">Organizer Name</th>
+                <th className="px-4 py-2 ">Start Date</th>
+                <th className="px-4 py-2 ">Location</th>
+                <th className="px-4 py-2 ">Status</th>
+                <th className="px-4 py-2 ">Total Count</th>
+                <th className="px-4 py-2 ">Sold Count</th>
+                <th className="px-4 py-2 ">Action</th>
               </tr>
             </thead>
             <tbody>
-              {dashboardData.new_events.map((event,idx) => (
-                <tr key={event.id} className={ idx %2 == 0 ?"bg-gray-100 " : "" }>
-                  <td className="px-4 py-2 border">{idx+1}</td>
-                  <td className="px-4 py-2 border">{event.event_name}</td>
-                  <td className="px-4 py-2 border">{event.organizer_name}</td>
-                  <td className="px-4 py-2 border">
+              {dashboardData.new_events.map((event, idx) => (
+                <tr
+                  key={event.id}
+                  className={` hover:bg-gray-200 ${
+                    idx % 2 == 0 ? "bg-gray-100" : ""
+                  }`}
+                >
+                  <td className="px-4 py-2 ">{idx + 1}</td>
+                  <td className="px-4 py-2 ">{event.event_name}</td>
+                  <td className="px-4 py-2 ">{event.organizer_name}</td>
+                  <td className="px-4 py-2 ">
                     {new Date(event.start_date).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2 border">{event.location}</td>
-                  <td className="px-4 py-2 border ">
+                  <td className="px-4 py-2 ">{event.location}</td>
+                  <td className="px-4 py-2  ">
                     {renderStatus(event.status)}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-2 ">
                     {calculateTotalTickets(event.ticket_types)}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-2">
                     {calculateTotalSoldTickets(event.ticket_types)}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-2 ">
                     <button
                       className="bg-blue-500 text-white rounded-lg px-4 py-1"
                       onClick={() => navigate(`/event-details/${event.id}`)}

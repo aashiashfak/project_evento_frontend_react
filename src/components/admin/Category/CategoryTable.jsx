@@ -15,10 +15,10 @@ const CategoryTable = ({categories, onEditClick, onDeleteClick}) => {
         </thead>
         <tbody >
           {categories.map((category, idx) => (
-            <tr key={category.id} className="border-t">
-              <td className="px-4 py-2 border">{idx + 1}</td>
-              <td className="px-4 py-2 border">{category.name}</td>
-              <td className="px-4 py-2 border">
+            <tr key={category.id} className={` hover:bg-gray-200 ${idx %2 == 0 ? "bg-gray-100":""}`}>
+              <td className="px-4 py-2 ">{idx + 1}</td>
+              <td className="px-4 py-2 ">{category.name}</td>
+              <td className="px-4 py-2 ">
                 <img
                   src={category.image}
                   alt={category.name}

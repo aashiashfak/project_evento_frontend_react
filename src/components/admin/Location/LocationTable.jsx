@@ -7,17 +7,22 @@ const LocationTable = ({locations, onEditClick, onDeleteClick}) => {
       <table className="min-w-full  border-gray-300 ">
         <thead className="sticky top-0 bg-gray-400">
           <tr>
-            <th className="p-2 border text-left">#</th>
-            <th className="p-2 border text-left">Location Name</th>
-            <th className="p-2 border text-left">Actions</th>
+            <th className="p-2  text-left">#</th>
+            <th className="p-2  text-left">Location Name</th>
+            <th className="p-2  text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
           {locations.map((location, idx) => (
-            <tr key={location.id}>
-              <td className="p-2 border ">{idx + 1}</td>
-              <td className="p-2 border ">{location.name}</td>
-              <td className="p-3 border flex space-x-4">
+            <tr
+              key={location.id}
+              className={` hover:bg-gray-200 ${
+                idx % 2 == 0 ? "bg-gray-100" : ""
+              }`}
+            >
+              <td className="p-2  ">{idx + 1}</td>
+              <td className="p-2  ">{location.name}</td>
+              <td className="p-3  flex space-x-4">
                 <button onClick={() => onEditClick(location)}>
                   <FaEdit />
                 </button>

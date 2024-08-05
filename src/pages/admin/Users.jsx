@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {blockUser, userList} from "../../api/adminApi/Users";
 
-
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,31 +47,28 @@ const UserList = () => {
         <table className="min-w-full bg-white border border-gray-300 shadow-lg">
           <thead className="bg-gray-400 sticky top-0">
             <tr>
-              <th className="px-6 py-3 border border-gray-300 text-left  font-semibold">
-                #
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left  font-semibold">
-                Username
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left  font-semibold">
-                Email
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
-                Phone
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left  font-semibold">
+              <th className="px-6 py-3 text-left font-semibold">#</th>
+              <th className="px-6 py-3 text-left font-semibold">Username</th>
+              <th className="px-6 py-3 text-left font-semibold">Email</th>
+              <th className="px-6 py-3 text-left font-semibold">Phone</th>
+              <th className="px-6 py-3 text-left  font-semibold">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, idx) => (
-              <tr key={user.id} className="hover:bg-gray-100">
-                <td className="px-6 py-4 border border-gray-300">{idx + 1}</td>
-                <td className="px-6 py-4 border border-gray-300">
+              <tr
+                key={user.id}
+                className={` hover:bg-gray-200 ${
+                  idx % 2 == 0 ? "bg-gray-100" : ""
+                }`}
+              >
+                <td className="px-6 py-4  ">{idx + 1}</td>
+                <td className="px-6 py-4 ">
                   {user.username ? user.username : "-"}
                 </td>
-                <td className="px-6 py-4 border border-gray-300">
+                <td className="px-6 py-4  ">
                   <div className="flex">
                     <a
                       href={`mailto:${user.email}`}
@@ -84,7 +80,7 @@ const UserList = () => {
                     </a>
                   </div>
                 </td>
-                <td className="px-6 py-4 border border-gray-300">
+                <td className="px-6 py-4">
                   <div className="flex">
                     <a
                       href={`tel:${user.phone_number}`}
@@ -98,10 +94,10 @@ const UserList = () => {
                     </a>
                   </div>
                 </td>
-                <td className="px-6 py-4 border border-gray-300">
+                <td className="px-6 py-4 ">
                   <button
                     onClick={() => handleBlockUnblock(user.id)}
-                    className={`w-28 px-4 py-1 rounded ${
+                    className={`w-24 px-4 py-1 rounded ${
                       user.is_active
                         ? "bg-green-500 text-white"
                         : "bg-red-500 text-white"

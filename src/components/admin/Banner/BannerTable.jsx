@@ -7,17 +7,22 @@ const BannerTable = ({banners, onEditClick, onDeleteClick}) => {
       <table className="min-w-[640px] bg-white border">
         <thead className="bg-gray-400 sticky top-0">
           <tr>
-            <th className="px-4 py-2 border">#</th>
-            <th className="px-4 py-2 border">Image</th>
-            <th className="px-4 py-2 border">Description</th>
-            <th className="px-4 py-2 border">Action</th>
+            <th className="px-4 py-2 ">#</th>
+            <th className="px-4 py-2 ">Image</th>
+            <th className="px-4 py-2 ">Description</th>
+            <th className="px-4 py-2 ">Action</th>
           </tr>
         </thead>
         <tbody>
           {banners.map((banner, idx) => (
-            <tr key={banner.id} className="border-t">
-              <td className="px-4 py-2 border">{idx + 1}</td>
-              <td className="px-4 py-2 border text-center">
+            <tr
+              key={banner.id}
+              className={` hover:bg-gray-200 ${
+                idx % 2 == 0 ? "bg-gray-100" : ""
+              }`}
+            >
+              <td className="px-4 py-2 ">{idx + 1}</td>
+              <td className="px-4 py-2  text-center">
                 {banner.image ? (
                   <img
                     src={banner.image}
@@ -28,8 +33,8 @@ const BannerTable = ({banners, onEditClick, onDeleteClick}) => {
                   <span>No image</span>
                 )}
               </td>
-              <td className="px-4 py-2 border">{banner.description}</td>
-              <td className="px-4 py-2 flex justify-center space-x-2">
+              <td className="px-4 py-2">{banner.description}</td>
+              <td className="px-4 py-2 flex justify-center space-x-2 mt-5">
                 <button onClick={() => onEditClick(banner)}>
                   <FaEdit />
                 </button>

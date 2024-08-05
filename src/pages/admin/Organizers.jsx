@@ -52,31 +52,26 @@ const Organizers = () => {
         <table className="min-w-full bg-white border border-gray-300 shadow-lg">
           <thead className="sticky top-0 bg-gray-400">
             <tr>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
-                #
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
+              <th className="px-6 py-3 text-left font-semibold">#</th>
+              <th className="px-6 py-3 text-left font-semibold">
                 Organizer Name
               </th>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
-                Email
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
-                Phone
-              </th>
-              <th className="px-6 py-3 border border-gray-300 text-left font-semibold">
-                Action
-              </th>
+              <th className="px-6 py-3 text-left font-semibold">Email</th>
+              <th className="px-6 py-3 text-left font-semibold">Phone</th>
+              <th className="px-6 py-3 text-left font-semibold">Action</th>
             </tr>
           </thead>
           <tbody>
             {organizers.map((organizer, idx) => (
-              <tr key={organizer.id} className="hover:bg-gray-100">
-                <td className="px-6 py-4 border border-gray-300">{idx + 1}</td>
-                <td className="px-6 py-4 border border-gray-300">
-                  {organizer.organizer_name}
-                </td>
-                <td className="px-6 py-4 border border-gray-300">
+              <tr
+                key={organizer.id}
+                className={` hover:bg-gray-200 ${
+                  idx % 2 == 0 ? "bg-gray-100" : ""
+                }`}
+              >
+                <td className="px-6 py-4 ">{idx + 1}</td>
+                <td className="px-6 py-4 ">{organizer.organizer_name}</td>
+                <td className="px-6 py-4 ">
                   <div className="flex">
                     <a
                       href={`mailto:${organizer.user.email}`}
@@ -86,7 +81,7 @@ const Organizers = () => {
                     </a>
                   </div>
                 </td>
-                <td className="px-6 py-4 border border-gray-300">
+                <td className="px-6 py-4 ">
                   <div className="flex">
                     <a
                       href={`tel:${organizer.user.phone_number}`}
@@ -96,10 +91,10 @@ const Organizers = () => {
                     </a>
                   </div>
                 </td>
-                <td className="px-6 py-4 border border-gray-300">
+                <td className="px-6 py-4">
                   <button
                     onClick={() => handleBlockUnblock(organizer.user.id)}
-                    className={`w-28 px-4 py-1 rounded ${
+                    className={`w-24 px-4 py-1 rounded ${
                       organizer.user.is_active
                         ? "bg-green-500 text-white"
                         : "bg-red-500 text-white"
