@@ -81,11 +81,11 @@ const CategoryList = () => {
         setCategories((prev) =>
           prev.map((cat) => (cat.id === response.data.id ? response.data : cat))
         );
-        showToast("Category updated successfully!","success");
+        showToast(`Category ${name} updated successfully!`,"success");
       } else {
         response = await addCategory(categoryData);
         setCategories((prev) => [...prev, response.data]);
-        showToast("Category added successfully!");
+        showToast(`Category ${name} added successfully!`);
       }
       setIsModalOpen(false);
     } catch (error) {

@@ -28,7 +28,7 @@ export const addBanner = async (bannerData) => {
   }
 };
 
-export const editBanner = async (id, bannerData, method) => {
+export const updateBanner = async (id, bannerData, method) => {
   try {
     const config = {
       headers: {

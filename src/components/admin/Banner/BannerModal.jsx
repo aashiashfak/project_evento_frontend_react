@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {addBanner, editBanner} from "../../../api/adminApi/AdminBanners";
 
-const BannerModal = ({banner, onClose, setBanners}) => {
+const BannerModal = ({banner, onClose, handleSubmit}) => {
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
@@ -17,45 +16,24 @@ const BannerModal = ({banner, onClose, setBanners}) => {
     }
   }, [banner]);
 
-  const handleSave = async () => {
-    let bannerData;
-
-    if (thumbnailFile) {
-      bannerData = new FormData();
-      bannerData.append("description", description);
-      bannerData.append("image", thumbnailFile);
-    } else {
-      bannerData = {description};
+  const handleSave = () => {
+    
+    if (description.trim() === ""){
+      setErrorMessage('Description is required')
+      return
     }
 
-    try {
-      if (banner) {
-        const response = await editBanner(
-          banner.id,
-          bannerData,
-          thumbnailFile ? "put" : "patch"
-        );
-        setBanners((prev) =>
-          prev.map((b) => (b.id === response.data.id ? response.data : b))
-        );
-      } else {
-        const response = await addBanner(bannerData);
-        setBanners((prev) => [...prev, response.data]);
-      }
-      onClose();
-    } catch (error) {
-      console.error("Error saving banner:", error);
-      if (error.response && error.response.data) {
-        const errors = error.response.data;
-        if (errors.non_field_errors) {
-          setErrorMessage(errors.non_field_errors.join(", "));
-        } else {
-          setErrorMessage(Object.values(errors).flat().join(", "));
-        }
-      } else {
-        setErrorMessage("An unexpected error occurred. Please try again.");
-      }
+    if (thumbnail === null){
+      setErrorMessage("Image is required")
+      return
     }
+
+    handleSubmit({
+      id: banner?.id,
+      description,
+      thumbnailFile,
+      setErrorMessage,
+    });
   };
 
   const handleThumbnailChange = (e) => {
