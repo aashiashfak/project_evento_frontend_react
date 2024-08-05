@@ -26,7 +26,9 @@ const CategoryModal = ({category, onClose, setCategories}) => {
     if (thumbnailFile) {
       // Create FormData if there's a file
       categoryData = new FormData();
-      categoryData.append("name", name);
+      if (originalName !== name) {
+        categoryData.append("name", name);
+      }
       categoryData.append("image", thumbnailFile);
     } else {
       // Regular object if no file
@@ -35,10 +37,10 @@ const CategoryModal = ({category, onClose, setCategories}) => {
 
     try {
       if (category) {
-        if (name === originalName) {
-          setErrorMessage("This is Current Category Name ");
-          return;
-        }
+        // if (name === originalName) {
+        //   setErrorMessage("This is Current Category Name ");
+        //   return;
+        // }
         const response = await editCategory(
           category.id,
           categoryData,
@@ -84,7 +86,7 @@ const CategoryModal = ({category, onClose, setCategories}) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center min-h-screen">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center min-h-screen z-20">
       <div className="bg-white p-6 rounded-md w-full max-w-md">
         <h2 className="text-xl font-semibold mb-4">
           {category ? "Edit Category" : "Add Category"}

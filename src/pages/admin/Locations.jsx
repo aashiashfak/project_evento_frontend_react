@@ -50,7 +50,7 @@ const LocationsList = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="px-4 pt-4">
       <div className="flex justify-between items-center bg-gray-800 rounded-t-xl p-4">
         <h1 className="text-xl font-semibold text-white">Locations List</h1>
         <button

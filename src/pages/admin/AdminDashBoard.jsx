@@ -71,23 +71,11 @@ const AdminDashBoard = () => {
   const renderStatus = (status) => {
     switch (status) {
       case "active":
-        return (
-          <span className="bg-green-500 text-white rounded-full px-2 py-1 w-48">
-            Active
-          </span>
-        );
+        return <h1 className="text-green-500 rounded-full">Active</h1>;
       case "disabled":
-        return (
-          <span className="bg-gray-500 text-white rounded-full px-2 py-1 w-48">
-            Disabled
-          </span>
-        );
+        return <h1 className="text-gray-500 rounded-full">Disabled</h1>;
       case "completed":
-        return (
-          <span className="bg-red-500 text-white rounded-full px-2 py-1 w-48">
-            Complete
-          </span>
-        );
+        return <h1 className="text-red-500 rounded-full">Complete</h1>;
       default:
         return status;
     }
@@ -95,7 +83,7 @@ const AdminDashBoard = () => {
 
   return (
     <div className="flex-grow flex flex-col overflow-hidden">
-      <div className="flex-grow p-6 relative">
+      <div className="flex-grow px-4 py-6 relative">
         <div className="flex items-center justify-center ">
           {isScrollable && (
             <button
@@ -147,10 +135,12 @@ const AdminDashBoard = () => {
         <div className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
           ALL EVENTS
         </div>
-        <div className="mt-4f overflow-x-auto shadow-xl">
-          <table className="min-w-full bg-white border">
-            <thead className="bg-gray-800 text-white text-left text-sm">
+        <div className=" overflow-x-auto shadow-xl overflow-y-auto h-[calc(100vh-170px)]">
+          <table className="min-w-full bg-white border text-sm ">
+            <thead className="bg-gray-800 text-white text-left  sticky top-0 z-10 " >
               <tr className="">
+                
+                <th className="px-4 py-2 border">#</th>
                 <th className="px-4 py-2 border">Event Name</th>
                 <th className="px-4 py-2 border">Organizer Name</th>
                 <th className="px-4 py-2 border">Start Date</th>
@@ -162,15 +152,16 @@ const AdminDashBoard = () => {
               </tr>
             </thead>
             <tbody>
-              {dashboardData.new_events.map((event) => (
-                <tr key={event.id} className="border-t">
+              {dashboardData.new_events.map((event,idx) => (
+                <tr key={event.id} className={ idx %2 == 0 ?"bg-gray-100 " : "" }>
+                  <td className="px-4 py-2 border">{idx+1}</td>
                   <td className="px-4 py-2 border">{event.event_name}</td>
                   <td className="px-4 py-2 border">{event.organizer_name}</td>
                   <td className="px-4 py-2 border">
                     {new Date(event.start_date).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 border">{event.location}</td>
-                  <td className="px-4 py-2 border text-center ">
+                  <td className="px-4 py-2 border ">
                     {renderStatus(event.status)}
                   </td>
                   <td className="px-4 py-2 border">
@@ -181,7 +172,7 @@ const AdminDashBoard = () => {
                   </td>
                   <td className="px-4 py-2 border">
                     <button
-                      className="bg-purple-500 text-white rounded-full px-4 py-1"
+                      className="bg-blue-500 text-white rounded-lg px-4 py-1"
                       onClick={() => navigate(`/event-details/${event.id}`)}
                     >
                       View
