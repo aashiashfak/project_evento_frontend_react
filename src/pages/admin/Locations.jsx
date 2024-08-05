@@ -3,7 +3,7 @@ import {FaPlus} from "react-icons/fa";
 import LocationEditModal from "../../components/admin/Location/LocationEditModal";
 import LocationTable from "../../components/admin/Location/LocationTable";
 import {listLocations} from "../../api/adminApi/AdminLocations" 
-import DeleteModal from "../../components/admin/Category/DeleteModal"; 
+import DeleteModal from "../../components/admin/DeleteModal/DeleteModal"; 
 import { deleteLocation } from "../../api/adminApi/AdminLocations"; 
 
 const LocationsList = () => {

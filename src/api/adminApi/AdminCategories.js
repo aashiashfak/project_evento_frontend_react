@@ -29,7 +29,7 @@ export const addCategory = async (categoryData) => {
 };
 
 //PUT or PATCH request for editing a category
-export const editCategory = async (id, categoryData, method) => {
+export const updateCategory = async (id, categoryData, method) => {
   try {
     const config = {
       headers: {

@@ -3,7 +3,7 @@ import {FaPlus} from "react-icons/fa";
 import BannerModal from "../../components/admin/Banner/BannerModal";
 import BannerTable from "../../components/admin/Banner/BannerTable";
 import {listBanners, deleteBanner} from "../../api/adminApi/AdminBanners";
-import DeleteModal from "../../components/admin/Category/DeleteModal";
+import DeleteModal from "../../components/admin/DeleteModal/DeleteModal";
 
 const BannerList = () => {
   const [banners, setBanners] = useState([]);

@@ -65,8 +65,8 @@ const BannerModal = ({banner, onClose, setBanners}) => {
 
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center min-h-screen z-30">
-      <div className="bg-white p-6 rounded-md w-full max-w-md ">
-        <h2 className="text-xl font-semibold mb-4">
+      <div className="bg-white p-6 rounded-md w-full max-w-md text-sm">
+        <h2 className="text-xl font-bold mb-4">
           {banner ? "Edit Banner" : "Add Banner"}
         </h2>
         <div className="mb-4">
@@ -95,7 +95,7 @@ const BannerModal = ({banner, onClose, setBanners}) => {
         <div className="text-sm text-red-600 p-2">
           {errorMessage && <p>{errorMessage}</p>}
         </div>
-        <div className="flex justify-center space-x-2">
+        <div className="flex justify-end space-x-2">
           <button
             className="bg-gray-300 px-4 py-2 rounded-md"
             onClick={onClose}
