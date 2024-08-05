@@ -20,6 +20,16 @@ const CategoryModal = ({category, onClose, handleSubmit}) => {
   }, [category]);
 
   const handleSave = () => {
+
+    if (name.trim() === "") {
+      setErrorMessage("Category Name is required");
+      return;
+    }
+    if (thumbnail === null) {
+      setErrorMessage("Image is required");
+      return;
+    }
+
     handleSubmit({
       id: category?.id,
       name,

@@ -21,7 +21,7 @@ export const addLocation = async (locationData) => {
   }
 };
 
-export const editLocation = async (id, locationData) => {
+export const updateLocation = async (id, locationData) => {
   try {
     const response = await axiosInstance.patch(
       `superuser/locations/${id}/`,

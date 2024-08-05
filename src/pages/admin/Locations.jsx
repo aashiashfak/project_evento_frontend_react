@@ -2,9 +2,16 @@ import React, {useState, useEffect} from "react";
 import {FaPlus} from "react-icons/fa";
 import LocationEditModal from "../../components/admin/Location/LocationEditModal";
 import LocationTable from "../../components/admin/Location/LocationTable";
-import {listLocations} from "../../api/adminApi/AdminLocations" 
+import {
+  addLocation,
+  listLocations,
+  updateLocation,
+} from "../../api/adminApi/AdminLocations"; 
 import DeleteModal from "../../components/admin/DeleteModal/DeleteModal"; 
 import { deleteLocation } from "../../api/adminApi/AdminLocations"; 
+import { showToast } from "../../utilities/tostify/toastUtils";
+
+
 
 const LocationsList = () => {
   const [locations, setLocations] = useState([]);
@@ -41,12 +48,39 @@ const LocationsList = () => {
   };
 
   const handleDeleteClick = (id, value) => {
-    console.log(id,value,'................................................')
     setDeleteObj({
       id,
       value,
     });
     setIsDeleteModalOpen(true);
+  };
+
+  const handleSubmit = async ({id, name, setErrorMessage}) => {
+    const locationData = {name};
+
+    try {
+      let response;
+      if (id) {
+        response = await updateLocation(id, locationData);
+        setLocations((prev) =>
+          prev.map((loc) => (loc.id === response.id ? response : loc))
+        );
+        showToast(`Location ${name} updated successfully!`);
+      } else {
+        response = await addLocation(locationData);
+        setLocations((prev) => [...prev, response]);
+        showToast(`Location ${name} added successfully!`);
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error saving location:", error);
+      if (error.response && error.response.data) {
+        const messages = Object.values(error.response.data).flat();
+        setErrorMessage(messages.join(" "));
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    }
   };
 
   return (
@@ -70,7 +104,7 @@ const LocationsList = () => {
         <LocationEditModal
           location={editLocation}
           onClose={handleCloseModal}
-          setLocations={setLocations}
+          handleSubmit={handleSubmit}
         />
       )}
       {isDeleteModalOpen && (
