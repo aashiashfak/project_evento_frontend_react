@@ -13,11 +13,13 @@ import {fetchDashboardresponse} from "../../api/adminApi/AdminDashboard";
 import "../../css/Global.css";
 import TopVendorsTable from "../../components/admin/Dashborad/TopVendorsTable";
 import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
+import PieChart from "../../components/admin/Dashborad/PieChart";
 
 const AdminDashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [statusData, setStatusData] = useState({});
   const scrollContainerRef = useRef(null);
   const [isScrollable, setIsScrollable] = useState(false);
   const navigate = useNavigate();
@@ -26,9 +28,22 @@ const AdminDashBoard = () => {
     const fetchDashboardData = async () => {
       try {
         const responseData = await fetchDashboardresponse();
-        console.log("responseData....of admin Dashboard", responseData);
         setDashboardData(responseData);
         setLoading(false);
+        console.log(responseData)
+
+        if (responseData.new_events) {
+          const statusCount = responseData.new_events.reduce((acc, event) => {
+            const {status} = event;
+            if (!acc[status]) {
+              acc[status] = 0;
+            }
+            acc[status] += 1;
+            return acc;
+          }, {});
+
+          setStatusData(statusCount);
+        }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
         setError(error);
@@ -146,6 +161,12 @@ const AdminDashBoard = () => {
               <TopVendorsTable vendors={dashboardData.top_vendors} />
             </div>
           </div>
+        </section>
+        <section className="mt-16">
+          <h1 className="font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
+            EVENT STATUS DISTRIBUTION
+          </h1>
+          <PieChart data={statusData} />
         </section>
         <h1 className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
           ALL EVENTS

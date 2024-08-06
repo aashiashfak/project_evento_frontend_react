@@ -6,7 +6,9 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css"; // You can choose different themes
 
 const BookingsChart = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // Format the initial date as a string
+  const initialDate = new Date().toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState(initialDate);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -53,21 +55,17 @@ const BookingsChart = () => {
   };
 
   useEffect(() => {
-    // Convert the selected date to UTC before sending it to the API
-    const utcDate = new Date(
-      Date.UTC(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate()
-      )
-    )
-      .toISOString()
-      .split("T")[0];
-    fetchData(utcDate);
+    fetchData(selectedDate);
   }, [selectedDate]);
 
   const handleDateChange = (date) => {
-    setSelectedDate(date[0]);
+    // Convert selected date to a string format that Flatpickr can read
+    const formattedDate = new Date(
+      Date.UTC(date[0].getFullYear(), date[0].getMonth(), date[0].getDate())
+    )
+      .toISOString()
+      .split("T")[0];
+    setSelectedDate(formattedDate);
   };
 
   const chartOptions = {
