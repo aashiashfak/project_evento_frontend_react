@@ -11,6 +11,8 @@ import {
 } from "react-icons/fa";
 import {fetchDashboardresponse} from "../../api/adminApi/AdminDashboard";
 import "../../css/Global.css";
+import TopVendorsTable from "../../components/admin/Dashborad/TopVendorsTable";
+import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
 
 const AdminDashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -132,9 +134,22 @@ const AdminDashBoard = () => {
             </button>
           )}
         </div>
-        <div className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
+        <section className="flex-col md:flex mt-16">
+          <div className="flex flex-col md:flex-row md:gap-2">
+            <div className="md:w-1/2">
+              <BookingsChart />
+            </div>
+            <div className="md:w-1/2">
+              <h1 className="mt-12 font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
+                TOP VENDORS
+              </h1>
+              <TopVendorsTable vendors={dashboardData.top_vendors} />
+            </div>
+          </div>
+        </section>
+        <h1 className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
           ALL EVENTS
-        </div>
+        </h1>
         <div className=" overflow-x-auto shadow-xl overflow-y-auto h-[calc(100vh-170px)]">
           <table className="min-w-full bg-white border text-sm ">
             <thead className="bg-gray-800 text-white text-left  sticky top-0 z-10 ">
@@ -165,9 +180,7 @@ const AdminDashBoard = () => {
                     {new Date(event.start_date).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 ">{event.location}</td>
-                  <td className="px-4 py-2  ">
-                    {renderStatus(event.status)}
-                  </td>
+                  <td className="px-4 py-2  ">{renderStatus(event.status)}</td>
                   <td className="px-4 py-2 ">
                     {calculateTotalTickets(event.ticket_types)}
                   </td>
