@@ -4,11 +4,17 @@ import {Navigate} from "react-router-dom";
 
 const RedirectAuthenticated = ({children}) => {
   const user = useSelector((state) => state.user);
-  console.log(user)
- 
+
+  console.log("entered in redirect authenticated");
 
   if (user.accessToken) {
-    return <Navigate to={"/"} />;
+    const redirectPath =
+      user.role === "admin"
+        ? "/admin/dashboard"
+        : user.role === "vendor"
+        ? "/vendor/dashboard"
+        : "/";
+    return <Navigate to={redirectPath} />;
   }
 
   return children;

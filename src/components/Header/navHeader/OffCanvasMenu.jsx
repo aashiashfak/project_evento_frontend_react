@@ -20,7 +20,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
     {path: "/all-events", label: "All Events", isDynamic: true},
     {path: "/about", label: "About Us"},
     {path: "/contact", label: "Contact Us"},
-    {path: "/list-your-events", label: "List Your Events"},
+    {path: "/vendor/login", label: "List Your Events"},
   ];
 
   const iconMap = {
@@ -28,7 +28,7 @@ const OffCanvasMenu = ({isVisible, onClose}) => {
     "/all-events": FaCalendarAlt,
     "/about": FaInfoCircle,
     "/contact": FaEnvelope,
-    "/list-your-events": FaListAlt,
+    "/vendor/login": FaListAlt,
   };
 
   return (

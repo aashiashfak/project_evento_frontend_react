@@ -1,13 +1,22 @@
 import {Route, Routes} from "react-router-dom";
-
-import React from 'react'
+import VendorSignUp from "../pages/vendor/VendorSignup"; 
+import VendorLoginRedirect from "../components/vendor/protecters/VendorLoginRedirect";
+import VendorDashboard from "../pages/vendor/VendorDashboard";
 
 const VendorRouter = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <Routes>
+      <Route
+        path="login"
+        element={
+          <VendorLoginRedirect>
+            <VendorSignUp />
+          </VendorLoginRedirect>
+        }
+      />
+      <Route path="dashboard" element={<VendorDashboard />} />
+    </Routes>
+  );
+};
 
-export default VendorRouter
+export default VendorRouter;

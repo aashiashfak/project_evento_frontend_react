@@ -9,7 +9,6 @@ const NavHeader = () => {
     {path: "/all-events", label: "All Events", isDynamic: true},
     {path: "/contact", label: "Contact"},
     {path: "/about", label: "About"},
-    {path: "/list-your-events", label: "List Your Events"},
   ];
 
   return (
@@ -32,9 +31,9 @@ const NavHeader = () => {
       </div>
       <div>
         <Link
-          to="/list-your-events"
+          to="/vendor/login"
           className={`mx-4 ${
-            location.pathname === "/list-your-events"
+            location.pathname === "/vendor/login"
               ? "text-violet-700 pointer-events-none font-semibold"
               : "text-black hover:text-violet-700"
           }`}

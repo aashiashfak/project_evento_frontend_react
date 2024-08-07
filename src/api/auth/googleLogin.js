@@ -21,21 +21,28 @@ export const handleGoogleLoginSuccess = async (
     console.log("response is okay");
 
     const data = response.data;
-    console.log('response data google ',data)
+    console.log("response data google ", data);
+
     dispatch(
       setUser({
         username: data.username,
         accessToken: data.access_token,
         refreshToken: data.refresh_token,
-        role:data.user.role,
-        profilePicture:data.user.profile_picture
+        role: data.user.role,
+        profilePicture: data.user.profile_picture,
       })
     );
-    navigate("/");
+
+    if (data.user.role === "admin") {
+      navigate("/admin/dashboard");
+    } else if (data.user.role === "vendor") {
+      navigate("/vendor/dashboard");
+    } else {
+      navigate("/");
+    }
 
     console.log("API response:", data);
 
-    // Handle the response from your API (e.g., store user info, redirect, etc.)
     return data;
   } catch (error) {
     if (error.response) {
