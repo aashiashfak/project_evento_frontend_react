@@ -10,6 +10,10 @@ const VendorLoginRedirect = ({children}) => {
     return <Navigate to="/vendor/" />;
   }
 
+  if (accessToken && role !== "vendor") {
+    return <Navigate to="/" />;
+  }
+
   return children;
 };
 
