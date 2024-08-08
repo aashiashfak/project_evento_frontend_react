@@ -1,44 +1,14 @@
 import React from "react";
-import {
-  FaUser,
-  FaHome,
-  FaThList,
-  FaMapMarkerAlt,
-  FaUsers,
-  FaUserTie,
-  FaRegEdit,
-} from "react-icons/fa";
-import {BiSolidCarousel} from "react-icons/bi";
+import {FaUser, FaRegEdit} from "react-icons/fa";
 import {useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {useLocation, useNavigate, Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-const navItems = [
-  {path: "/admin/dashboard", label: "Dashboard"},
-  {path: "/admin/categories", label: "Categories"},
-  {path: "/admin/locations", label: "Locations"},
-  {path: "/admin/banners", label: "Banners"},
-  {path: "/admin/users", label: "Users"},
-  {path: "/admin/organizers", label: "Organizers"},
-];
-
-const iconMap = {
-  "/admin/dashboard": FaHome,
-  "/admin/categories": FaThList,
-  "/admin/locations": FaMapMarkerAlt,
-  "/admin/banners": BiSolidCarousel,
-  "/admin/users": FaUsers,
-  "/admin/organizers": FaUserTie,
-};
-
-const Sidebar = ({isVisible}) => {
+const Sidebar = ({isVisible, navItems, iconMap}) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
   const baseUrl = "http://localhost:8000/";
   const navigate = useNavigate();
-
-  console.log("user from Redux store", user);
 
   return (
     <aside
@@ -101,6 +71,13 @@ const Sidebar = ({isVisible}) => {
 
 Sidebar.propTypes = {
   isVisible: PropTypes.bool.isRequired,
+  navItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  iconMap: PropTypes.objectOf(PropTypes.elementType).isRequired,
 };
 
 export default Sidebar;

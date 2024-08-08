@@ -26,7 +26,7 @@ const Organizers = () => {
       await blockOrganizer(organizerId);
       setOrganizers((prevOrganizers) =>
         prevOrganizers.map((organizer) =>
-          organizer.user.id === organizerId
+          organizer.user && organizer.user.id === organizerId
             ? {
                 ...organizer,
                 user: {...organizer.user, is_active: !organizer.user.is_active},
@@ -65,42 +65,50 @@ const Organizers = () => {
             {organizers.map((organizer, idx) => (
               <tr
                 key={organizer.id}
-                className={` hover:bg-gray-200 ${
+                className={`hover:bg-gray-200 ${
                   idx % 2 == 0 ? "bg-gray-100" : ""
                 }`}
               >
-                <td className="px-6 py-4 ">{idx + 1}</td>
-                <td className="px-6 py-4 ">{organizer.organizer_name}</td>
-                <td className="px-6 py-4 ">
+                <td className="px-6 py-4">{idx + 1}</td>
+                <td className="px-6 py-4">{organizer.organizer_name}</td>
+                <td className="px-6 py-4">
                   <div className="flex">
-                    <a
-                      href={`mailto:${organizer.user.email}`}
-                      className="text-blue-500 hover:underline"
-                    >
-                      {organizer.user.email}
-                    </a>
+                    {organizer.user?.email ? (
+                      <a
+                        href={`mailto:${organizer.user.email}`}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {organizer.user.email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
                   </div>
                 </td>
-                <td className="px-6 py-4 ">
+                <td className="px-6 py-4">
                   <div className="flex">
-                    <a
-                      href={`tel:${organizer.user.phone_number}`}
-                      className="text-blue-500 hover:underline"
-                    >
-                      {organizer.user.phone_number}
-                    </a>
+                    {organizer.user?.phone_number ? (
+                      <a
+                        href={`tel:${organizer.user.phone_number}`}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {organizer.user.phone_number}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    onClick={() => handleBlockUnblock(organizer.user.id)}
+                    onClick={() => handleBlockUnblock(organizer.user?.id)}
                     className={`w-24 px-4 py-1 rounded ${
-                      organizer.user.is_active
+                      organizer.user?.is_active
                         ? "bg-green-500 text-white"
                         : "bg-red-500 text-white"
                     }`}
                   >
-                    {organizer.user.is_active ? "Block" : "Unblock"}
+                    {organizer.user?.is_active ? "Block" : "Unblock"}
                   </button>
                 </td>
               </tr>

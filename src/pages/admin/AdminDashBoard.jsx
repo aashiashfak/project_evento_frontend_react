@@ -1,27 +1,18 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import DashboardCard from "../../components/admin/Dashborad/DashboardCard";
-import {
-  FaHome,
-  FaUserTie,
-  FaUsers,
-  FaThList,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import {FaHome, FaUserTie, FaUsers, FaThList} from "react-icons/fa";
 import {fetchDashboardresponse} from "../../api/adminApi/AdminDashboard";
 import "../../css/Global.css";
 import TopVendorsTable from "../../components/admin/Dashborad/TopVendorsTable";
 import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
 import PieChart from "../../components/admin/Dashborad/PieChart";
+import ScrollableDashboard from "../../components/ScrollDashbordCards/ScrollableDashboardCards";
 
 const AdminDashBoard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [statusData, setStatusData] = useState({});
-  const scrollContainerRef = useRef(null);
-  const [isScrollable, setIsScrollable] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +21,7 @@ const AdminDashBoard = () => {
         const responseData = await fetchDashboardresponse();
         setDashboardData(responseData);
         setLoading(false);
-        console.log(responseData)
+        console.log(responseData);
 
         if (responseData.new_events) {
           const statusCount = responseData.new_events.reduce((acc, event) => {
@@ -52,27 +43,6 @@ const AdminDashBoard = () => {
     };
     fetchDashboardData();
   }, []);
-
-  useEffect(() => {
-    const checkScrollable = () => {
-      if (scrollContainerRef.current) {
-        const {scrollWidth, clientWidth} = scrollContainerRef.current;
-        setIsScrollable(scrollWidth > clientWidth);
-      }
-    };
-
-    checkScrollable();
-    window.addEventListener("resize", checkScrollable);
-    return () => window.removeEventListener("resize", checkScrollable);
-  }, [dashboardData]);
-
-  const handleScrollLeft = () => {
-    scrollContainerRef.current.scrollBy({left: -250, behavior: "smooth"});
-  };
-
-  const handleScrollRight = () => {
-    scrollContainerRef.current.scrollBy({left: 250, behavior: "smooth"});
-  };
 
   const calculateTotalTickets = (ticketTypes) => {
     return ticketTypes.reduce((total, ticket) => total + ticket.count, 0);
@@ -98,57 +68,34 @@ const AdminDashBoard = () => {
     }
   };
 
+  const cards = [
+    {
+      icon: FaHome,
+      title: "Total Events",
+      value: dashboardData.total_events,
+      subValue: `${dashboardData.completed_events} Completed`,
+    },
+    {
+      icon: FaUserTie,
+      title: "Total Organizers",
+      value: dashboardData.total_vendors,
+    },
+    {
+      icon: FaUsers,
+      title: "Total Users",
+      value: dashboardData.total_users,
+    },
+    {
+      icon: FaThList,
+      title: "Categories",
+      value: dashboardData.total_categories,
+    },
+  ];
+
   return (
     <div className="flex-grow flex flex-col overflow-hidden">
       <div className="flex-grow px-4 py-6 relative">
-        <div className="flex items-center justify-center ">
-          {isScrollable && (
-            <button
-              onClick={handleScrollLeft}
-              className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
-            >
-              <FaChevronLeft />
-            </button>
-          )}
-          <div
-            ref={scrollContainerRef}
-            className="grid grid-flow-col auto-cols-max gap-4 overflow-x-auto pt-2 pb-5 px-4 hide-scrollbar"
-          >
-            {dashboardData && (
-              <>
-                <DashboardCard
-                  icon={FaHome}
-                  title="Total Events"
-                  value={dashboardData.total_events}
-                  subValue={`${dashboardData.completed_events} Completed`}
-                />
-                <DashboardCard
-                  icon={FaUserTie}
-                  title="Total Organizers"
-                  value={dashboardData.total_vendors}
-                />
-                <DashboardCard
-                  icon={FaUsers}
-                  title="Total Users"
-                  value={dashboardData.total_users}
-                />
-                <DashboardCard
-                  icon={FaThList}
-                  title="Categories"
-                  value={dashboardData.total_categories}
-                />
-              </>
-            )}
-          </div>
-          {isScrollable && (
-            <button
-              onClick={handleScrollRight}
-              className="p-2 bg-gray-300 hover:bg-gray-400 rounded-full shadow-md"
-            >
-              <FaChevronRight />
-            </button>
-          )}
-        </div>
+        <ScrollableDashboard cards={cards} />
         <section className="flex-col md:flex mt-16">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="md:w-1/2">

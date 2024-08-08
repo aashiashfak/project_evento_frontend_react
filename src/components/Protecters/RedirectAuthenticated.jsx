@@ -12,7 +12,7 @@ const RedirectAuthenticated = ({children}) => {
       user.role === "admin"
         ? "/admin/dashboard"
         : user.role === "vendor"
-        ? "/vendor/dashboard"
+        ? "/vendor/"
         : "/";
     return <Navigate to={redirectPath} />;
   }
