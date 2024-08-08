@@ -14,7 +14,7 @@ const VendorRouter = () => {
           </VendorLoginRedirect>
         }
       />
-      <Route path="dashboard" element={<VendorDashboard />} />
+      <Route path="/" element={<VendorDashboard />} />
     </Routes>
   );
 };

@@ -3,6 +3,10 @@ import {ClipLoader} from "react-spinners";
 import {resendOtp} from "../../../api/auth/resendOtp";
 import {verifyOtp} from "../../../api/vendorApi/vendorAuth";
 import {FaArrowLeft} from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../redux/userSlice";
+
+
 
 const OtpModal = ({vendorData, handleOtpSent}) => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -12,6 +16,7 @@ const OtpModal = ({vendorData, handleOtpSent}) => {
   const [isRunning, setIsRunning] = useState(true);
   const otpRefs = useRef([]);
   const {email} = vendorData;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let interval;
@@ -73,9 +78,21 @@ const OtpModal = ({vendorData, handleOtpSent}) => {
     setIsLoading(true);
     try {
       const enteredOtp = otp.join("");
-      await verifyOtp({otp: enteredOtp, vendorData});
+      const response = await verifyOtp({otp: enteredOtp, vendorData});
+      console.log("vendor signup response", response);
       handleOtpSent(false);
-      alert("OTP verified successfully!");
+      console.log('otp verified succussfully')
+      console.log("access token of vendor signup", response.access_token);
+      console.log("vendor user details", response.user);
+      dispatch(
+        setUser({
+          username: response.vendor.user.username || null,
+          accessToken: response.access_token,
+          refreshToken: response.refresh_token,
+          role: response.vendor.user.role,
+          profilePicture: response.vendor.user.profile_picture,
+        })
+      );
     } catch (error) {
       setMessage(error.response?.data?.error || "An error occurred");
     } finally {
@@ -102,7 +119,7 @@ const OtpModal = ({vendorData, handleOtpSent}) => {
       <div className="relative bg-white p-6 rounded-md shadow-md w-full max-w-sm h-72">
         <button
           className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
-          onClick={()=>handleOtpSent(false)}
+          onClick={() => handleOtpSent(false)}
         >
           <FaArrowLeft size={20} />
         </button>
