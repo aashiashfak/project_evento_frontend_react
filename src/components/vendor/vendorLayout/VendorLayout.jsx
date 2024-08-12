@@ -6,14 +6,12 @@ import {FaHome, FaRegListAlt} from "react-icons/fa";
 
 const vendorNavItems = [
   {path: "/vendor/", label: "Dashboard"},
-  {path: "/vendor/products", label: "Products"},
-  {path: "/vendor/orders", label: "Orders"},
+  {path: "/vendor/events", label: "Events"},
 ];
 
 const vendorIconMap = {
   "/vendor/": FaHome,
-  "/vendor/products": FaRegListAlt,
-  "/vendor/orders": FaRegListAlt,
+  "/vendor/events": FaRegListAlt,
 };
 
 const VendorLayout = ({isSidebarVisible, onToggleSidebar}) => {

@@ -4,6 +4,10 @@ import VendorLoginRedirect from "../components/vendor/protecters/VendorLoginRedi
 import VendorDashboard from "../pages/vendor/VendorDashboard";
 import VendorProtectedRoute from "../components/vendor/protecters/VendorProtectedRoute";
 import VendorLayout from "../components/vendor/vendorLayout/VendorLayout";
+import Events from "../pages/vendor/Events";
+import CreateEventPage from "../pages/vendor/EventCreate";
+
+
 
 const VendorRouter = () => {
   return (
@@ -25,6 +29,8 @@ const VendorRouter = () => {
         }
       >
         <Route path="/" element={<VendorDashboard />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/add-events" element={<CreateEventPage />} />
       </Route>
     </Routes>
   );

@@ -5,9 +5,8 @@ import CategoryTable from "../../components/admin/Category/CategoryTable";
 import {categoryList} from "../../api/adminApi/AdminCategories";
 import DeleteModal from "../../components/admin/DeleteModal/DeleteModal";
 import {deleteCategory} from "../../api/adminApi/AdminCategories";
-import { showToast } from "../../utilities/tostify/toastUtils";
-import { addCategory, updateCategory } from "../../api/adminApi/AdminCategories";
-
+import {showToast} from "../../utilities/tostify/toastUtils";
+import {addCategory, updateCategory} from "../../api/adminApi/AdminCategories";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -81,7 +80,7 @@ const CategoryList = () => {
         setCategories((prev) =>
           prev.map((cat) => (cat.id === response.data.id ? response.data : cat))
         );
-        showToast(`Category ${name} updated successfully!`,"success");
+        showToast(`Category ${name} updated successfully!`, "success");
       } else {
         response = await addCategory(categoryData);
         setCategories((prev) => [...prev, response.data]);
@@ -105,18 +104,16 @@ const CategoryList = () => {
   return (
     <div className="px-4 pt-4">
       <section>
-        {
-          <div className="flex justify-between items-center  bg-gray-800 rounded-t-xl p-4">
-            <h1 className="text-xl font-semibold text-white">Category List</h1>
-            <button
-              className="bg-gray-400 bg-opacity-50 text-white rounded-full px-4 py-1 flex items-center"
-              onClick={handleAddClick}
-            >
-              <FaPlus className="mr-2" />
-              Add
-            </button>
-          </div>
-        }
+        <div className="flex justify-between items-center  bg-gray-800 rounded-t-xl p-4">
+          <h1 className="text-xl font-semibold text-white">Category List</h1>
+          <button
+            className="bg-gray-400 bg-opacity-50 text-white rounded-full px-4 py-1 flex items-center"
+            onClick={handleAddClick}
+          >
+            <FaPlus className="mr-2" />
+            Add
+          </button>
+        </div>
 
         <CategoryTable
           categories={categories}
