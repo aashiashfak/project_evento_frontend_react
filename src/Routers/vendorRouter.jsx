@@ -5,7 +5,7 @@ import VendorDashboard from "../pages/vendor/VendorDashboard";
 import VendorProtectedRoute from "../components/vendor/protecters/VendorProtectedRoute";
 import VendorLayout from "../components/vendor/vendorLayout/VendorLayout";
 import Events from "../pages/vendor/Events";
-import CreateEventPage from "../pages/vendor/EventCreate";
+import EventPage from "../pages/vendor/EventPage";
 
 
 
@@ -30,7 +30,8 @@ const VendorRouter = () => {
       >
         <Route path="/" element={<VendorDashboard />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/add-events" element={<CreateEventPage />} />
+        <Route path="/add-event" element={<EventPage />} />
+        <Route path="/edit-event/:eventId" element={<EventPage />} />
       </Route>
     </Routes>
   );

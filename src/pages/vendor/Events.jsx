@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getVendorEvents} from "../../api/vendorApi/vendorEvents";
-import {FaPlus} from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrash} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 
 const Events = () => {
@@ -21,8 +21,10 @@ const Events = () => {
   };
 
   const handleAddClick = () => {
-    navigate("/vendor/add-events");
+    navigate("/vendor/add-event");
   };
+
+  
 
   const calculateTotalTickets = (ticketTypes) => {
     return ticketTypes.reduce((total, ticket) => total + ticket.count, 0);
@@ -104,7 +106,17 @@ const Events = () => {
                 <td className="px-4 py-2">
                   {calculateTotalSoldTickets(event.ticket_types)}
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-2 py-2">
+                  <div className="flex "></div>
+                  <button
+                    className="p-2 bg-gray-300 rounded-md mr-3"
+                    onClick={() => navigate(`/vendor/edit-event/${event.id}`)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button className="p-2 bg-gray-300 rounded-md mr-3">
+                    <FaTrash />
+                  </button>
                   <button
                     className="bg-blue-500 text-white rounded-lg px-4 py-1"
                     onClick={() => navigate(`/event-details/${event.id}`)}

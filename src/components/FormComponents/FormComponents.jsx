@@ -1,13 +1,15 @@
 import React from "react";
 
 // Input Component
-const Input = ({id, type = "text", placeholder, ...rest}) => {
+const Input = ({id, width, type = "text", placeholder, ...rest}) => {
   return (
     <input
       id={id}
       type={type}
       placeholder={placeholder}
-      className="border border-gray-300 p-2 rounded-md w-full"
+      className={`border-t-0 border-gray-300 p-2 rounded-md border-b-2 shadow-md focus:ring-1 outline-none focus:ring-gray-300 ${
+        width ? width : "w-full"
+      }`}
       {...rest}
     />
   );
@@ -30,7 +32,7 @@ const Select = ({id, children, ...rest}) => {
   return (
     <select
       id={id}
-      className="border border-gray-300 p-2 rounded-md w-full"
+      className="border-b-2 border  border-t-0 border-gray-300 p-2 shadow-md rounded-md w-full outline-none focus:ring-1 focus:ring-gray-300"
       {...rest}
     >
       {children}
@@ -44,7 +46,7 @@ const Textarea = ({id, placeholder, ...rest}) => {
     <textarea
       id={id}
       placeholder={placeholder}
-      className="border border-gray-300 p-2 rounded-md w-full"
+      className="border-b-2 border-t-0 border-gray-300 p-2 rounded-md w-full border shadow-md outline-none focus:ring-1 focus:ring-gray-300"
       rows="4"
       {...rest}
     />
@@ -52,12 +54,13 @@ const Textarea = ({id, placeholder, ...rest}) => {
 };
 
 // Button Component
-const Button = ({type = "button", children, onClick}) => {
+const Button = ({type = "button", width, children, onClick}) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      className={`bg-gray-400 text-white p-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+        width && width }`}
     >
       {children}
     </button>
