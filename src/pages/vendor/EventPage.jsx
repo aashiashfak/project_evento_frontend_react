@@ -34,61 +34,57 @@ const EventPage = () => {
       },
     ],
   });
+
   const [loading, setLoading] = useState(true);
-  const baseUrl ="http://localhost:8000/"
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          if (eventId) {
-            const response = await axiosInstance.get(
-              `vendors/vendor/event/${eventId}/`
-            );
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (eventId) {
+          const response = await axiosInstance.get(
+            `vendors/vendor/event/${eventId}/`
+          );
 
-            const eventData = response.data;
+          const eventData = response.data;
 
-            // Convert datetime to date for the date fields
-            const startDate = eventData.start_date
-              ? eventData.start_date.split("T")[0]
-              : "";
-            const endDate = eventData.end_date
-              ? eventData.end_date.split("T")[0]
-              : "";
+          // Convert datetime to match input fields
+          const startDate = eventData.start_date
+            ? new Date(eventData.start_date).toISOString().slice(0, 16)
+            : "";
+          const endDate = eventData.end_date
+            ? new Date(eventData.end_date).toISOString().slice(0, 16)
+            : "";
 
-            setInitialValues((prevValues) => ({
-              ...prevValues,
-              ...eventData,
-              start_date: startDate,
-              end_date: endDate,
-              event_img_1: eventData.event_img_1, // Set the image file path as value
-              ticket_types: eventData.ticket_types.map((ticket) => ({
-                ...ticket,
-                ticket_image: ticket.ticket_image, // Set the image file path as value
-              })),
-            }));
-          }
-
-          const [locationResponse, categoryResponse, venueResponse] =
-            await Promise.all([
-              axiosInstance.get("events/locations/"),
-              axiosInstance.get("events/categories/"),
-              axiosInstance.get("events/venues/"),
-            ]);
-
-          setLocations(locationResponse.data);
-          setCategories(categoryResponse.data);
-          setVenues(venueResponse.data);
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
-          toast.error("Failed to fetch data.");
-        } finally {
-          setLoading(false);
+          setInitialValues((prevValues) => ({
+            ...prevValues,
+            ...eventData,
+            start_date: startDate,
+            end_date: endDate,
+          }));
         }
-      };
 
-      fetchData();
-    }, [eventId]);
+        const [locationResponse, categoryResponse, venueResponse] =
+          await Promise.all([
+            axiosInstance.get("events/locations/"),
+            axiosInstance.get("events/categories/"),
+            axiosInstance.get("events/venues/"),
+          ]);
 
-  const handleFormSubmit = async (values, actions) => {
+        setLocations(locationResponse.data);
+        setCategories(categoryResponse.data);
+        setVenues(venueResponse.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        toast.error("Failed to fetch data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [eventId]);
+
+  const handleFormSubmit = async (values, actions , ) => {
     try {
       let response;
       if (eventId) {
