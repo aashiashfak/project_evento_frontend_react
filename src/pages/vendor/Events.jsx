@@ -75,6 +75,7 @@ const Events = () => {
               <th className="px-4 py-2">Total Count</th>
               <th className="px-4 py-2">Sold Count</th>
               <th className="px-4 py-2">Action</th>
+              <th className="px-4 py-2">View</th>
             </tr>
           </thead>
           <tbody>
@@ -117,11 +118,21 @@ const Events = () => {
                     <button className="p-2 bg-gray-300 rounded-md mr-3">
                       <FaTrash />
                     </button>
+                  </div>
+                </td>
+                <td className="px-2 py-2 truncate">
+                  <div className="flex flex-col ">
                     <button
-                      className="bg-blue-500 text-white rounded-lg px-4 py-1"
+                      className="bg-blue-500 text-white rounded-lg px-4 py-1 mb-2"
                       onClick={() => navigate(`/event-details/${event.id}`)}
                     >
                       View
+                    </button>
+                    <button
+                      className="bg-blue-500 text-white rounded-lg px-4 py-1"
+                      onClick={() => navigate(`/event/tickets}`)}
+                    >
+                      View tickets
                     </button>
                   </div>
                 </td>

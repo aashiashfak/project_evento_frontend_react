@@ -3,6 +3,8 @@ import EventForm from "../../components/vendor/EventForm/EventForm";
 import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axiosInstance from "../../utilities/axios/axiosInstance";
+import PageNotFound from "../../components/Error/PageNotFound";
+
 
 const EventPage = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const EventPage = () => {
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [venues, setVenues] = useState([]);
+  const [eventNotFound , setEventNotFound] = useState(false)
   const [initialValues, setInitialValues] = useState({
     event_name: "",
     categories: [],
@@ -76,6 +79,10 @@ const EventPage = () => {
       } catch (error) {
         console.error("Failed to fetch data:", error);
         toast.error("Failed to fetch data.");
+        if (eventId){
+          setEventNotFound(true)
+        }
+        
       } finally {
         setLoading(false);
       }
@@ -85,14 +92,20 @@ const EventPage = () => {
   }, [eventId]);
 
   const handleFormSubmit = async (values, actions , ) => {
+    
+    
     try {
       let response;
       if (eventId) {
-        response = await axiosInstance.put(`/events/${eventId}/`, values, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        response = await axiosInstance.put(
+          `/vendors/vendor/event/${eventId}/`,
+          values,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         toast.success("Event updated successfully!");
       } else {
         response = await axiosInstance.post(
@@ -129,6 +142,10 @@ const EventPage = () => {
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading indicator
+  }
+
+  if (eventNotFound){
+    return <PageNotFound/>
   }
 
   return (
