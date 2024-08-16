@@ -42,9 +42,6 @@ const EventForm = ({
   console.log("initaivalues in Event Form component", initialValues);
   console.log("image previews", imagePreviews);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   const validationSchema = Yup.object({
     event_name: Yup.string()
       .required("Event name is required")
@@ -52,20 +49,8 @@ const EventForm = ({
     categories: Yup.array()
       .of(Yup.string())
       .min(1, "At least one category is required"),
-    start_date: Yup.date()
-      .required("Start date is required")
-      .min(today, "Start date cannot be before today")
-      .when("end_date", (end_date, schema) =>
-        end_date
-          ? schema.max(
-              new Date(end_date),
-              "Start date cannot be after end date"
-            )
-          : schema
-      ),
-    end_date: Yup.date()
-      .required("End date is required")
-      .min(today, "End date cannot be before today"),
+    start_date: Yup.date().required("Start date is required"),
+    end_date: Yup.date().required("End date is required"),
     time: Yup.string().required("Time is required"),
     location: Yup.string().required("Location is required"),
     venue: isAddingVenue

@@ -130,7 +130,9 @@ const Events = () => {
                     </button>
                     <button
                       className="bg-blue-500 text-white rounded-lg px-4 py-1"
-                      onClick={() => navigate(`/event/tickets}`)}
+                      onClick={() => 
+                        navigate(`/vendor/event-tickets/${event.id}/${event.event_name}/`)
+                      }
                     >
                       View tickets
                     </button>
