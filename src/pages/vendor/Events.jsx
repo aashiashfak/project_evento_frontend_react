@@ -87,7 +87,12 @@ const Events = () => {
                 }`}
               >
                 <td className="px-4 py-2">{idx + 1}</td>
-                <td className="px-4 py-2">{event.event_name}</td>
+                <td
+                  className="px-4 py-2 underline truncate hover:text-blue-600"
+                  onClick={() => navigate(`/vendor/edit-event/${event.id}`)}
+                >
+                  {event.event_name}
+                </td>
                 <td className="px-4 py-2">
                   <img
                     className="w-20 h-20 rounded-md"
@@ -115,9 +120,6 @@ const Events = () => {
                     >
                       <FaEdit />
                     </button>
-                    <button className="p-2 bg-gray-300 rounded-md mr-3">
-                      <FaTrash />
-                    </button>
                   </div>
                 </td>
                 <td className="px-2 py-2 truncate">
@@ -130,8 +132,10 @@ const Events = () => {
                     </button>
                     <button
                       className="bg-blue-500 text-white rounded-lg px-4 py-1"
-                      onClick={() => 
-                        navigate(`/vendor/event-tickets/${event.id}/${event.event_name}/`)
+                      onClick={() =>
+                        navigate(
+                          `/vendor/event-tickets/${event.id}/${event.event_name}/`
+                        )
                       }
                     >
                       View tickets

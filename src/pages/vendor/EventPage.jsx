@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import axiosInstance from "../../utilities/axios/axiosInstance";
 import PageNotFound from "../../components/Error/PageNotFound";
+import DeleteModal from "../../components/admin/DeleteModal/DeleteModal";
 
 
 const EventPage = () => {
@@ -15,6 +16,7 @@ const EventPage = () => {
   const [venues, setVenues] = useState([]);
   const [eventNotFound , setEventNotFound] = useState(false)
   const [initialValues, setInitialValues] = useState({
+    id:"",
     event_name: "",
     categories: [],
     start_date: "",

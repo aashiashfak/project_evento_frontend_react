@@ -187,9 +187,11 @@ const EventTickets = () => {
                   <img
                     className="w-20 h-20 rounded-md"
                     src={
-                      ticket.ticket_image.startsWith(baseUrl)
-                        ? ticket.ticket_image
-                        : `${baseUrl}${ticket.ticket_image}`
+                      ticket.ticket_image
+                        ? ticket.ticket_image.startsWith(baseUrl)
+                          ? ticket.ticket_image
+                          : `${baseUrl}${ticket.ticket_image}`
+                        : ""
                     }
                     alt={ticket.type_name}
                   />

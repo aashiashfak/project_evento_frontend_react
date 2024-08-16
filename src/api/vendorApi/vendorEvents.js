@@ -8,3 +8,12 @@ export const getVendorEvents = async () => {
     throw error;
   }
 };
+
+export const deleteEvents = async (eventId) => {
+  try {
+    const response = await axiosInstance.delete(`vendors/vendor/event/${eventId}/`);
+    console.log(response);
+  } catch (error) {
+    throw error;
+  }
+};

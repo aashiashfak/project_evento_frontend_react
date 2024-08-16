@@ -54,13 +54,23 @@ const Textarea = ({id, placeholder, ...rest}) => {
 };
 
 // Button Component
-const Button = ({type = "button", width, children, onClick}) => {
+const Button = ({
+  type = "button",
+  width,
+  children,
+  onClick,
+  backgroundColor,
+  hover,
+}) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`bg-gray-400 text-white p-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
-        width && width }`}
+      className={`${
+        backgroundColor ? backgroundColor : "bg-gray-400"
+      } text-white p-2 rounded-md ${hover ? hover : "hover:bg-gray-600"} ${
+        width && width
+      } `}
     >
       {children}
     </button>

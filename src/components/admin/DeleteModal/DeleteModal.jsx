@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DeleteModal = ({
   identifier,
@@ -7,10 +8,20 @@ const DeleteModal = ({
   deleteObj,
   deleteApi,
 }) => {
+  const navigate = useNavigate()
   const handleDelete = async () => {
     try {
-      await deleteApi(deleteObj.eventId, deleteObj.id);
-      setList((prev) => prev.filter((item) => item.id !== deleteObj.id));
+      if (identifier === "Ticket_Type") {
+        await deleteApi(deleteObj.eventId, deleteObj.id);
+      } else {
+        await deleteApi(deleteObj.id);
+        if (identifier === 'Event'){
+          navigate('/vendor/events')
+        }
+      }
+      if (setList){
+        setList((prev) => prev.filter((item) => item.id !== deleteObj.id));
+      }
       onDeleteModalClose(false);
     } catch (error) {
       console.error(`Error deleting ${identifier} ${deleteObj.value}:`, error);
