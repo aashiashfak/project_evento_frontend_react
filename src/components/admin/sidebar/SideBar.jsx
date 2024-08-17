@@ -38,7 +38,7 @@ const Sidebar = ({isVisible, navItems, iconMap}) => {
           </p>
           <button
             className="text-white rounded"
-            onClick={() => navigate("/admin/profile")}
+            onClick={() => user.role === "admin" ? navigate("/admin/profile") : navigate('/vendor/profile')}
           >
             <FaRegEdit />
           </button>
@@ -53,8 +53,8 @@ const Sidebar = ({isVisible, navItems, iconMap}) => {
               <li key={item.path} className="mb-2">
                 <Link
                   to={item.path}
-                  className={`flex items-center p-2 text-white rounded ${
-                    isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                  className={`flex items-center p-2 rounded ${
+                    isActive ? "bg-gray-700 text-blue-500 " : "hover:bg-gray-700 text-white"
                   }`}
                 >
                   <Icon className="mr-2" />

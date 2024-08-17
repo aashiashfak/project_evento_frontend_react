@@ -9,7 +9,7 @@ import {
   updateUsername,
 } from "../../api/userProfile/UserProfileApi";
 import {showToast} from "../../utilities/tostify/toastUtils";
-import Header from "../../components/Header/Header";
+
 
 const UserProfileBox = () => {
   // const [userProfile, setUserProfile] = useState(null);
@@ -104,11 +104,11 @@ const UserProfileBox = () => {
 
   return (
     <div>
-      <div className="px-6 sm:px-10 md:px-16 lg:px-20 mx-auto py-12">
-        <h1 className="text-violet-700 font-semibold text-2xl mb-2">
-          ACCOUNT DETAILS
-        </h1>
-        <div className="flex flex-col md:flex-row items-center p-4 rounded justify-center shadow-xl">
+      <div className="px-6 sm:px-10 md:px-16 xl:px-20 mx-auto py-12">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">
+          Account Details
+        </h2>
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center p-4 rounded justify-center shadow-xl">
           <div className="px-3 mt-4 relative">
             <div className="py-6 m-auto">
               {profilePicture ? (
@@ -137,11 +137,11 @@ const UserProfileBox = () => {
               onChange={handleProfilePictureChange}
             />
           </div>
-          <div className="py-8 px-6 text-gray-600 md:ml-6 w-full md:w-1/3">
+          <div className="py-8 px-6 text-gray-600 w-full md:ml-6 min-w-min md:w-1/3">
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 mb-1 ">User Name:</p>
+                  <p className="font-semibold mr-2 mb-1 ">User Name</p>
                   {!isInlineEdit && (
                     <button
                       className="text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
@@ -175,15 +175,15 @@ const UserProfileBox = () => {
                   </div>
                 ) : (
                   <div className="border border-gray-400 rounded border-opacity-45 shadow-md px-2 py-1">
-                    <p className="">{username||"Guest"}</p>
+                    <p className="">{username || "Guest"}</p>
                   </div>
                 )}
               </div>
             </div>
-            <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
+            <div className="flex flex-col lg:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 mb-1">Email Address:</p>
+                  <p className="font-semibold mr-2 mb-1">Email Address</p>
                   <button
                     className="text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
                     onClick={() => openModal("email", email)}
@@ -199,7 +199,7 @@ const UserProfileBox = () => {
             <div className="flex flex-col md:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">
-                  <p className="font-semibold mr-2 mb-1">Mobile Number:</p>
+                  <p className="font-semibold mr-2 mb-1">Mobile Number</p>
                   <button
                     className=" text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700 mb-2"
                     onClick={() => openModal("phone", phoneNumber)}
