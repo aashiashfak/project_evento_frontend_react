@@ -30,7 +30,9 @@ const VendorSignUp = () => {
     },
     validationSchema: Yup.object({
       organizer_name: Yup.string().required("Organizer name is required"),
-      pan_card_number: Yup.string().required("PAN card number is required"),
+      pan_card_number: Yup.string()
+        .required("PAN card number is required")
+        .max(10, "PAN card number should not be more than 10 characters"),
       address: Yup.string().required("Address is required"),
       contact_name: Yup.string().required("Contact name is required"),
       email: Yup.string()
@@ -40,8 +42,18 @@ const VendorSignUp = () => {
       benificiary_name: Yup.string().required("Beneficiary name is required"),
       account_type: Yup.string().required("Account type is required"),
       bank_name: Yup.string().required("Bank name is required"),
-      account_number: Yup.string().required("Account number is required"),
-      IFSC_code: Yup.string().required("IFSC code is required"),
+      account_number: Yup.string()
+        .required("Account number is required")
+        .matches(
+          /^\d{1,16}$/,
+          "Account number should be between 1 and 16 digits"
+        ),
+      IFSC_code: Yup.string()
+        .required("IFSC code is required")
+        .matches(
+          /^[A-Z]{4}0[A-Z0-9]{6}$/,
+          "IFSC code should be exactly 11 characters, starting with 4 uppercase letters, followed by 0, and ending with 6 alphanumeric characters"
+        ),
       password: Yup.string().required("Password is required"),
       confirm_password: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")

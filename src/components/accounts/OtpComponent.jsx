@@ -99,7 +99,21 @@ const OtpComponent = (props) => {
           profilePicture:userData.user.profile_picture
         })
       );
-      navigate("/");
+       if (userData.user.role) {
+         switch (userData.user.role) {
+           case "admin":
+             navigate("/admin/dashboard/");
+             break;
+           case "vendor":
+             navigate("/vendor/");
+             break;
+           default:
+             navigate("/");
+             break;
+         }
+       } else {
+         navigate("/");
+       }
     } catch (error) {
       setMessage(error.response?.data?.error || "An error occurred");
     } finally {

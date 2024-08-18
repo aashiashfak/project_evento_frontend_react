@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from "react";
 import {Route, Routes} from "react-router-dom";
-import Spinner from "../components/spinner/Spinner";
+import { Spinner } from "../components/spinner/Spinner";
 
 const EmailSignIn = lazy(() => import("../pages/EmailSignIn"));
 const MobileSignIn = lazy(() => import("../pages/MobileSignIn"));

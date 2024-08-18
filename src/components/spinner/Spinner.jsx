@@ -1,5 +1,5 @@
 import React from "react";
-import { ClipLoader } from "react-spinners";
+import { ClipLoader, GridLoader } from "react-spinners";
 
 
 const Spinner = () => {
@@ -10,4 +10,12 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+
+const LoaderComponent = () => (
+  <div className="flex justify-center items-center h-screen">
+    <GridLoader color="#7C3AED" size={23} />
+  </div>
+);
+
+
+export {Spinner, LoaderComponent};

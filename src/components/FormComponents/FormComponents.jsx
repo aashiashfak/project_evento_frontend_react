@@ -32,7 +32,7 @@ const Select = ({id, children, ...rest}) => {
   return (
     <select
       id={id}
-      className="border-b-2 border  border-t-0 border-gray-300 p-2 shadow-md rounded-md w-full outline-none focus:ring-1 focus:ring-gray-300"
+      className="border border-b-2  border-t-0 border-gray-300 p-2 shadow-md rounded-md w-full outline-none focus:ring-1 focus:ring-gray-300"
       {...rest}
     >
       {children}

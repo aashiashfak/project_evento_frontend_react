@@ -8,3 +8,12 @@ export const getVendorProfile = async () => {
     throw error;
   }
 };
+
+export const editVendorProfile = async (vendorData) => {
+  try {
+    const response = await axiosInstance.put("vendors/vendor/profile/",vendorData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
