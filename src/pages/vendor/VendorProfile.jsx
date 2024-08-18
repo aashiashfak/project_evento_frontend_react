@@ -15,6 +15,7 @@ import {
   Button,
   Select,
 } from "../../components/FormComponents/FormComponents";
+import { showToast } from "../../utilities/tostify/toastUtils";
 
 const VendorProfile = () => {
   const [loading, setLoading] = useState(true);
@@ -73,6 +74,7 @@ const VendorProfile = () => {
 
         console.log(response);
         setIsEdit(false);
+        showToast(`orgainzer details updated succussfully`, "success");
       } catch (error) {
         if (error.response && error.response.data) {
           const backendErrors = error.response.data;

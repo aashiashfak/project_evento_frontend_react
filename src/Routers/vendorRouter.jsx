@@ -8,6 +8,7 @@ import Events from "../pages/vendor/Events";
 import EventPage from "../pages/vendor/EventPage";
 import EventTickets from "../pages/vendor/EventTickets";
 import VendorProfile from "../pages/vendor/VendorProfile";
+import BookedUsers from "../pages/vendor/BookedUsers";
 
 
 
@@ -33,13 +34,13 @@ const VendorRouter = () => {
         <Route path="/" element={<VendorDashboard />} />
         <Route path="/profile" element={<VendorProfile />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/booked-users" element={<BookedUsers />} />
         <Route path="/add-event" element={<EventPage />} />
         <Route path="/edit-event/:eventId" element={<EventPage />} />
         <Route
           path="/event-tickets/:eventId/:eventName"
           element={<EventTickets />}
         />
-        
       </Route>
     </Routes>
   );
