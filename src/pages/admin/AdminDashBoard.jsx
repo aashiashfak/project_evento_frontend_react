@@ -98,10 +98,10 @@ const AdminDashBoard = () => {
         <ScrollableDashboard cards={cards} />
         <section className="flex-col md:flex mt-16">
           <div className="flex flex-col md:flex-row md:gap-2">
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 ">
               <BookingsChart />
             </div>
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 ">
               <h1 className="mt-12 font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
                 TOP VENDORS
               </h1>

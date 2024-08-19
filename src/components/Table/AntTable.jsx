@@ -15,7 +15,6 @@ const AntTable = ({data, columns, loading, pagination, onChange}) => {
             headerFilterHoverBg: "#4a5568", // Tailwind's bg-gray-700 color for filter button hover
             headerSplitColor: "#ffffff", // White color for header split border
             fixedHeaderSortActiveBg: "#4a5568", // Background color for fixed header when sorted
-            fixedHeaderSortActiveBg: "#4a5568", // Background color for fixed header when sorted
           },
         },
       }}

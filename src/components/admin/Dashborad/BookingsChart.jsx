@@ -4,8 +4,13 @@ import "chart.js/auto";
 import axiosInstance from "../../../utilities/axios/axiosInstance";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css"; // You can choose different themes
+import {useSelector} from "react-redux";
 
 const BookingsChart = () => {
+  // Get the user's role from Redux
+  const userRole = useSelector((state) => state.user.role);
+
+
   // Format the initial date as a string
   const initialDate = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(initialDate);
@@ -24,9 +29,13 @@ const BookingsChart = () => {
 
   const fetchData = async (date) => {
     try {
-      const response = await axiosInstance.get(
-        `/superuser/events/bookings-per-day/${date}`
-      );
+      // Determine the API endpoint based on the user's role
+      const endpoint =
+        userRole === "admin"
+          ? `/superuser/events/bookings-per-day/${date}`
+          : `vendors/vendor/ticket-booking-data/${date}`;
+
+      const response = await axiosInstance.get(endpoint);
       const data = response.data;
 
       const labels = data.map((item) => {

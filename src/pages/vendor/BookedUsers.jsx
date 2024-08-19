@@ -6,12 +6,26 @@ const BookedUsersTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
+  // Debounce the search term by 1 second
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+
+    // Cleanup the timeout if the searchTerm changes
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
+  // Fetch data whenever the debounced search term changes
   useEffect(() => {
     const fetchBookedUsers = async () => {
       try {
         setLoading(true);
-        const response = await getBookedUsers(searchTerm);
+        const response = await getBookedUsers(debouncedSearchTerm);
         console.log("response...........", response);
         setData(response.results);
       } catch (error) {
@@ -22,7 +36,7 @@ const BookedUsersTable = () => {
     };
 
     fetchBookedUsers();
-  }, [searchTerm]); // Depend on searchTerm to refetch data
+  }, [debouncedSearchTerm]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
