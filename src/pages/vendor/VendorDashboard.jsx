@@ -8,6 +8,7 @@ import {PiHandCoinsFill} from "react-icons/pi";
 import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
 import TopVendorsTable from "../../components/admin/Dashborad/TopVendorsTable";
 import TopUsersTable from "../../components/vendor/DashBoard/TopUsersTable";
+import PieChart from "../../components/admin/Dashborad/PieChart";
 
 const VendorDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -22,12 +23,19 @@ const VendorDashboard = () => {
     try {
       const responseData = await dashboardItems();
       setDashboardData(responseData);
+      
       console.log('VendorDashboard data:',responseData)
     } catch (error) {
       console.log(error);
       setError(error);
     }
   };
+
+ const eventStats = {
+   active: dashboardData ? dashboardData.active_events_count : 0,
+   completed: dashboardData ? dashboardData.completed_events_count : 0,
+   disabled: dashboardData ? dashboardData.disabled_events_count : 0,
+ };
 
 
   if (!dashboardData) return <div>Loading...</div>;
@@ -59,8 +67,8 @@ const VendorDashboard = () => {
   ];
 
   return (
-    <div className="px-6 pt-2 py-4 flex-grow flex flex-col overflow-hidden">
-      <div className="flex-grow px-4 py-6 relative">
+    <div className="px-6 pt-4 pb-10 flex-grow flex flex-col">
+      <div className="flex-grow px-4 ">
         <ScrollableDashboard cards={cards} />
       </div>
       <section className="flex-col md:flex mt-16">
@@ -75,6 +83,12 @@ const VendorDashboard = () => {
             <TopUsersTable topUsers={dashboardData.top_users} />
           </div>
         </div>
+      </section>
+      <section className="mt-16">
+        <h1 className="font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
+          EVENT STATUS DISTRIBUTION
+        </h1>
+        <PieChart data={eventStats} />
       </section>
     </div>
   );

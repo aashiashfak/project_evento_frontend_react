@@ -34,6 +34,7 @@ const AdminDashBoard = () => {
           }, {});
 
           setStatusData(statusCount);
+          console.log('status Count:',statusCount)
         }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -114,6 +115,7 @@ const AdminDashBoard = () => {
             EVENT STATUS DISTRIBUTION
           </h1>
           <PieChart data={statusData} />
+          
         </section>
         <h1 className="mt-12 font-semibold text-gray-800  border-b-2 border-gray-800 w-max mb-3">
           ALL EVENTS

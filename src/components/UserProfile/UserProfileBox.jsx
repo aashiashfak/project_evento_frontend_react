@@ -23,6 +23,7 @@ const UserProfileBox = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [username,setUsername1] = useState('')
+  const [usernameError, setUsernameError] = useState()
   const dispatch = useDispatch();
   const userNameInputRef = useRef();
 
@@ -69,6 +70,11 @@ const UserProfileBox = () => {
       showToast(`your username Change to ${newUsername}`,'success');
     } catch (error) {
       console.error("Error updating username", error);
+      if (error.response && error.response.data) {
+        setUsernameError(error.response.data.username.username || "An error occurred");
+      } else {
+        setUsernameError("An error occurred while updating the username");
+      }
     }
   };
 
@@ -156,10 +162,11 @@ const UserProfileBox = () => {
                     <input
                       type="text"
                       value={newUsername}
-                      onChange={(e) => setNewUsername(e.target.value)}
+                      onChange={(e) => {setNewUsername(e.target.value);setUsernameError('')}}
                       className="w-full py-1 pl-2 shadow-md border rounded mb-4 md:mb-0 mr-2 mt-2"
                       ref={userNameInputRef}
                     />
+
                     <button
                       onClick={handleUsernameSave}
                       className="text-sm ml-2 bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
@@ -168,7 +175,7 @@ const UserProfileBox = () => {
                     </button>
                     <button
                       className="ml-2 text-sm bg-violet-600 text-white py-1 px-4 rounded transition duration-200 hover:bg-violet-700"
-                      onClick={() => setIsInlineEdit(false)}
+                      onClick={() => {setIsInlineEdit(false);setUsernameError("");}}
                     >
                       Close
                     </button>
@@ -180,6 +187,9 @@ const UserProfileBox = () => {
                 )}
               </div>
             </div>
+            {usernameError && (
+              <p className="text-red-500 text-sm mt-1">{usernameError}</p>
+            )}
             <div className="flex flex-col lg:flex-row items-center mb-4 justify-between w-full">
               <div className="flex flex-col w-full">
                 <div className="flex justify-between w-full">

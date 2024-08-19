@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axiosInstance from "../utilities/axios/axiosInstance";
 import Header from "../components/Header/Header";
 import {useSelector} from "react-redux";
 import PageNotFound from "../components/Error/PageNotFound";
+import {toast} from "react-toastify";
 
 const ConfirmPayment = () => {
   const location = useLocation();
-  const {eventId, ticketTypeId, quantity, price} = location.state || {}; // Use default empty object to avoid destructuring error
+  const navigate = useNavigate();
+  const {eventId, ticketTypeId, quantity, price} = location.state || {};
   const [eventDetails, setEventDetails] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [foundTicketType, setFoundTicketType] = useState(null);
@@ -25,7 +27,6 @@ const ConfirmPayment = () => {
           );
           setEventDetails(response.data);
           setFoundTicketType(ticketType);
-          console.log(response.data);
         } catch (error) {
           console.error("Error fetching event details:", error);
         }
@@ -43,6 +44,56 @@ const ConfirmPayment = () => {
       setTotalPrice((subtotal + bookingFee + tax).toFixed(2));
     }
   }, [eventDetails, quantity, price]);
+
+  const handlePayment = async () => {
+    try {
+      const paymentData = {
+        ticket_id: ticketTypeId,
+        ticket_count: quantity,
+      };
+
+      const response = await axiosInstance.post(
+        `events/ticket/booking/${ticketTypeId}/`,
+        paymentData
+      );
+
+      if (response.status === 200) {
+        const {order_id, currency, amount, key} = response.data;
+        const options = {
+          key, // Razorpay Key ID
+          amount, // Amount in paisa
+          currency,
+          name: "Evento",
+          description: `Payment for ${eventDetails.event_name} - ${foundTicketType.type_name}`,
+          order_id, // Pass the order ID
+          handler: function (response) {
+            // Handle payment success
+            alert(`Payment successful: ${response.razorpay_payment_id}`);
+            navigate("/user-profile", {state: response});
+          },
+          prefill: {
+            name: username,
+            email: "user@example.com", // Replace with user's email
+            contact: "9999999999", // Replace with user's phone number
+          },
+          notes: {
+            address: "Event location address",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } else {
+        toast.error("Payment initiation failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Payment initiation failed:", error);
+      toast.error("An error occurred during payment initiation.");
+    }
+  };
 
   if (!eventId || !ticketTypeId) {
     return <PageNotFound />;
@@ -106,7 +157,10 @@ const ConfirmPayment = () => {
           </div>
 
           <div className="flex justify-center">
-            <button className="w-full sm:w-1/3  bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105">
+            <button
+              onClick={handlePayment}
+              className="w-full sm:w-1/3  bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+            >
               Confirm and Pay
             </button>
           </div>

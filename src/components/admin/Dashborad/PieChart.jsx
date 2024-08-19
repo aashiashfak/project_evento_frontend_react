@@ -10,7 +10,9 @@ const PieChart = ({data}) => {
   };
 
   const chartData = {
-    labels: Object.keys(data),
+     labels : Object.keys(data).map(
+    (status) => `${status.charAt(0).toUpperCase() + status.slice(1)} (${data[status]})`
+  ),
     datasets: [
       {
         data: Object.values(data),
@@ -25,9 +27,12 @@ const PieChart = ({data}) => {
     ],
   };
 
+  const totalEvents = Object.values(data).reduce((a, b) => a + b, 0);
+
   return (
     <div className="w-52 h-52 m-auto sm:m-0">
       <Pie data={chartData} />
+      <p className="text-sm text-center mt-2"> Total Events: {totalEvents}</p>
     </div>
   );
 };
