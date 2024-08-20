@@ -66,10 +66,30 @@ const ConfirmPayment = () => {
           name: "Evento",
           description: `Payment for ${eventDetails.event_name} - ${foundTicketType.type_name}`,
           order_id, // Pass the order ID
-          handler: function (response) {
-            // Handle payment success
-            alert(`Payment successful: ${response.razorpay_payment_id}`);
-            navigate("/user-profile", {state: response});
+          handler: async function (response) {
+            // Payment success, create the ticket
+            try {
+              const ticketResponse = await axiosInstance.post(
+                "/events/confirm-payment/",
+                {
+                  order_id: response.razorpay_order_id,
+                  payment_id: response.razorpay_payment_id,
+                  ticket_id: ticketTypeId,
+                  ticket_count: quantity,
+                }
+              );
+              if (ticketResponse.status === 201) {
+                toast.success("Ticket booked successfully!");
+                navigate("/user-profile", {state: ticketResponse.data});
+              } else {
+                toast.error(
+                  "Failed to book the ticket. Please contact support."
+                );
+              }
+            } catch (error) {
+              console.error("Error creating ticket:", error);
+              toast.error("An error occurred during ticket creation.");
+            }
           },
           prefill: {
             name: username,
@@ -159,7 +179,7 @@ const ConfirmPayment = () => {
           <div className="flex justify-center">
             <button
               onClick={handlePayment}
-              className="w-full sm:w-1/3  bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+              className="w-full sm:w-1/3 bg-violet-700 text-white px-4 py-2 mt-4 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
             >
               Confirm and Pay
             </button>

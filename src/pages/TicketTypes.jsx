@@ -5,11 +5,16 @@ import Header from "../components/Header/Header";
 import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {FaPlus, FaMinus} from "react-icons/fa";
+import {useSelector} from "react-redux";
+import LoginModal from "../components/Protecters/LoginRequireModal";
 
 const TicketTypes = () => {
   const {id: eventId} = useParams();
   const [ticketTypes, setTicketTypes] = useState(null);
   const [ticketCounts, setTicketCounts] = useState({});
+  const user = useSelector((state) => state.user);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,7 +70,16 @@ const TicketTypes = () => {
     });
   };
 
+  const handleClose = () => {
+    setShowLoginModal(false);
+  };
+
   const handleBuy = (ticketType) => {
+    if (!user || !user.accessToken) {
+      setShowLoginModal(true);
+      return;
+    }
+
     const selectedCount = ticketCounts[ticketType.id] || 0;
     if (selectedCount === 0) {
       showToast("Please select at least one ticket.");
@@ -144,6 +158,7 @@ const TicketTypes = () => {
           );
         })}
       </div>
+      {showLoginModal && <LoginModal onClose={handleClose} />}
       <ToastContainer />
     </div>
   );

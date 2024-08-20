@@ -1,6 +1,7 @@
 import React from "react";
 import {Link, useLocation} from "react-router-dom";
 
+
 const NavHeader = () => {
   const location = useLocation();
 
@@ -31,7 +32,7 @@ const NavHeader = () => {
       </div>
       <div>
         <Link
-          to="/vendor/login"
+          to={ "/vendor/login"}
           className={`mx-4 ${
             location.pathname === "/vendor/login"
               ? "text-violet-700 pointer-events-none font-semibold"

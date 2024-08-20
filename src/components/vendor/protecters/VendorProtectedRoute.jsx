@@ -15,7 +15,9 @@ const VendorProtectedRoute = ({children}) => {
     return <Navigate to="/vendor/login" />;
   }
 
-  if (user.role !== "vendor") {
+  if (user.role === "admin") {
+    return <Navigate to="/admin/dashboard" />;
+  } else if (user.role !== "vendor") {
     return <Navigate to="/" />;
   }
 

@@ -2,17 +2,25 @@ import React from "react";
 import Logo from "../../Header/Logo";
 import {FaBars} from "react-icons/fa";
 import { clearUser } from "../../../redux/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({onToggleSidebar}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const userRole = useSelector((state)=> state.user.role)
 
-  const handleLogout = ()=>{
-    dispatch(clearUser())
-    navigate('/admin/login')
-  }
+   const handleLogout = () => {
+     dispatch(clearUser());
+     if (userRole === "admin") {
+       navigate("/admin/login");
+     } else if (userRole === "vendor") {
+       navigate("/login");
+     } else {
+       navigate("/login");
+     }
+   };
+
   return (
     <div className="p-6 flex justify-between sticky top-0 bg-white shadow-lg z-50">
       <div className="flex justify-around gap-4">
