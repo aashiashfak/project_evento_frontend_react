@@ -7,13 +7,13 @@ import {
 } from "react-icons/fa";
 import Logo from "../Header/Logo";
 
-const Footer = () => {
+const UserFooter = () => {
   return (
-    <div className="bg-black text-white pt-8">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+    <div className="bg-gray-200 text-white pt-8 text-sm">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-black">
         {/* Left Section */}
         <div className="mb-6 md:mb-0 text-center md:text-left">
-            <Logo/>
+          <Logo />
           <h2 className="text-lg font-bold mb-2 mt-4">
             Experience the best events with us.
           </h2>
@@ -89,20 +89,21 @@ const Footer = () => {
       </div>
 
       {/* Social Media Section */}
-      <div className="mt-8 flex justify-center md:justify-end space-x-4 md:mr-7">
+      <div className="mt-8 flex justify-center md:justify-end space-x-4 md:mr-7 text-black">
         <a
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gray-300"
+          className="hover:text-violet-600"
         >
           <FaFacebookF />
         </a>
+
         <a
           href="https://twitter.com"
           target="_blank"
+          className="hover:text-violet-600"
           rel="noopener noreferrer"
-          className="hover:text-gray-300"
         >
           <FaTwitter />
         </a>
@@ -110,7 +111,7 @@ const Footer = () => {
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gray-300"
+          className="hover:text-violet-600"
         >
           <FaLinkedinIn />
         </a>
@@ -118,7 +119,7 @@ const Footer = () => {
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gray-300"
+          className="hover:text-violet-600"
         >
           <FaInstagram />
         </a>
@@ -142,4 +143,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default UserFooter;

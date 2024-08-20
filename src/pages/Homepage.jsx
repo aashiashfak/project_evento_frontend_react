@@ -9,7 +9,10 @@ import SearchBar from "../components/Header/SearchBar";
 import {setWishListItems} from "../redux/WishListSlice";
 import Promo from "../components/PromoComponent/Promo";
 import {getWishlistItems} from "../api/events/wishlist";
-import Footer from "../components/Footer/Footer";
+import UserFooter from "../components/userLayout/UserFooter";
+
+
+
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -40,7 +43,8 @@ const Homepage = () => {
       <Categories />
       <TrendingEvents />
       <Promo />
-      <Footer/>
+      <UserFooter/>
+
     </div>
   );
 };

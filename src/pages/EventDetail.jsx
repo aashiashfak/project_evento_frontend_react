@@ -181,7 +181,7 @@ const EventDetail = () => {
   return (
     <div>
       <Header />
-      <div className="container mx-auto sm:px-10 md:px-20 lg:px-28 pt-6 p-4">
+      <div className="container mx-auto sm:px-10 md:px-20 lg:px-28 pt-6 p-12">
         <div className="">
           <div className="w-full mb-5  h-80 shadow-md rounded ">
             {event_img_1 ? (
@@ -226,19 +226,23 @@ const EventDetail = () => {
                       : "bg-gray-400 cursor-default opacity-50"
                   } text-white px-4 py-2 transition duration-200 rounded-lg ease-in-out transform `}
                   onClick={() =>
-                    isTicketsAvailable && navigate(`/ticket-types/${id}`)
+                    isTicketsAvailable &&
+                    status === "active" &&
+                    navigate(`/ticket-types/${id}`)
                   }
                   disabled={!isTicketsAvailable || status !== "active"}
                   data-tooltip-id="my-tooltip"
                   data-tooltip-content={
-                    status !== "active" ? "This event is not active" : ""
+                    !isTicketsAvailable
+                      ? "No tickets available"
+                      : status !== "active"
+                      ? "This event is not active"
+                      : ""
                   }
-                  data-tooltip-place="bottom"
+                  data-tooltip-place="top"
                 >
-                  <p>View Tickets</p>{" "}
-                  <span>
-                    <IoTicket />
-                  </span>
+                  <p>Buy Tickets</p>
+                  <IoTicket />
                 </button>
                 <Tooltip id="my-tooltip" />
                 <p className="text-gray-500 text-sm mb-1">

@@ -1,6 +1,7 @@
 import React, {Suspense, lazy} from "react";
 import {Route, Routes} from "react-router-dom";
 import {Spinner} from "../components/spinner/Spinner";
+import UserLayout from "../components/userLayout/UserLayout";
 
 const EmailSignIn = lazy(() => import("../pages/EmailSignIn"));
 const MobileSignIn = lazy(() => import("../pages/MobileSignIn"));
@@ -41,14 +42,21 @@ const UserRouter = () => {
         <Route path="/mobile-signin" element={<MobileSignIn />} />
         <Route path="/otp" element={<OtpComponent />} />
         <Route path="/list-your-events" element={<ListYourEvents />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/all-events/:categoryName?" element={<AllEvents />} />
+        {/* <Route path="/about" element={<AboutUs />} /> */}
+        {/* <Route path="/contact" element={<Contact />} /> */}
+        {/* <Route path="/all-events/:categoryName?" element={<AllEvents />} /> */}
+        {/* <Route path="/event-details/:eventID" element={<EventDetail />} /> */}
+
         <Route path="/session-expired" element={<SessionExpired />} />
-        <Route path="/event-details/:eventID" element={<EventDetail />} />
         <Route path="/ticket-types/:id" element={<TicketTypes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/confirm-payment" element={<ConfirmPayment />} />
+        <Route element={<UserLayout />}>
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/all-events/:categoryName?" element={<AllEvents />} />
+          <Route path="/event-details/:eventID" element={<EventDetail />} />
+        </Route>
 
         <Route
           path="/wishlist"
