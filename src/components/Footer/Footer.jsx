@@ -14,7 +14,7 @@ const Footer = () => {
         {/* Left Section */}
         <div className="mb-6 md:mb-0 text-center md:text-left">
             <Logo/>
-          <h2 className="text-xl font-bold mb-2">
+          <h2 className="text-lg font-bold mb-2 mt-4">
             Experience the best events with us.
           </h2>
           <p>

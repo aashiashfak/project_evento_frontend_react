@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AntTable from "../../components/Table/AntTable";
-import {getBookedUsers} from "../../api/vendorApi/vendorDashbord";
+import {getBookedTickets} from "../../api/vendorApi/vendorDashbord";
 
-const BookedUsersTable = () => {
+const BookedTicketsTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +25,7 @@ const BookedUsersTable = () => {
     const fetchBookedUsers = async () => {
       try {
         setLoading(true);
-        const response = await getBookedUsers(debouncedSearchTerm);
+        const response = await getBookedTickets(debouncedSearchTerm);
         console.log("response...........", response);
         setData(response.results);
       } catch (error) {
@@ -104,7 +104,7 @@ const BookedUsersTable = () => {
     <section className="px-5 py-2">
       <div className="flex items-center justify-between mb-3">
         <h1 className="mt-12 font-semibold text-gray-800 border-b-2 border-gray-800 w-max">
-          BOOKED USERS
+          BOOKED TICKETS
         </h1>
         <input
           type="text"
@@ -126,4 +126,4 @@ const BookedUsersTable = () => {
   );
 };
 
-export default BookedUsersTable;
+export default BookedTicketsTable;

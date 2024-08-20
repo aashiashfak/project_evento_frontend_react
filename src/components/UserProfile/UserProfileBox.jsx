@@ -32,6 +32,7 @@ const UserProfileBox = () => {
       try {
         const responseData = await getUserProfile();
         const {email, phone_number, username, profile_picture} = responseData;
+        console.log('responseData:',responseData)
         // setUserProfile(responseData);
         setEmail(email);
         setPhoneNumber(phone_number);

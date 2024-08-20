@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from "react";
 import {Route, Routes} from "react-router-dom";
-import { Spinner } from "../components/spinner/Spinner";
+import {Spinner} from "../components/spinner/Spinner";
 
 const EmailSignIn = lazy(() => import("../pages/EmailSignIn"));
 const MobileSignIn = lazy(() => import("../pages/MobileSignIn"));
@@ -22,6 +22,7 @@ const WishLIst = lazy(() => import("../pages/WishLIst"));
 const RequireAuth = lazy(() => import("../components/Protecters/RequireAuth"));
 const UserProfile = lazy(() => import("../pages/UserProfile"));
 const ConfirmPayment = lazy(() => import("../pages/ConformPayment"));
+const UserTicketsPage = lazy(() => import("../pages/UserTicketsPage"));
 
 const UserRouter = () => {
   return (
@@ -48,6 +49,7 @@ const UserRouter = () => {
         <Route path="/ticket-types/:id" element={<TicketTypes />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/confirm-payment" element={<ConfirmPayment />} />
+
         <Route
           path="/wishlist"
           element={
@@ -61,6 +63,14 @@ const UserRouter = () => {
           element={
             <RequireAuth>
               <UserProfile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user-tickets"
+          element={
+            <RequireAuth>
+              <UserTicketsPage />
             </RequireAuth>
           }
         />

@@ -107,6 +107,8 @@ const TicketTypes = () => {
         {ticketTypes.map((ticketType) => {
           const availableTickets = ticketType.count - ticketType.sold_count;
           const selectedCount = ticketCounts[ticketType.id] || 0;
+          const isSoldOut = availableTickets === 0;
+
           return (
             <div
               key={ticketType.id}
@@ -123,15 +125,17 @@ const TicketTypes = () => {
                 <h1 className="text-2xl font-bold mb-2">
                   {ticketType.type_name} - ₹ {ticketType.price}
                 </h1>
-                {availableTickets < 20 && (
+                {availableTickets < 20 && availableTickets > 0 && (
                   <p className="text-red-500">Only {availableTickets} left!</p>
                 )}
+                {isSoldOut && <p className="text-red-500">Sold Out</p>}
                 <div className="flex items-center space-x-4 mb-2">
                   <p>Quantity</p>
                   <div className="flex items-center space-x-2">
                     <button
                       className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300"
                       onClick={() => incrementCount(ticketType.id)}
+                      disabled={isSoldOut}
                     >
                       <FaPlus />
                     </button>
@@ -139,6 +143,7 @@ const TicketTypes = () => {
                     <button
                       className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300"
                       onClick={() => decrementCount(ticketType.id)}
+                      disabled={selectedCount === 0}
                     >
                       <FaMinus />
                     </button>
@@ -148,10 +153,15 @@ const TicketTypes = () => {
                   Total - ₹ {(ticketType.price * selectedCount).toFixed(2)}
                 </p>
                 <button
-                  className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                  className={`w-full px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform ${
+                    isSoldOut
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-violet-700 text-white hover:bg-violet-900 hover:scale-105"
+                  }`}
                   onClick={() => handleBuy(ticketType)}
+                  disabled={isSoldOut}
                 >
-                  Buy
+                  {isSoldOut ? "Sold Out" : "Buy"}
                 </button>
               </div>
             </div>

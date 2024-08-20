@@ -2,19 +2,20 @@ import React, {useState} from "react";
 import {Outlet} from "react-router-dom";
 import Header from "../../admin/Header/Header";
 import Sidebar from "../../../components/admin/sidebar/SideBar";
-import {FaHome, FaRegListAlt, FaUsers} from "react-icons/fa";
+import {FaHome, FaRegListAlt} from "react-icons/fa";
+import {HiTicket} from "react-icons/hi2";
 
 
 const vendorNavItems = [
   {path: "/vendor/", label: "Dashboard"},
   {path: "/vendor/events", label: "Events"},
-  {path: "/vendor/booked-users", label: "Booked Users"},
+  {path: "/vendor/booked-tickets", label: "Booked Tickets"},
 ];
 
 const vendorIconMap = {
   "/vendor/": FaHome,
   "/vendor/events": FaRegListAlt,
-  "/vendor/booked-users":FaUsers
+  "/vendor/booked-tickets": HiTicket,
 };
 
 const VendorLayout = ({isSidebarVisible, onToggleSidebar}) => {

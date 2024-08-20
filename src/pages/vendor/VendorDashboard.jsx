@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {dashboardItems, getBookedUsers} from "../../api/vendorApi/vendorDashbord";
+import {dashboardItems} from "../../api/vendorApi/vendorDashbord";
 import ScrollableDashboard from "../../components/ScrollDashbordCards/ScrollableDashboardCards";
-import {FaUsers, FaThList} from "react-icons/fa";
+import {FaUsers} from "react-icons/fa";
 import {MdOutlineEventNote} from "react-icons/md";
 import {BsTicketPerforatedFill} from "react-icons/bs";
 import {PiHandCoinsFill} from "react-icons/pi";
 import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
-import TopVendorsTable from "../../components/admin/Dashborad/TopVendorsTable";
 import TopUsersTable from "../../components/vendor/DashBoard/TopUsersTable";
 import PieChart from "../../components/admin/Dashborad/PieChart";
 

@@ -16,7 +16,7 @@ const EventPage = () => {
   const [venues, setVenues] = useState([]);
   const [eventNotFound , setEventNotFound] = useState(false)
   const [initialValues, setInitialValues] = useState({
-    id:"",
+    id: "",
     event_name: "",
     categories: [],
     start_date: "",
@@ -28,6 +28,7 @@ const EventPage = () => {
     about: "",
     instruction: "",
     terms_and_conditions: "",
+    status: "",
     location_url: "",
     ticket_types: [
       {

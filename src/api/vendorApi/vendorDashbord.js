@@ -11,10 +11,10 @@ export const dashboardItems = async () => {
 };
 
 
-export const getBookedUsers = async (search = "") => {
+export const getBookedTickets = async (search = "") => {
   try {
     const response = await axiosInstance.get(
-      "vendors/vendor/user-ticket-details/",
+      "vendors/vendor/booked-ticket-details/",
       {
         params: {search},
       }

@@ -1,6 +1,6 @@
 import React from "react";
 import DropDownMenu from "./DropDownMenu";
-import {FaUser, FaHeart, FaSignOutAlt} from "react-icons/fa";
+import {FaUser, FaHeart, FaSignOutAlt, FaTicketAlt} from "react-icons/fa";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +36,13 @@ const ProfileDropdown = () => {
         onClick={() => handleNavigation("/wishlist")}
       >
         <DropDownMenu icon={<FaHeart />} title="Wishlist" />
+      </div>
+      <hr className="w-[170px] mx-auto bg-gray-400 h-[1.5px] border-none "></hr>
+      <div
+        className="px-5 py-3 cursor-pointer"
+        onClick={() => handleNavigation("/user-tickets")}
+      >
+        <DropDownMenu icon={<FaTicketAlt />} title="Your Tickets" />
       </div>
       <hr className="w-[170px] mx-auto bg-gray-400 h-[1.5px] border-none "></hr>
       <div className="px-5 py-3 cursor-pointer" onClick={handleLogout}>

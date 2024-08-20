@@ -265,24 +265,50 @@ const EventForm = ({
               </div>
 
               {/* Event Time */}
-              <div className="w-full sm:w-1/2">
-                <Label htmlFor="time">Event Time</Label>
-                <Input
-                  type="time"
-                  id="time"
-                  name="time"
-                  value={values.time}
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFormError("");
-                  }}
-                  width="w-36"
-                />
-                <ErrorMessage
-                  name="time"
-                  component="div"
-                  className="text-red-500"
-                />
+              <div className="flex flex-col sm:flex-row sm:gap-2 w-1/2 flex-wrap">
+                {/* Event Time */}
+                <div>
+                  <Label htmlFor="time">Event Time</Label>
+                  <Input
+                    type="time"
+                    id="time"
+                    name="time"
+                    value={values.time}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFormError("");
+                    }}
+                    width="w-36"
+                  />
+                  <ErrorMessage
+                    name="time"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div>
+                  {/* Status (for edit mode) */}
+                  {mode === "edit" && (
+                    <div className="w-full">
+                      <Label htmlFor="status">Status</Label>
+                      <Select
+                        id="status"
+                        name="status"
+                        value={values.status}
+                        onChange={handleChange}
+                      >
+                        <option value="active">Active</option>
+                        <option value="disabled">Disabled</option>
+                        <option value="completed">Completed</option>
+                      </Select>
+                      <ErrorMessage
+                        name="status"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-4">
@@ -732,12 +758,16 @@ const EventForm = ({
                 <Button
                   backgroundColor={"bg-red-500"}
                   hover={"hover:bg-red-600"}
-                  onClick={()=>handleDelete(values.id,values.event_name)}
+                  onClick={() => handleDelete(values.id, values.event_name)}
                 >
                   Delete
                 </Button>
               )}
-              {console.log('values data of id and event name ',values.id, values.event_name)}
+              {console.log(
+                "values data of id and event name ",
+                values.id,
+                values.event_name
+              )}
               <Button onClick={() => navigate("/vendor/events")}>Cancel</Button>
             </div>
             {formError && (
