@@ -8,7 +8,7 @@ import {PiHandCoinsFill} from "react-icons/pi";
 import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
 import TopUsersTable from "../../components/vendor/DashBoard/TopUsersTable";
 import PieChart from "../../components/admin/Dashborad/PieChart";
-
+import noDataGif from "../../assets/Gifs/noDataGif.mp4"; 
 
 const VendorDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -18,25 +18,23 @@ const VendorDashboard = () => {
     fetchvendorDashboardData();
   }, []);
 
-
   const fetchvendorDashboardData = async () => {
     try {
       const responseData = await dashboardItems();
       setDashboardData(responseData);
-      
-      console.log('VendorDashboard data:',responseData)
+
+      console.log("VendorDashboard data:", responseData);
     } catch (error) {
       console.log(error);
       setError(error);
     }
   };
 
- const eventStats = {
-   active: dashboardData ? dashboardData.active_events_count : 0,
-   completed: dashboardData ? dashboardData.completed_events_count : 0,
-   disabled: dashboardData ? dashboardData.disabled_events_count : 0,
- };
-
+  const eventStats = {
+    active: dashboardData ? dashboardData.active_events_count : 0,
+    completed: dashboardData ? dashboardData.completed_events_count : 0,
+    disabled: dashboardData ? dashboardData.disabled_events_count : 0,
+  };
 
   if (!dashboardData) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
@@ -77,10 +75,20 @@ const VendorDashboard = () => {
             <BookingsChart />
           </div>
           <div className="md:w-1/2 ">
-            <h1 className="mt-12 font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
+            <h1 className=" font-semibold text-gray-800 border-b-2 border-gray-800 w-max mb-3">
               TOP USERS
             </h1>
-            <TopUsersTable topUsers={dashboardData.top_users} />
+            {dashboardData.top_users && dashboardData.top_users.length > 0 ? (
+              <TopUsersTable topUsers={dashboardData.top_users} />
+            ) : (
+              <div className="flex flex-col items-center">
+                <video autoPlay muted className="w-80 h-32">
+                  <source src={noDataGif} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <p className="text-gray-500 mt-4">No top users available.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
