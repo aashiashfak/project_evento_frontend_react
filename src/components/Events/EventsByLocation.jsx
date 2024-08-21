@@ -3,7 +3,13 @@ import axios from "axios";
 import EventCard from "./EventCard";
 import TextHeading from "../texts/TextHeading";
 import {PiCity} from "react-icons/pi";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay, Navigation} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
 import "../../css/Global.css";
+import {IoChevronBack, IoChevronForward} from "react-icons/io5"; // Import icons
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
@@ -17,8 +23,8 @@ const EventsByLocation = ({locationID}) => {
         const response = await axios.get(
           `http://127.0.0.1:8000/events/by_location/${locationID}/`
         );
-        setEvents(response.data.slice(0,15));
-        console.log("eventsbylocatin.....", response.data);
+        setEvents(response.data.slice(0, 15));
+        console.log("eventsbylocation.....", response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -29,42 +35,57 @@ const EventsByLocation = ({locationID}) => {
     }
   }, [locationID]);
 
-  useEffect(() => {
-    if (events.length > 0) {
-      const scrollContainer = document.querySelector(".scroll-container");
-      let scrollAmount = 400; 
-      let scrollDirection = 1;
-
-      const scroll = () => {
-        if (scrollContainer) {
-          scrollContainer.scrollBy({
-            left: scrollAmount * scrollDirection,
-            behavior: "smooth",
-          });
-        }
-      };
-
-      const intervalId = setInterval(() => {
-        scroll();
-        scrollDirection *= -1; 
-      }, 4000); 
-
-      return () => clearInterval(intervalId); 
-    }
-  }, [events]);
-
   return (
-    <div className="mt-6">
+    <div className="mt-8 mb-10 px-4">
       <TextHeading Heading={`EVENTS IN ${loc.toUpperCase()}`} icon={PiCity} />
-      <div className="pt-4 pb-6 px-6 md:px-14 lg:px-20 bg-white overflow-x-auto overflow-y-hidden hide-scrollbar scroll-container ">
+      <div className="pt-6 pb-8 bg-white overflow-hidden">
         {events.length > 0 ? (
-          <div className="inline-flex space-x-4 pr-6 sm:pr-14 md:pr-20">
-            {events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
+          <div className="relative">
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              spaceBetween={16}
+              loop={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              navigation={{
+                prevEl: ".swiper-button-prev",
+                nextEl: ".swiper-button-next",
+              }}
+              breakpoints={{
+                1365: {
+                  slidesPerView: 4,
+                },
+                1100: {
+                  slidesPerView: 3,
+                },
+                730: {
+                  slidesPerView: 2,
+                },
+                0: {
+                  slidesPerView: 1,
+                },
+              }}
+              className="w-full"
+            >
+              {events.map((event) => (
+                <SwiperSlide key={event.id} className="flex justify-center">
+                  <EventCard event={event} />
+                </SwiperSlide>
+              ))}
+              <div className="swiper-button-prev custom-swiper-button">
+                <IoChevronBack />
+              </div>
+              <div className="swiper-button-next custom-swiper-button">
+                <IoChevronForward />
+              </div>
+            </Swiper>
           </div>
         ) : (
-          <p className="text-center">No events available for this location.</p>
+          <p className="text-center text-gray-600">
+            No events available for this location.
+          </p>
         )}
       </div>
     </div>

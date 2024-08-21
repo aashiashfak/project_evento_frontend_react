@@ -39,12 +39,14 @@ const Homepage = () => {
       <Header />
       <SearchBar />
       <Banner />
-      <EventsByLocation locationID={locationId} />
-      <Categories />
-      <TrendingEvents />
-      <Promo />
-      <UserFooter/>
+      <div className="px-4 sm:px-8 md:px-12 lg:px-16">
+        <EventsByLocation locationID={locationId} />
+        <Categories />
+        <TrendingEvents />
+      </div>
 
+      <Promo />
+      <UserFooter />
     </div>
   );
 };

@@ -4,6 +4,12 @@ import "../../css/Global.css";
 import TextHeading from "../texts/TextHeading";
 import {useNavigate} from "react-router-dom";
 import {BiCategory} from "react-icons/bi";
+import {Swiper, SwiperSlide} from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/pagination";
+
+import {Autoplay} from "swiper/modules"; // Correct way to import with Vite
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -22,42 +28,34 @@ const Categories = () => {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    if (categories.length > 0) {
-      const scrollContainer = document.querySelector(".scroll-container-2");
-      let scrollAmount = 400;
-      let scrollDirection = 1;
-
-      const scroll = () => {
-        if (scrollContainer) {
-          scrollContainer.scrollBy({
-            left: scrollAmount * scrollDirection,
-            behavior: "smooth",
-          });
-        }
-      };
-
-      // Added interval for automatic scrolling
-      const intervalId = setInterval(() => {
-        scroll();
-        scrollDirection *= -1;
-      }, 6000);
-
-      return () => clearInterval(intervalId);
-    }
-  }, [categories]);
-
   return (
     <div className="pb-4">
       <TextHeading Heading="CATEGORIES" icon={BiCategory} />
-      <div className="flex overflow-x-auto space-x-4 pb-4 pt-4 px-6 md:px-14 lg:px-20 hide-scrollbar scroll-container-2">
+      <Swiper 
+        spaceBetween={15}
+        slidesPerView={3}
+        loop={true}
+        autoplay={{
+          delay: 1000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]} // Attach the Autoplay module here
+        speed={3000}
+        breakpoints={{
+          320: {slidesPerView: 1}, // Extra small screens
+          620: {slidesPerView: 2}, // Small screens
+          905: {slidesPerView: 3}, 
+          1250: {slidesPerView: 4},
+        }}
+        className="pb-4 pt-4 mt-5" 
+      >
         {categories.map((category) => (
-          <div key={category.id} className="flex-none group">
-            <div className=" w-64 bg-white shadow-md rounded-lg overflow-hidden relative">
+          <SwiperSlide key={category.id} className="group ">
+            <div className="flex gap-4 bg-white shadow-md rounded-lg overflow-hidden relative">
               <img
                 src={category.image}
                 alt={category.name}
-                className="w-full h-44 object-cover"
+                className="w-full h-44 object-cover flex-grow"
               />
               <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-1 group-hover:bg-opacity-70 ease-in-out transition duration-200">
                 <h2 className="text-white text-md font-normal text-center">
@@ -66,17 +64,17 @@ const Categories = () => {
               </div>
             </div>
 
-            <div>
+            <div className="flex gap-4">
               <button
-                className="w-full bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
+                className="w-full flex-grow bg-violet-700 text-white px-4 py-2 mt-2 transition duration-200 rounded-lg ease-in-out transform hover:bg-violet-900 hover:scale-105"
                 onClick={() => navigate(`all-events/${category.name}`)}
               >
                 Find More
               </button>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };

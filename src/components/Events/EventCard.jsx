@@ -92,12 +92,24 @@ const EventCard = ({event}) => {
     setShowLoginModal(false);
   };
 
+  const baseURL = "http://127.0.0.1:8000";
+  console.log(event_img_1);
+
+
+  console.log(
+    event_img_1.startsWith(baseURL) ? event_img_1 : `${baseURL}${event_img_1}`,'........................................'
+  );
+
   return (
-    <div className="border rounded-lg shadow-md w-64 flex-shrink-0">
+    <div className="border rounded-lg shadow-md flex-grow gap-4">
       <div className="h-64 bg-gray-200 flex items-center justify-center rounded-t-lg">
         {event_img_1 ? (
           <img
-            src={event_img_1}
+            src={
+              event_img_1.startsWith(baseURL)
+                ? event_img_1
+                : `${baseURL}${event_img_1}`
+            }
             alt="Event"
             className="w-full h-full object-cover rounded-t-lg"
           />
