@@ -80,7 +80,7 @@ const ConfirmPayment = () => {
               );
               if (ticketResponse.status === 201) {
                 toast.success("Ticket booked successfully!");
-                navigate("/user-profile", {state: ticketResponse.data});
+                navigate("/user-tickets", {state: ticketResponse.data});
               } else {
                 toast.error(
                   "Failed to book the ticket. Please contact support."
@@ -93,8 +93,8 @@ const ConfirmPayment = () => {
           },
           prefill: {
             name: username,
-            email: "user@example.com", // Replace with user's email
-            contact: "9999999999", // Replace with user's phone number
+            email: "user@example.com",
+            contact: "9999999999", 
           },
           notes: {
             address: "Event location address",

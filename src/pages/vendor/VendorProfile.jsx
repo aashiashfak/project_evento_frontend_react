@@ -214,7 +214,7 @@ const VendorProfile = () => {
               <select
                 id="account_type"
                 name="account_type"
-                defaultValue={initialValues.account_type || ""}
+                {...formik.getFieldProps("account_type")}
                 onChange={formik.handleChange}
                 disabled={!isEdit}
                 className="border border-b-2 border-t-0 border-gray-300 p-2 shadow-md rounded-md w-full outline-none focus:ring-1 focus:ring-gray-300"
@@ -285,7 +285,13 @@ const VendorProfile = () => {
               >
                 Save
               </Button>
-              <Button type="button" onClick={() => {setIsEdit(false);formik.setValues(initialValues);}}>
+              <Button
+                type="button"
+                onClick={() => {
+                  setIsEdit(false);
+                  formik.setValues(initialValues);
+                }}
+              >
                 Cancel
               </Button>
             </div>

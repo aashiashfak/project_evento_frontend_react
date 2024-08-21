@@ -63,6 +63,11 @@ const UserProfileBox = () => {
   };
 
   const handleUsernameSave = async () => {
+    if (newUsername===username){
+      setUsernameError('This is your current username')
+      return
+    }
+
     try {
       await updateUsername(newUsername);
       setIsInlineEdit(false);

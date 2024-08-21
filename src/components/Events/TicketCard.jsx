@@ -5,17 +5,26 @@ const TicketCard = ({ticket}) => {
     canceled: "bg-red-500",
     used: "bg-gray-500",
   };
+
+  const ticketBgStatusColors = {
+    active: "bg-gradient-to-br from-white to-green-300",
+    canceled: "bg-gradient-to-br from-white to-red-300",
+    used: "bg-gradient-to-br from-white to-gray-300",
+  };
+
+  // Get the gradient background class based on ticket status
+  const ticketBgColor =
+    ticketBgStatusColors[ticket.ticket_status] ||
+    "bg-gradient-to-br from-white to-gray-300";
   
 
   const statusColor = statusColors[ticket.ticket_status] || "bg-gray-500"; 
 
   return (
     <div className="relative bg-white flex flex-col sm:flex-row shadow-lg mb-6 w-full max-w-lg mx-auto rounded-lg border border-gray-300 border-dashed">
-      <div className="flex-grow p-6 pt-8 pb-8 bg-gradient-to-br from-white to-gray-100 rounded-l-lg    ticket-body">
+      <div className={`flex-grow p-6 pt-8 pb-8 ${ticketBgColor} rounded-l-lg`}>
         <section className="text-gray-700">
-          <h3 className=" text-black font-bold mb-4">
-            {ticket.event_name}
-          </h3>
+          <h3 className=" text-black font-bold mb-4">{ticket.event_name}</h3>
           <p>
             Ticket Type:{" "}
             <span className="font-medium">{ticket.ticket_type}</span>
