@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "../../css/Global.css";
-import {IoChevronBack, IoChevronForward} from "react-icons/io5"; // Import icons
+import {IoChevronBack, IoChevronForward} from "react-icons/io5";
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);

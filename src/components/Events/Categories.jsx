@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
 
-import {Autoplay} from "swiper/modules"; // Correct way to import with Vite
+import {Autoplay} from "swiper/modules"; 
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -39,11 +39,11 @@ const Categories = () => {
           delay: 1000,
           disableOnInteraction: false,
         }}
-        modules={[Autoplay]} // Attach the Autoplay module here
+        modules={[Autoplay]} 
         speed={3000}
         breakpoints={{
-          320: {slidesPerView: 1}, // Extra small screens
-          620: {slidesPerView: 2}, // Small screens
+          320: {slidesPerView: 1}, 
+          620: {slidesPerView: 2}, 
           905: {slidesPerView: 3}, 
           1250: {slidesPerView: 4},
         }}
