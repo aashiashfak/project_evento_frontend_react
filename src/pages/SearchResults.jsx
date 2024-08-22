@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axiosInstance from "../utilities/axios/axiosInstance";
 import {useLocation} from "react-router-dom";
 import Header from "../components/Header/Header";
@@ -6,6 +6,7 @@ import EventCardPageView from "../components/Events/EventCardPageView";
 import SearchBar from "../components/Header/SearchBar";
 import Lottie from "react-lottie";
 import noDataAnimation from "../assets/LottieJson/NoDataAnimation.json";
+import { Spinner } from "../components/spinner/Spinner";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -14,10 +15,11 @@ const useQuery = () => {
 const SearchResults = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true); 
-  const [page, setPage] = useState(1); 
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
   const query = useQuery();
   const searchTerm = query.get("search");
+  const prevSearchTermRef = useRef(""); // Keep track of previous search term
 
   useEffect(() => {
     const fetchEvents = async (pageNum) => {
@@ -29,14 +31,28 @@ const SearchResults = () => {
             page: pageNum,
           },
         });
-        setEvents((prevEvents) => [...prevEvents, ...response.data.results]);
-        setHasMore(response.data.next !== null); // If there is no next page, set hasMore to false
+        setEvents((prevEvents) => {
+          // Ensure no duplicate data is added
+          const newEvents = response.data.results.filter(
+            (newEvent) =>
+              !prevEvents.some((prevEvent) => prevEvent.id === newEvent.id)
+          );
+          return [...prevEvents, ...newEvents];
+        });
+        setHasMore(response.data.next !== null);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);
         setLoading(false);
       }
     };
+
+    if (searchTerm && searchTerm !== prevSearchTermRef.current) {
+      setEvents([]); // Clear events only when the search term changes
+      setPage(1); // Reset page to 1
+      setHasMore(true);
+      prevSearchTermRef.current = searchTerm; // Update the ref to track the current search term
+    }
 
     if (searchTerm) {
       fetchEvents(page);
@@ -64,11 +80,9 @@ const SearchResults = () => {
     };
   }, [hasMore, loading]);
 
-  useEffect(() => {
-    setEvents([]);
-    setPage(1);
-    setHasMore(true);
-  }, [searchTerm]);
+  if (loading){
+    <Spinner/>
+  }
 
   return (
     <div>

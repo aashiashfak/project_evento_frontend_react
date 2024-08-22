@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import axiosInstance from "../utilities/axios/axiosInstance";
 import Header from "../components/Header/Header";
 import FilterSidebar from "../components/Events/SideBar";
@@ -6,26 +6,39 @@ import EventCardPageView from "../components/Events/EventCardPageView";
 import {FiFilter} from "react-icons/fi";
 import {useParams} from "react-router-dom";
 import "../../src/css/Global.css";
+import Lottie from "react-lottie";
+import noDataAnimation from "../assets/LottieJson/NoDataAnimation.json";
+
 
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
   const [filters, setFilters] = useState({});
   const [showSidebar, setShowSidebar] = useState(false);
-  const [loading, setLoading] = useState(false); // New state for loading
-  const [hasMore, setHasMore] = useState(true); // New state to track if more data is available
-  const [page, setPage] = useState(1); // New state to track the current page
   const {categoryName} = useParams();
   const [initialLoad, setInitialLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const prevFiltersRef = useRef({});
 
   useEffect(() => {
     const fetchEvents = async (pageNum) => {
       try {
         setLoading(true);
         const response = await axiosInstance.get("events/list_all_events/", {
-          params: {...filters, page: pageNum},
+          params: {
+            ...filters,
+            page: pageNum,
+          },
         });
-        setEvents((prevEvents) => [...prevEvents, ...response.data.results]);
-        setHasMore(response.data.next !== null); // If there is no next page, set hasMore to false
+        setEvents((prevEvents) => {
+          const newEvents = response.data.results.filter(
+            (newEvent) =>
+              !prevEvents.some((prevEvent) => prevEvent.id === newEvent.id)
+          );
+          return [...prevEvents, ...newEvents];
+        });
+        setHasMore(response.data.next !== null);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -33,10 +46,17 @@ const AllEvents = () => {
       }
     };
 
+    if (!initialLoad && filters !== prevFiltersRef.current) {
+      setEvents([]);
+      setPage(1);
+      setHasMore(true);
+      prevFiltersRef.current = filters;
+    }
+
     if (!initialLoad) {
       fetchEvents(page);
     }
-  }, [filters, initialLoad, page]);
+  }, [filters, page, initialLoad]);
 
   useEffect(() => {
     if (initialLoad) {
@@ -74,9 +94,6 @@ const AllEvents = () => {
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
     setShowSidebar(false);
-    setEvents([]); // Reset events when filters change
-    setPage(1); // Reset page to 1 when filters change
-    setHasMore(true); // Reset hasMore when filters change
   };
 
   const toggleSidebar = () => {
@@ -87,13 +104,12 @@ const AllEvents = () => {
     <div className="relative">
       <Header />
       <div className="flex">
-        {/* Sidebar Toggle Button */}
         <div className="fixed sm:top-[93px] md:top-[78px] top-[88px] left-4 z-50">
           <button
             onClick={toggleSidebar}
             className="bg-violet-700 text-white p-4 rounded-full shadow-lg opacity-40 hover:bg-violet-600 flex items-center hover:opacity-100"
           >
-            <FiFilter className="" />
+            <FiFilter className=" " />
           </button>
         </div>
 
@@ -124,15 +140,31 @@ const AllEvents = () => {
             showSidebar ? "overflow-hidden" : ""
           }`}
         >
-          <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
-            {events.map((event) => (
-              <EventCardPageView key={event.id} event={event} />
-            ))}
-          </div>
-
+          {events.length === 0 && !loading ? (
+            <div className="flex justify-center items-center flex-col mt-10">
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: noDataAnimation,
+                  rendererSettings: {
+                    preserveAspectRatio: "xMidYMid slice",
+                  },
+                }}
+                height={200}
+                width={200}
+              />
+              <p className="text-gray-500 mt-4">No events found.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">
+              {events.map((event) => (
+                <EventCardPageView key={event.id} event={event} />
+              ))}
+            </div>
+          )}
           {/* Load more trigger */}
           <div id="load-more" className="h-10 w-full"></div>
-
           {loading && <p>Loading more events...</p>}
         </div>
       </div>

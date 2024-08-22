@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FaArrowLeft} from "react-icons/fa";
 import '../../css/DatePickerStyles.css'
+import '../../css/Global.css'
 
 const FilterSidebar = ({onFilterChange, closeSidebar, initialCategory}) => {
   const [startDate, setStartDate] = useState(null);
@@ -68,7 +69,7 @@ const FilterSidebar = ({onFilterChange, closeSidebar, initialCategory}) => {
   };
 
   return (
-    <div className="left-0 h-full w-72  bg-white shadow-md p-4 z-50 overflow-y-scroll">
+    <div className="left-0 h-full w-72  bg-white shadow-md p-4 z-50 overflow-y-scroll text-sm hide-scrollbar">
       <div>
         <button
           className="mt-2 mb-6 text-gray-600 hover:text-black transform transition duration-200"
