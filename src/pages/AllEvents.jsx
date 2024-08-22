@@ -5,36 +5,40 @@ import FilterSidebar from "../components/Events/SideBar";
 import EventCardPageView from "../components/Events/EventCardPageView";
 import {FiFilter} from "react-icons/fi";
 import {useParams} from "react-router-dom";
-import '../../src/css/Global.css'
+import "../../src/css/Global.css";
 
 const AllEvents = () => {
   const [events, setEvents] = useState([]);
   const [filters, setFilters] = useState({});
   const [showSidebar, setShowSidebar] = useState(false);
+  const [loading, setLoading] = useState(false); // New state for loading
+  const [hasMore, setHasMore] = useState(true); // New state to track if more data is available
+  const [page, setPage] = useState(1); // New state to track the current page
   const {categoryName} = useParams();
- const [initialLoad, setInitialLoad] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
 
- 
-  console.log('filters.......',filters)
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchEvents = async (pageNum) => {
       try {
+        setLoading(true);
         const response = await axiosInstance.get("events/list_all_events/", {
-          params: filters,
+          params: {...filters, page: pageNum},
         });
-        setEvents(response.data);
+        setEvents((prevEvents) => [...prevEvents, ...response.data.results]);
+        setHasMore(response.data.next !== null); // If there is no next page, set hasMore to false
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);
+        setLoading(false);
       }
     };
 
     if (!initialLoad) {
-      fetchEvents();
+      fetchEvents(page);
     }
-  }, [filters, initialLoad]);
+  }, [filters, initialLoad, page]);
 
   useEffect(() => {
-    // Only set filters based on categoryName if initialLoad is true
     if (initialLoad) {
       if (categoryName) {
         setFilters((prevFilters) => ({
@@ -42,13 +46,37 @@ const AllEvents = () => {
           category: categoryName,
         }));
       }
-      setInitialLoad(false); 
+      setInitialLoad(false);
     }
   }, [categoryName, initialLoad]);
 
+  useEffect(() => {
+    if (!hasMore || loading) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    });
+
+    const target = document.querySelector("#load-more");
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [hasMore, loading]);
+
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    setShowSidebar(false); 
+    setShowSidebar(false);
+    setEvents([]); // Reset events when filters change
+    setPage(1); // Reset page to 1 when filters change
+    setHasMore(true); // Reset hasMore when filters change
   };
 
   const toggleSidebar = () => {
@@ -59,12 +87,13 @@ const AllEvents = () => {
     <div className="relative">
       <Header />
       <div className="flex">
+        {/* Sidebar Toggle Button */}
         <div className="fixed sm:top-[93px] md:top-[78px] top-[88px] left-4 z-50">
           <button
             onClick={toggleSidebar}
             className="bg-violet-700 text-white p-4 rounded-full shadow-lg opacity-40 hover:bg-violet-600 flex items-center hover:opacity-100"
           >
-            <FiFilter className=" " />
+            <FiFilter className="" />
           </button>
         </div>
 
@@ -91,7 +120,7 @@ const AllEvents = () => {
 
         {/* Event cards */}
         <div
-          className={`flex justify-center flex-wrap py-12  w-full sm:pt-10 px-6 sm:px-10 md:px-16 lg:px-20 ${
+          className={`flex justify-center flex-wrap py-12 w-full sm:pt-10 px-6 sm:px-10 md:px-16 lg:px-20 ${
             showSidebar ? "overflow-hidden" : ""
           }`}
         >
@@ -100,6 +129,11 @@ const AllEvents = () => {
               <EventCardPageView key={event.id} event={event} />
             ))}
           </div>
+
+          {/* Load more trigger */}
+          <div id="load-more" className="h-10 w-full"></div>
+
+          {loading && <p>Loading more events...</p>}
         </div>
       </div>
     </div>
