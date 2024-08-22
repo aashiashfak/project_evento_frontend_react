@@ -93,12 +93,6 @@ const EventCard = ({event}) => {
   };
 
   const baseURL = "http://127.0.0.1:8000";
-  console.log(event_img_1);
-
-
-  console.log(
-    event_img_1.startsWith(baseURL) ? event_img_1 : `${baseURL}${event_img_1}`,'........................................'
-  );
 
   return (
     <div className="border rounded-lg shadow-md flex-grow gap-4">

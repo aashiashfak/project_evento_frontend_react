@@ -1,13 +1,13 @@
 import React, {useState, useEffect, useRef} from "react";
-import axiosInstance from "../utilities/axios/axiosInstance";
-import Header from "../components/Header/Header";
-import FilterSidebar from "../components/Events/SideBar";
-import EventCardPageView from "../components/Events/EventCardPageView";
+import axiosInstance from "../../utilities/axios/axiosInstance";
+import Header from "../../components/Header/Header";
+import FilterSidebar from "../../components/Events/SideBar";
+import EventCardPageView from "../../components/Events/EventCardPageView";
 import {FiFilter} from "react-icons/fi";
 import {useParams} from "react-router-dom";
-import "../../src/css/Global.css";
+import "../../css/Global.css";
 import Lottie from "react-lottie";
-import noDataAnimation from "../assets/LottieJson/NoDataAnimation.json";
+import noDataAnimation from "../../assets/LottieJson/NoDataAnimation.json";
 
 
 const AllEvents = () => {

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import axiosInstance from "../utilities/axios/axiosInstance";
-import TicketCard from "../components/Events/TicketCard";
-import Header from "../components/Header/Header";
-import NoDataGif from "../assets/Gifs/noDataGif.mp4";
-import {TicketLoader} from "../components/spinner/Spinner";
+import axiosInstance from "../../utilities/axios/axiosInstance";
+import TicketCard from "../../components/Events/TicketCard";
+import Header from "../../components/Header/Header";
+import NoDataGif from "../../assets/Gifs/noDataGif.mp4";
+import {TicketLoader} from "../../components/spinner/Spinner";
 
 const UserTicketsPage = () => {
   const [tickets, setTickets] = useState([]);

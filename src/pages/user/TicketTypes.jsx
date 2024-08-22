@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import axiosInstance from "../utilities/axios/axiosInstance";
-import Header from "../components/Header/Header";
+import axiosInstance from "../../utilities/axios/axiosInstance";
+import Header from "../../components/Header/Header";
 import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {FaPlus, FaMinus} from "react-icons/fa";
 import {useSelector} from "react-redux";
-import LoginModal from "../components/Protecters/LoginRequireModal";
+import LoginModal from "../../components/Protecters/LoginRequireModal";
 
 const TicketTypes = () => {
   const {id: eventId} = useParams();

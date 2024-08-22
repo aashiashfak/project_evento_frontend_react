@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 import {useSelector} from "react-redux";
-import EventCardPageView from "../components/Events/EventCardPageView";
+import EventCardPageView from "../../components/Events/EventCardPageView";
 
 
 const WishList = () => {

@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import Header from "../components/Header/Header";
-import EventsByLocation from "../components/Events/EventsByLocation";
-import Banner from "../components/Banner/Banner";
-import TrendingEvents from "../components/Events/TrendingEvents";
-import Categories from "../components/Events/Categories";
-import SearchBar from "../components/Header/SearchBar";
-import {setWishListItems} from "../redux/WishListSlice";
-import Promo from "../components/PromoComponent/Promo";
-import {getWishlistItems} from "../api/events/wishlist";
-import UserFooter from "../components/userLayout/UserFooter";
-import {TicketLoader} from "../components/spinner/Spinner";
+import Header from "../../components/Header/Header";
+import EventsByLocation from "../../components/Events/EventsByLocation";
+import Banner from "../../components/Banner/Banner";
+import TrendingEvents from "../../components/Events/TrendingEvents";
+import Categories from "../../components/Events/Categories";
+import SearchBar from "../../components/Header/SearchBar";
+import {setWishListItems} from "../../redux/WishListSlice";
+import Promo from "../../components/PromoComponent/Promo";
+import {getWishlistItems} from "../../api/events/wishlist";
+import UserFooter from "../../components/userLayout/UserFooter";
+import {TicketLoader} from "../../components/spinner/Spinner";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -34,14 +34,14 @@ const Homepage = () => {
   }, [user, wishlistItems.length, dispatch]);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer)
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading){
+  if (isLoading) {
     return <TicketLoader />;
   }
 

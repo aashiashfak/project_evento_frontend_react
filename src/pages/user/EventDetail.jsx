@@ -2,19 +2,19 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {FaHeart, FaRegHeart, FaShareAlt} from "react-icons/fa";
-import axiosInstance from "../utilities/axios/axiosInstance";
-import Header from "../components/Header/Header";
-import Accordion from "../components/Events/Accordion";
-import {setWishListItems} from "../redux/WishListSlice";
-import LoginRequireModal from "../components/Protecters/LoginRequireModal";
+import axiosInstance from "../../utilities/axios/axiosInstance";
+import Header from "../../components/Header/Header";
+import Accordion from "../../components/Events/Accordion";
+import {setWishListItems} from "../../redux/WishListSlice";
+import LoginRequireModal from "../../components/Protecters/LoginRequireModal";
 import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp, IoTicket} from "react-icons/io5";
 import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
-import Organizer from "../components/Events/Organizer";
-import {showToast} from "../utilities/tostify/toastUtils";
+import Organizer from "../../components/Events/Organizer";
+import {showToast} from "../../utilities/tostify/toastUtils";
 
 const EventDetail = () => {
   const {eventID} = useParams();

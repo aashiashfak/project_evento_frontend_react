@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import {ClipLoader} from "react-spinners";
-import OtpComponent from "../components/accounts/OtpComponent";
+import OtpComponent from "../../components/accounts/OtpComponent";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
-import {emailOtpRequest} from "../api/auth/emailOtpRequest";
+import {emailOtpRequest} from "../../api/auth/emailOtpRequest";
 
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {FaArrowLeft} from "react-icons/fa";
-import GoogleSignIn from "../components/accounts/GoogleSignIn";
+import GoogleSignIn from "../../components/accounts/GoogleSignIn";
 import {CiPhone, CiMail} from "react-icons/ci";
 import "react-toastify/dist/ReactToastify.css";
 

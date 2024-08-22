@@ -1,12 +1,12 @@
 import React, {useEffect, useState, useRef} from "react";
-import axiosInstance from "../utilities/axios/axiosInstance";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 import {useLocation} from "react-router-dom";
-import Header from "../components/Header/Header";
-import EventCardPageView from "../components/Events/EventCardPageView";
-import SearchBar from "../components/Header/SearchBar";
+import Header from "../../components/Header/Header";
+import EventCardPageView from "../../components/Events/EventCardPageView";
+import SearchBar from "../../components/Header/SearchBar";
 import Lottie from "react-lottie";
-import noDataAnimation from "../assets/LottieJson/NoDataAnimation.json";
-import { Spinner } from "../components/spinner/Spinner";
+import noDataAnimation from "../../assets/LottieJson/NoDataAnimation.json";
+import { Spinner } from "../../components/spinner/Spinner";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import axiosInstance from "../utilities/axios/axiosInstance";
-import Header from "../components/Header/Header";
+import axiosInstance from "../../utilities/axios/axiosInstance";
+import Header from "../../components/Header/Header";
 import {useSelector} from "react-redux";
-import PageNotFound from "../components/Error/PageNotFound";
+import PageNotFound from "../../components/Error/PageNotFound";
 import {toast} from "react-toastify";
 
 const ConfirmPayment = () => {

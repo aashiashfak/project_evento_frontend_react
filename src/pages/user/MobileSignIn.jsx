@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {ClipLoader} from "react-spinners";
-import OtpComponent from "../components/accounts/OtpComponent";
+import OtpComponent from "../../components/accounts/OtpComponent";
 import {FaArrowLeft} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import "../css/Global.css";
-import {phoneOtpRequest} from "../api/auth/phoneOtpRequest";
+import {phoneOtpRequest} from "../../api/auth/phoneOtpRequest";
 
 const MobileSignIn = () => {
   const [phone, setPhone] = useState("");
