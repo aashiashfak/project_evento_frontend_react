@@ -16,10 +16,11 @@ const UserTicketsPage = () => {
       .get("accounts/user-tickets/")
       .then((res) => {
         setTickets(res.data);
+        console.log('user Tickets:...',res.data)
         handleFilterTickets(res.data, "upcoming");
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false)); // Set loading to false after fetching data
+      .finally(() => setIsLoading(false)); 
   }, []);
 
   const handleFilterTickets = (tickets, status) => {
@@ -76,10 +77,10 @@ const UserTicketsPage = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 px-4">
+      <div className="grid grid-cols-1  px-4">
         {filteredTickets.length > 0 ? (
           filteredTickets.map((ticket) => (
-            <TicketCard key={ticket.id} ticket={ticket} />
+            <TicketCard key={ticket.id} ticket={ticket} setTickets={setTickets} setFilteredTickets={setFilteredTickets}/>
           ))
         ) : (
           <div className="flex flex-col items-center justify-center">

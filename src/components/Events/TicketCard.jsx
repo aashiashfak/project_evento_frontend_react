@@ -1,9 +1,13 @@
+import {useState} from "react";
+import {cancelUserTicket} from "../../api/events/tIckets";
 import {Button} from "../FormComponents/FormComponents";
+import "../../css/ticket.css"
 
-const TicketCard = ({ticket}) => {
-  // Define the status color mapping
+const TicketCard = ({ticket, setTickets, setFilteredTickets}) => {
+  const [errorMessage, setErrorMessage] = useState("");
+
   const statusColors = {
-    active: " bg-green-500",
+    active: "bg-green-500",
     canceled: "bg-red-500",
     used: "bg-gray-500",
   };
@@ -14,18 +18,45 @@ const TicketCard = ({ticket}) => {
     used: "bg-gradient-to-br from-white to-gray-300",
   };
 
-  // Get the gradient background class based on ticket status
   const ticketBgColor =
     ticketBgStatusColors[ticket.ticket_status] ||
     "bg-gradient-to-br from-white to-gray-300";
 
   const statusColor = statusColors[ticket.ticket_status] || "bg-gray-500";
 
+  const handleCancel = async (ticketID) => {
+    try {
+      const response = await cancelUserTicket(ticketID);
+      console.log(response);
+      setTickets((prev) =>
+        prev.map((ticket) =>
+          ticket.id === ticketID
+            ? {...ticket, ticket_status: "canceled"}
+            : ticket
+        )
+      );
+      setFilteredTickets((prevFilteredTickets) =>
+        prevFilteredTickets.filter((ticket) => ticket.id !== ticketID)
+      );
+    } catch (error) {
+      const errorMsg = error.response?.data?.error || "Failed to cancel ticket";
+      setErrorMessage(errorMsg);
+      console.log("error: cannot cancel ticket", errorMsg);
+    }
+  };
+
+  // Calculate the time difference between now and the booking date
+  const bookingDate = new Date(ticket.booking_date);
+  const currentTime = new Date();
+  const timeDifference = (currentTime - bookingDate) / 1000 / 60; // Difference in minutes
+
   return (
-    <div className="relative bg-white flex flex-col sm:flex-row shadow-lg mb-6 w-full max-w-lg mx-auto rounded-lg border border-gray-300 border-dashed">
-      <div className={`flex-grow p-6 pt-8 pb-8 ${ticketBgColor} rounded-l-lg`}>
+    <div className="ticket relative shadow-md mb-6 w-full max-w-lg mx-auto">
+      <div className="left"></div>
+      <div className="right"></div>
+      <div className="ticket-content-wrapper p-6 pt-8 pb-8 rounded-lg">
         <section className="text-gray-700">
-          <h3 className=" text-black font-bold mb-4">{ticket.event_name}</h3>
+          <h3 className="text-black font-bold mb-4">{ticket.event_name}</h3>
           <p>
             Ticket Type:{" "}
             <span className="font-medium">{ticket.ticket_type}</span>
@@ -46,7 +77,8 @@ const TicketCard = ({ticket}) => {
           <p>
             Booking Date:{" "}
             <span className="font-medium">
-              {new Date(ticket.booking_date).toLocaleDateString()}
+              {bookingDate.toLocaleDateString()}{" "}
+              {bookingDate.toLocaleTimeString()}
             </span>
           </p>
           <p>
@@ -54,17 +86,23 @@ const TicketCard = ({ticket}) => {
             <span className="font-medium">{ticket.organizer_name}</span>
           </p>
 
-          {ticket.ticket_status == "active" && (
+          {/* Show the Cancel button only if the ticket is active and was booked less than 2 minutes ago */}
+          {ticket.ticket_status === "active" && timeDifference <= 2 && (
             <div className="flex justify-end">
-              <Button backgroundColor={"bg-red-500"} hover={"hover:bg-red-800"}>
+              <Button
+                onClick={() => handleCancel(ticket.id)}
+                backgroundColor="bg-red-500"
+                hover="hover:bg-red-800"
+              >
                 Cancel
               </Button>
             </div>
           )}
+          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </section>
       </div>
 
-      <div className="flex flex-col justify-center items-center p-4  border-gray-300">
+      <div className="flex flex-col justify-center items-center p-4 border-gray-300">
         {ticket.qr_code && (
           <img
             src={ticket.qr_code}
