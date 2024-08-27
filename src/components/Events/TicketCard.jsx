@@ -1,3 +1,5 @@
+import {Button} from "../FormComponents/FormComponents";
+
 const TicketCard = ({ticket}) => {
   // Define the status color mapping
   const statusColors = {
@@ -16,9 +18,8 @@ const TicketCard = ({ticket}) => {
   const ticketBgColor =
     ticketBgStatusColors[ticket.ticket_status] ||
     "bg-gradient-to-br from-white to-gray-300";
-  
 
-  const statusColor = statusColors[ticket.ticket_status] || "bg-gray-500"; 
+  const statusColor = statusColors[ticket.ticket_status] || "bg-gray-500";
 
   return (
     <div className="relative bg-white flex flex-col sm:flex-row shadow-lg mb-6 w-full max-w-lg mx-auto rounded-lg border border-gray-300 border-dashed">
@@ -52,6 +53,14 @@ const TicketCard = ({ticket}) => {
             Organizer:{" "}
             <span className="font-medium">{ticket.organizer_name}</span>
           </p>
+
+          {ticket.ticket_status == "active" && (
+            <div className="flex justify-end">
+              <Button backgroundColor={"bg-red-500"} hover={"hover:bg-red-800"}>
+                Cancel
+              </Button>
+            </div>
+          )}
         </section>
       </div>
 

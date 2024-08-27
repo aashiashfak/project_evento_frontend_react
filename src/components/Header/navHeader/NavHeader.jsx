@@ -1,9 +1,10 @@
 import React from "react";
+import {useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
-
 
 const NavHeader = () => {
   const location = useLocation();
+  const userRole = useSelector((state) => state.user.role);
 
   const navItems = [
     {path: "/", label: "Home"},
@@ -13,7 +14,7 @@ const NavHeader = () => {
   ];
 
   return (
-    <div className="hidden md:flex justify-between w-full  text-sm">
+    <div className="hidden md:flex justify-between w-full text-sm">
       <div className="flex">
         {navItems.slice(0, 4).map((item) => (
           <Link
@@ -32,14 +33,15 @@ const NavHeader = () => {
       </div>
       <div>
         <Link
-          to={ "/vendor/login"}
+          to={userRole === "vendor" ? "/vendor/" : "/vendor/login"}
           className={`mx-4 ${
-            location.pathname === "/vendor/login"
+            location.pathname === "/vendor/login" ||
+            location.pathname === "/vendor/"
               ? "text-violet-700 pointer-events-none font-semibold"
               : "text-black hover:text-violet-700"
           }`}
         >
-          List Your Events
+          {userRole === "vendor" ? "Dashboard" : "List Your Events"}
         </Link>
       </div>
     </div>

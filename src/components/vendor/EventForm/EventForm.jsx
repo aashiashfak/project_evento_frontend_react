@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Formik, Field, FieldArray, ErrorMessage} from "formik";
 import * as Yup from "yup";
-import DeleteModal from "../../admin/DeleteModal/DeleteModal"
+import DeleteModal from "../../admin/DeleteModal/DeleteModal";
 import {
   Input,
   Label,
@@ -12,7 +12,10 @@ import {
 import {AiOutlineClose} from "react-icons/ai";
 import {FiTrash2, FiPlus} from "react-icons/fi";
 import {useNavigate} from "react-router-dom";
-import { deleteEvents } from "../../../api/vendorApi/vendorEvents";
+import {deleteEvents} from "../../../api/vendorApi/vendorEvents";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css";
+import {ClipLoader} from "react-spinners";
 
 const EventForm = ({
   initialValues,
@@ -25,9 +28,16 @@ const EventForm = ({
   const [isAddingVenue, setIsAddingVenue] = useState(false);
   const [formError, setFormError] = useState("");
   const baseUrl = "http://localhost:8000/";
-  const [isDeleteModalOpen,setIsDeleteModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [deleteObj,setDeleteObj] = useState({})
+  const [deleteObj, setDeleteObj] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(
+    "isLoading...............................................",
+    isLoading
+  );
+
+  const date = new Date();
 
   const [imagePreviews, setImagePreviews] = useState({
     event_img_1: initialValues.event_img_1
@@ -55,7 +65,9 @@ const EventForm = ({
       .of(Yup.string())
       .min(1, "At least one category is required"),
     start_date: Yup.date().required("Start date is required"),
-    end_date: Yup.date().required("End date is required"),
+    end_date: Yup.date()
+      .required("End date is required")
+      .min(Yup.ref("start_date"), "End date cannot be before start date"),
     time: Yup.string().required("Time is required"),
     location: Yup.string().required("Location is required"),
     venue: isAddingVenue
@@ -97,17 +109,18 @@ const EventForm = ({
     }),
   });
 
-  const handleDelete = (id ,value)=>{
-    setIsDeleteModalOpen(true)
+  const handleDelete = (id, value) => {
+    setIsDeleteModalOpen(true);
     setDeleteObj({
       id,
       value,
-
-    })
-  }
+    });
+  };
 
   const handleFormSubmit = (values, actions) => {
     let updatedFields = {};
+
+    setIsLoading(true);
 
     if (mode === "edit") {
       // Loop through all keys to detect changes
@@ -128,7 +141,6 @@ const EventForm = ({
         }
       });
 
-      // Handle venue addition
       if (isAddingVenue) {
         updatedFields.venue = values.new_venue_name;
         delete updatedFields.new_venue_name;
@@ -142,12 +154,20 @@ const EventForm = ({
 
       // Submit the updated fields
       onSubmit(updatedFields, actions);
+      setIsLoading(false);
     } else {
-      // Handle creation mode
+
+
       const updatedValues = {...values};
 
+      if (isAddingVenue) {
+        updatedValues.venue = values.new_venue_name;
+        delete updatedValues.new_venue_name;
+      }
+      
       // Submit the values for creation
       onSubmit(updatedValues, actions);
+      setIsLoading(false);
     }
   };
 
@@ -224,16 +244,16 @@ const EventForm = ({
                 {/* Start Date */}
                 <div className="">
                   <Label htmlFor="start_date">Start Date</Label>
-                  <Input
-                    type="datetime-local"
-                    id="start_date"
+                  <Flatpickr
                     name="start_date"
-                    value={values.start_date}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setFormError("");
+                    value={values.start_date ? values.start_date : date}
+                    onChange={(date) => setFieldValue("start_date", date[0])}
+                    options={{
+                      dateFormat: "Y-m-d H:i",
+                      minDate: "today",
+                      enableTime: true,
                     }}
-                    width="w-36"
+                    className="border-t-0 border-gray-300 p-2 rounded-md border-b-2 shadow-md focus:ring-1 outline-none focus:ring-gray-300"
                   />
                   <ErrorMessage
                     name="start_date"
@@ -245,16 +265,16 @@ const EventForm = ({
                 {/* End Date */}
                 <div className="">
                   <Label htmlFor="end_date">End Date</Label>
-                  <Input
-                    type="datetime-local"
-                    id="end_date"
+                  <Flatpickr
                     name="end_date"
-                    value={values.end_date}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setFormError("");
+                    value={values.end_date ? values.end_date : date}
+                    onChange={(date) => setFieldValue("end_date", date[0])}
+                    options={{
+                      dateFormat: "Y-m-d H:i",
+                      minDate: values.start_date || "today",
+                      enableTime: true,
                     }}
-                    width="w-36"
+                    className="border-t-0 border-gray-300 p-2 rounded-md border-b-2 shadow-md focus:ring-1 outline-none focus:ring-gray-300"
                   />
                   <ErrorMessage
                     name="end_date"
@@ -266,7 +286,6 @@ const EventForm = ({
 
               {/* Event Time */}
               <div className="flex flex-col sm:flex-row sm:gap-2 w-1/2 flex-wrap">
-                {/* Event Time */}
                 <div>
                   <Label htmlFor="time">Event Time</Label>
                   <Input
@@ -752,7 +771,13 @@ const EventForm = ({
                 backgroundColor={"bg-green-500"}
                 hover={"hover:bg-green-600"}
               >
-                {mode === "edit" ? "Save" : "Create"}
+                {isLoading ? (
+                  <ClipLoader />
+                ) : mode === "edit" ? (
+                  "Save"
+                ) : (
+                  "Create"
+                )}
               </Button>
               {mode === "edit" && (
                 <Button

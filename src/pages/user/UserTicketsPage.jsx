@@ -49,7 +49,7 @@ const UserTicketsPage = () => {
   return (
     <div>
       <Header />
-      <div className="flex mb-6 p-6 ml-5">
+      <div className="flex mb-6 px-6 pt-6 sticky top-14 z-10 bg-white w-full">
         <button
           className={`py-2 px-4 text-black font-semibold border-b-4 ${
             activeTab === "upcoming" ? "border-black" : "border-transparent"

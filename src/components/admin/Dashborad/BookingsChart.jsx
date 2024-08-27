@@ -36,6 +36,7 @@ const BookingsChart = () => {
           : `vendors/vendor/ticket-booking-data/${date}`;
 
       const response = await axiosInstance.get(endpoint);
+      console.log('booking chart data :', response.data)
       const data = response.data;
 
       const labels = data.map((item) => {

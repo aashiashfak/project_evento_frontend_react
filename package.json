@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@react-oauth/google": "^0.12.1",
+    "@react-pdf/renderer": "^3.4.4",
     "@reduxjs/toolkit": "^2.2.5",
     "antd": "^5.20.1",
     "axios": "^1.7.2",
@@ -20,6 +21,8 @@
     "flatpickr": "^4.6.13",
     "formik": "^2.4.6",
     "framer-motion": "^11.2.13",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "lottie-web": "^5.12.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

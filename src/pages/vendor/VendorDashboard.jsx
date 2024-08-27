@@ -9,6 +9,7 @@ import BookingsChart from "../../components/admin/Dashborad/BookingsChart";
 import TopUsersTable from "../../components/vendor/DashBoard/TopUsersTable";
 import PieChart from "../../components/admin/Dashborad/PieChart";
 import noDataGif from "../../assets/Gifs/noDataGif.mp4"; 
+import VendorReport from "../../components/vendor/ReportGenerator/VendorReport";
 
 const VendorDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -98,6 +99,9 @@ const VendorDashboard = () => {
         </h1>
         <PieChart data={eventStats} />
       </section>
+      <div>
+        <VendorReport/>
+      </div>
     </div>
   );
 };

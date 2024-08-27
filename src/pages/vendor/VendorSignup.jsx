@@ -92,15 +92,20 @@ const VendorSignUp = () => {
   });
 
   return (
-    <div>
+    <div className="pb-8">
       {!isOtpSent ? (
-        <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-md">
-          <h1 className="text-3xl font-bold mb-6 text-center">START SELLING</h1>
-          <p className="text-center mb-6 font-semibold">
-            Please fill in the below details to access your vendor account,
-            where you can list your events, track their progress, and manage
-            your bookings.
-          </p>
+        <div className="max-w-5xl mx-auto px-6 bg-white shadow-md rounded-md pb-6">
+          <div className="py-6 sticky top-0 z-10 bg-white ">
+            <h1 className="text-3xl font-bold mb-6 text-center">
+              START SELLING
+            </h1>
+            <p className="text-center mb-6 font-semibold">
+              Please fill in the below details to access your vendor account,
+              where you can list your events, track their progress, and manage
+              your bookings.
+            </p>
+          </div>
+
           <form onSubmit={formik.handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
@@ -545,7 +550,7 @@ const VendorSignUp = () => {
             <div className="flex justify-center mt-6">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="text-center px-4 py-2 w-full sm:w-64 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 {isLoading ? <ClipLoader /> : "submit"}
               </button>

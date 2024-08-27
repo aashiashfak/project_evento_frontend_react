@@ -28,7 +28,7 @@ const EventPage = () => {
     about: "",
     instruction: "",
     terms_and_conditions: "",
-    status: "",
+    status: null,
     location_url: "",
     ticket_types: [
       {
