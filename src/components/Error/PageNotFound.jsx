@@ -1,17 +1,30 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import notFoundImg from "../../assets/StaticImages/404pageNotFound.webp";
+import {useSelector} from "react-redux";
 
 const PageNotFound = () => {
- const navigate = useNavigate()
+  const navigate = useNavigate();
+  const role = useSelector((state) => state.user.role);
 
   const handleBackToHome = () => {
-    navigate('/')
+    const redirectPath =
+      role === "admin"
+        ? "/admin/dashboard"
+        : role === "vendor"
+        ? "/vendor/"
+        : "/";
+    navigate(redirectPath);
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-3">
-      <h1 className="text-9xl text-gray-300">404</h1>
-      <p className="text-2xl text-gray-600 mt-4 text-center">
+      <img
+        src={notFoundImg}
+        alt="404 - Page Not Found Illustration"
+        className="max-w-full max-h-80"
+      />
+      <p className="text-lg text-gray-600 mt-4 text-center">
         So sorry, we couldn't find what you were looking for...
       </p>
       <button

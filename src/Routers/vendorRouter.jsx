@@ -9,6 +9,7 @@ import EventPage from "../pages/vendor/EventPage";
 import EventTickets from "../pages/vendor/EventTickets";
 import VendorProfile from "../pages/vendor/VendorProfile";
 import BookedTicketsTable from "../pages/vendor/BookedTickets";
+import PageNotFound from "../components/Error/PageNotFound";
 
 
 
@@ -42,6 +43,7 @@ const VendorRouter = () => {
           element={<EventTickets />}
         />
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

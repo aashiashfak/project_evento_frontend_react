@@ -10,6 +10,7 @@ import Banner from "../pages/admin/Banner";
 import Users from "../pages/admin/Users";
 import Organizers from "../pages/admin/Organizers";
 import ProfilePage from "../pages/admin/ProfilePage";
+import PageNotFound from "../components/Error/PageNotFound";
 
 const AdminRouter = () => {
   return (
@@ -38,6 +39,7 @@ const AdminRouter = () => {
         <Route path="organizers" element={<Organizers />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>
+      <Route path="*" element={<PageNotFound/>} />
     </Routes>
   );
 };

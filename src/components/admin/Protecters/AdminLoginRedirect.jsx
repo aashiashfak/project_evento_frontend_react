@@ -4,13 +4,16 @@ import {Navigate} from "react-router-dom";
 
 const AdminLoginRedirect = ({children}) => {
   const {role, accessToken} = useSelector((state) => state.user);
-    console.log('entered AdminLogin Redirect')
+  console.log("entered AdminLogin Redirect");
   if (accessToken && role === "admin") {
     return <Navigate to="/admin/dashboard" />;
   }
+  if (accessToken && role === "vendor") {
+    return <Navigate to="/vendor/" />;
+  }
 
-  if (accessToken && role !== 'admin'){
-    return <Navigate to='/'/>
+  if (accessToken && role !== "admin") {
+    return <Navigate to="/" />;
   }
 
   return children;
