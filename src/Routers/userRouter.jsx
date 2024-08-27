@@ -3,6 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import {Spinner} from "../components/spinner/Spinner";
 import UserLayout from "../components/userLayout/UserLayout";
 
+
 const EmailSignIn = lazy(() => import("../pages/user/EmailSignIn"));
 const MobileSignIn = lazy(() => import("../pages/user/MobileSignIn"));
 const OtpComponent = lazy(() => import("../components/accounts/OtpComponent"));
@@ -24,6 +25,7 @@ const RequireAuth = lazy(() => import("../components/Protecters/RequireAuth"));
 const UserProfile = lazy(() => import("../pages/user/UserProfile"));
 const ConfirmPayment = lazy(() => import("../pages/user/ConformPayment"));
 const UserTicketsPage = lazy(() => import("../pages/user/UserTicketsPage"));
+const PageNotFound = lazy(() => import("../components/Error/PageNotFound"));
 
 const UserRouter = () => {
   return (
@@ -77,6 +79,7 @@ const UserRouter = () => {
             </RequireAuth>
           }
         />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>
   );

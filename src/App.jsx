@@ -4,6 +4,7 @@ import UserRouter from "./Routers/userRouter";
 import AdminRouter from "./Routers/adminRouter";
 import {ToastContainer} from "react-toastify";
 import VendorRouter from "./Routers/vendorRouter";
+import PageNotFound from "./components/Error/PageNotFound";
 
 
 const App = () => {
