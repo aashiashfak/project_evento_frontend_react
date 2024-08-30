@@ -9,6 +9,7 @@ function GoogleSignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  console.log('entered in google login')
 
   return (
     <div>

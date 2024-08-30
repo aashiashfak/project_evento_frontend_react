@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         try {
           const response = await axios.post(
-            "http://localhost:8000/api/token/refresh/",
+            "https://api.evento.ink/api/token/refresh/",
             {
               refresh: refreshToken,
             }
