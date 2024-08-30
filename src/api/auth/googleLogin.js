@@ -1,5 +1,5 @@
 import {setUser} from "../../redux/userSlice";
-import axios from "axios";
+import axios from "axios"
 import axiosInstance from "../../utilities/axios/axiosInstance";
 
 export const handleGoogleLoginSuccess = async (
@@ -13,8 +13,8 @@ export const handleGoogleLoginSuccess = async (
     console.log("entered in google login");
 
     // Make an axios call to your API with the token in the body
-    const response = await axiosInstance.post(
-      "accounts/google/oauth1/",
+    const response = await axios.post(
+      "https://api.evento.ink/accounts/google/oauth1/",
       {access_token: token}, // Use 'access_token' as the key
       {headers: {"Content-Type": "application/json"}}
     );
