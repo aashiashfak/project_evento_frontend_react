@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import EventCard from "./EventCard";
 import TextHeading from "../texts/TextHeading";
 import {PiCity} from "react-icons/pi";
@@ -10,6 +9,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "../../css/Global.css";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5";
+import axiosInstance from "../../utilities/axios/axiosInstance";
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
@@ -20,8 +20,8 @@ const EventsByLocation = ({locationID}) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/events/by_location/${locationID}/`
+        const response = await axiosInstance.get(
+          `events/by_location/${locationID}/`
         );
         setEvents(response.data.slice(0, 15));
         console.log("eventsbylocation.....", response.data);
