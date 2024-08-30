@@ -4,7 +4,7 @@ import {setUser, clearUser} from "../../redux/userSlice";
 import {clearWishListItems} from "../../redux/WishListSlice";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "http://13.51.115.47/",
   headers: {
     "Content-Type": "application/json",
   },
