@@ -92,7 +92,7 @@ const EventCard = ({event}) => {
     setShowLoginModal(false);
   };
 
-  const baseURL = "https://api.evento.ink/";
+  const baseURL = "https://api.evento.ink";
 
   return (
     <div className="border rounded-lg shadow-md flex-grow gap-4">
