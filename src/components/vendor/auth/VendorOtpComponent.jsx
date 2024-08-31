@@ -4,7 +4,9 @@ import {resendOtp} from "../../../api/auth/resendOtp";
 import {verifyOtp} from "../../../api/vendorApi/vendorAuth";
 import {FaArrowLeft} from "react-icons/fa";
 import {useDispatch} from "react-redux";
-import {setUser, clearUser, clearWishListItems} from "../../../redux/userSlice";
+import {setUser, clearUser,} from "../../../redux/userSlice";
+import { clearWishListItems } from "../../../redux/WishListSlice";
+
 
 const OtpModal = ({vendorData, handleOtpSent}) => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
