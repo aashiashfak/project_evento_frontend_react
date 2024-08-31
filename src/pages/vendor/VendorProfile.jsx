@@ -43,7 +43,7 @@ const VendorProfile = () => {
       account_number: Yup.string()
         .required("Account number is required")
         .matches(
-          /^\d{9,16}$/, // Update regex to enforce 9 to 16 digits
+          /^\d{9,16}$/,
           "Account number should be between 9 and 16 digits"
         ),
       IFSC_code: Yup.string()

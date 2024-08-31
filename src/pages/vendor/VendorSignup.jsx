@@ -45,8 +45,8 @@ const VendorSignUp = () => {
       account_number: Yup.string()
         .required("Account number is required")
         .matches(
-          /^\d{1,16}$/,
-          "Account number should be between 1 and 16 digits"
+          /^\d{9,16}$/, 
+          "Account number should be between 9 and 16 digits"
         ),
       IFSC_code: Yup.string()
         .required("IFSC code is required")
@@ -73,7 +73,6 @@ const VendorSignUp = () => {
         setVendorData(modifiedValues);
         setIsOtpSent(true);
         setIsLoading(false);
-        alert(response.message);
       } catch (error) {
         setIsLoading(false);
         if (error.response && error.response.data) {

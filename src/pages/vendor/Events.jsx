@@ -46,7 +46,7 @@ const Events = () => {
         return status;
     }
   };
-  const baseUrl = "http://localhost:8000/";
+  const baseUrl = "https://api.evento.ink";
 
   return (
     <div className="px-4 pt-4">

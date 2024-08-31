@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const Sidebar = ({isVisible, navItems, iconMap}) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
-  const baseUrl = "http://localhost:8000/";
+  const baseUrl = "https://api.evento.ink";
   const navigate = useNavigate();
 
   return (

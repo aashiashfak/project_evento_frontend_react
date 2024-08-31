@@ -3,10 +3,8 @@ import {ClipLoader} from "react-spinners";
 import {resendOtp} from "../../../api/auth/resendOtp";
 import {verifyOtp} from "../../../api/vendorApi/vendorAuth";
 import {FaArrowLeft} from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/userSlice";
-
-
+import {useDispatch} from "react-redux";
+import {setUser, clearUser, clearWishListItems} from "../../../redux/userSlice";
 
 const OtpModal = ({vendorData, handleOtpSent}) => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -81,9 +79,11 @@ const OtpModal = ({vendorData, handleOtpSent}) => {
       const response = await verifyOtp({otp: enteredOtp, vendorData});
       console.log("vendor signup response", response);
       handleOtpSent(false);
-      console.log('otp verified succussfully')
+      console.log("otp verified succussfully");
       console.log("access token of vendor signup", response.access_token);
       console.log("vendor user details", response.user);
+      dispatch(clearUser());
+      dispatch(clearWishListItems());
       dispatch(
         setUser({
           username: response.vendor.user.username || null,

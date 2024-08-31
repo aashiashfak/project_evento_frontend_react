@@ -8,7 +8,6 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
-import "../../css/Global.css";
 import {Autoplay, Navigation} from "swiper/modules"; // Import the Navigation module
 import {IoChevronBack, IoChevronForward} from "react-icons/io5"; // Import the icons
 
@@ -30,7 +29,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="pb-4">
+    <div className="pb-4 px-4">
       <TextHeading Heading="CATEGORIES" icon={BiCategory} />
       <div className="pt-6 pb-8 bg-white overflow-hidden">
         {categories.length > 0 ? (
