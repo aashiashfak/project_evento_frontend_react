@@ -15,9 +15,9 @@ const Accordion = ({title, description}) => {
         className="flex justify-between w-full items-center"
         onClick={toggleAccordion}
       >
-        <span className="text-violet-700 px-4 font-semibold">{title}</span>
+        <span className="text-violet-700 pr-2  font-semibold">{title}</span>
         <FaChevronDown
-          className={`text-violet-700 font-bold text-2xl transition-transform duration-500 ${
+          className={`text-violet-700 font-bold text-sm transition-transform duration-500 ${
             accordion ? "rotate-180" : "rotate-0"
           }`}
         />

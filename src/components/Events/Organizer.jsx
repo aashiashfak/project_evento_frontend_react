@@ -8,7 +8,7 @@ const Organizer = ({vendor_id, email, phone, name, photo}) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [error, setError] = useState(null);
 
-  const baseUrl = "http://localhost:8000/media/";
+  const baseUrl = "https://api.evento.ink/media/";
 
   useEffect(() => {
     const fetchVendorStatus = async () => {

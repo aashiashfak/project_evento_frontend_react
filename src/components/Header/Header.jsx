@@ -14,7 +14,7 @@ const Header = () => {
   const searchResults = location.pathname === "/search-results";
 
   return (
-    <div className={`sticky top-0 z-20 flex flex-col md:flex-row items-center justify-between px-6 py-3 bg-white ${isHomePage || searchResults ? "" : "shadow-md" }`}>
+    <div className={`sticky top-0 z-20 flex flex-col md:flex-row items-center justify-between px-6 pt-3  md:py-3  bg-white ${isHomePage || searchResults ? "" : "shadow-md" }`}>
       <div className="flex items-center justify-between w-full md:w-auto">
         <Logo />
         <div className="flex md:hidden items-center">

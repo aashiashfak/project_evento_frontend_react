@@ -181,7 +181,7 @@ const EventDetail = () => {
   return (
     <div>
       <Header />
-      <div className="container mx-auto sm:px-10 md:px-20 lg:px-28 pt-6 p-12">
+      <div className="container mx-auto sm:px-4 md:px-20 lg:px-28 pt-6 p-4">
         <div className="">
           <div className="w-full mb-5  h-80 shadow-md rounded ">
             {event_img_1 ? (

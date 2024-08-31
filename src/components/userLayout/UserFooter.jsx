@@ -3,9 +3,9 @@ import {
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
-  FaInstagram,
 } from "react-icons/fa";
 import Logo from "../Header/Logo";
+import {AiFillInstagram} from "react-icons/ai";
 
 const UserFooter = () => {
   return (
@@ -121,7 +121,7 @@ const UserFooter = () => {
           rel="noopener noreferrer"
           className="hover:text-violet-600"
         >
-          <FaInstagram />
+          <AiFillInstagram />
         </a>
       </div>
 
