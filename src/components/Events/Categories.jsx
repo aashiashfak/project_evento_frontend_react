@@ -31,7 +31,7 @@ const Categories = () => {
   return (
     <div className="pb-4 px-4">
       <TextHeading Heading="CATEGORIES" icon={BiCategory} />
-      <div className="pt-6 pb-8 bg-white overflow-hidden">
+      <div className="pt-2 pb-8 bg-white overflow-hidden">
         {categories.length > 0 ? (
           <div className="relative">
             <Swiper

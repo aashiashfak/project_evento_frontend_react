@@ -33,7 +33,7 @@ const NavHeader = () => {
       </div>
       <div>
         <Link
-          to={userRole === "vendor" ? "/vendor/" : "/vendor/login"}
+          to="/vendor/login"
           className={`mx-4 ${
             location.pathname === "/vendor/login" ||
             location.pathname === "/vendor/"
@@ -41,7 +41,9 @@ const NavHeader = () => {
               : "text-black hover:text-violet-700"
           }`}
         >
-          {userRole === "vendor" ? "Dashboard" : "List Your Events"}
+          {userRole === "vendor" || userRole === "admin"
+            ? "Dashboard"
+            : "List Your Events"}
         </Link>
       </div>
     </div>

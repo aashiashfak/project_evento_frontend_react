@@ -16,7 +16,7 @@ const Logo = () => {
       >
         Evento
       </h1>
-      <img src={LogoImg} alt="" className=" w-6 h-6 mt-1 " />
+      <img src={LogoImg} alt="" className=" w-6 h-6 mt-[2px] " />
     </div>
   );
 }

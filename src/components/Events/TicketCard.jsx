@@ -52,8 +52,6 @@ const TicketCard = ({ticket, setTickets, setFilteredTickets}) => {
 
   return (
     <div className="ticket relative shadow-md mb-6 w-full max-w-lg mx-auto">
-      <div className="left"></div>
-      <div className="right"></div>
       <div className="ticket-content-wrapper p-6 pt-8 pb-8 rounded-lg">
         <section className="text-gray-700">
           <h3 className="text-black font-bold mb-4">{ticket.event_name}</h3>

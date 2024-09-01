@@ -7,7 +7,7 @@ import EventCardPageView from "../../components/Events/EventCardPageView";
 const WishList = () => {
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
 
-  const BASE_URL = "http://127.0.0.1:8000";
+  const BASE_URL = "https://api.evento.ink";
 
   function completeImageUrl(url) {
     if (url && !url.startsWith("http")) {
@@ -29,7 +29,7 @@ const WishList = () => {
   return (
     <div>
       <Header />
-      <div className="relative">
+      <div className="relative pb-4">
         <div className="flex">
           <div className="flex justify-center flex-wrap pt-4 sm:pt-10 w-full px-8 sm:px-10 md:px-16 lg:px-20">
             <div className="grid grid-cols-1 c-tablet:grid-cols-2 c-desktop:grid-cols-3 gap-4">

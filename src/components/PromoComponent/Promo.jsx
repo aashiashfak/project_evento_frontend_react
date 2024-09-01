@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import PromoDetail from "./PromoDetail";
 import EventImage from "../../assets/EventPromo/EventImage.png";
 import { FaGlobe, FaChartLine} from "react-icons/fa";
 import {IoSpeedometerSharp} from "react-icons/io5";
 import publish_bg from "../../assets/EventPromo/publish_events_background.jpg";
+import { useSelector } from "react-redux";
 
 const Promo = () => {
+
+  const role = useSelector((state) => state.user.role);
   return (
     <div
       className="relative w-full bg-cover bg-center py-4"
@@ -27,9 +30,11 @@ const Promo = () => {
               artists, we've got you covered. Join our community today and
               elevate your event experience!"
             </p>
-            <button className="bg-violet-700 text-white px-4 py-2 rounded-lg transition duration-200 transform hover:bg-violet-900 hover:scale-105">
-              LIST YOUR EVENT
-            </button>
+            {(!role || (role !== "admin" && role !== "vendor")) && (
+              <button className="bg-violet-700 text-white px-4 py-2 rounded-lg transition duration-200 transform hover:bg-violet-900 hover:scale-105">
+                LIST YOUR EVENT
+              </button>
+            )}
           </div>
           <div className="w-full lg:w-1/4 lg:mb-24">
             <div className="hidden lg:block w-32 h-32">
