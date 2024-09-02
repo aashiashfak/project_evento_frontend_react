@@ -11,10 +11,13 @@ import "../../css/Global.css";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5";
 import axiosInstance from "../../utilities/axios/axiosInstance";
 import { Spinner } from "../spinner/Spinner";
+import LoginModal from "../Protecters/LoginRequireModal";
+
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const loc = events.length > 0 ? events[0].location : "";
   console.log("location is :.....", loc);
@@ -80,7 +83,7 @@ const EventsByLocation = ({locationID}) => {
             >
               {events.map((event) => (
                 <SwiperSlide key={event.id} className="flex justify-center">
-                  <EventCard event={event} />
+                  <EventCard event={event} setShowModal={setShowModal} />
                 </SwiperSlide>
               ))}
               <div className="swiper-button-prev custom-swiper-button">
@@ -97,6 +100,7 @@ const EventsByLocation = ({locationID}) => {
           </p>
         )}
       </div>
+      {showModal && <LoginModal onClose={() => setShowModal(false)} />}
     </div>
   );
 };

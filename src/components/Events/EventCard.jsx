@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useSelector, useDispatch} from "react-redux";
 import axiosInstance from "../../utilities/axios/axiosInstance";
-import LoginModal from "../Protecters/LoginRequireModal";
 import {setWishListItems} from "../../redux/WishListSlice";
 import {FaCalendarDays, FaClock} from "react-icons/fa6";
 import {TbBuildingCircus} from "react-icons/tb";
@@ -11,7 +10,7 @@ import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
 import {showToast} from "../../utilities/tostify/toastUtils";
 
-const EventCard = ({event}) => {
+const EventCard = ({event,setShowModal}) => {
   const {
     event_name,
     start_date,
@@ -28,7 +27,7 @@ const EventCard = ({event}) => {
   const wishlistItems = useSelector((state) => state.wishlist.WishListItems);
   const dispatch = useDispatch();
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  
 
   const minTicketPrice =
     ticket_types && ticket_types.length > 0
@@ -43,7 +42,7 @@ const EventCard = ({event}) => {
 
   const handleWishlistClick = async () => {
     if (!user || !user.accessToken) {
-      setShowLoginModal(true);
+      setShowModal(true);
       return;
     }
 
@@ -87,10 +86,6 @@ const EventCard = ({event}) => {
     hour12: true,
   };
   const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
-
-  const handleClose = () => {
-    setShowLoginModal(false);
-  };
 
   const baseURL = "https://api.evento.ink";
 
@@ -172,7 +167,6 @@ const EventCard = ({event}) => {
           <p className="text-sm text-gray-600 ">₹ {minTicketPrice} Onwards</p>
         )}
       </div>
-      {showLoginModal && <LoginModal onClose={handleClose} />}
     </div>
   );
 };

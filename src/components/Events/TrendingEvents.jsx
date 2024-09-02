@@ -10,9 +10,13 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "../../css/Global.css";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5"; // Import icons
+import LoginModal from '../Protecters/LoginRequireModal'
+
+
 
 const TrendingEvents = () => {
   const [trendingEvents, setTrendingEvents] = useState([]);
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const fetchTrendingEvents = async () => {
@@ -64,7 +68,7 @@ const TrendingEvents = () => {
             >
               {trendingEvents.map((event) => (
                 <SwiperSlide key={event.id} className="flex justify-center">
-                  <EventCard event={event} />
+                  <EventCard event={event} setShowModal={setShowModal} />
                 </SwiperSlide>
               ))}
               <div className="swiper-button-prev custom-swiper-button">
@@ -79,6 +83,7 @@ const TrendingEvents = () => {
           <p className="text-center">No Trending Events available.</p>
         )}
       </div>
+      {showModal && <LoginModal onClose={() => setShowModal(false)} />}
     </div>
   );
 };

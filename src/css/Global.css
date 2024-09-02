@@ -69,3 +69,7 @@ input[type='number'] {
 .swiper-button-next.custom-swiper-button {
   right: 1px;
 }
+
+.swiper-slide {
+  overflow: visible; /* Ensure that overflow is not clipping the modal */
+}
