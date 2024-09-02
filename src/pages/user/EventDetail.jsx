@@ -15,6 +15,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
 import Organizer from "../../components/Events/Organizer";
 import {showToast} from "../../utilities/tostify/toastUtils";
+import { Spinner } from "../../components/spinner/Spinner";
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -102,7 +103,7 @@ const EventDetail = () => {
   };
 
   if (!eventDetails) {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
   const {

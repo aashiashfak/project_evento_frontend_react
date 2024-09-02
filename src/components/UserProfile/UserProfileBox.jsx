@@ -9,6 +9,7 @@ import {
   updateUsername,
 } from "../../api/userProfile/UserProfileApi";
 import {showToast} from "../../utilities/tostify/toastUtils";
+import { Spinner } from "../spinner/Spinner";
 
 
 const UserProfileBox = () => {
@@ -110,7 +111,7 @@ const UserProfileBox = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
 

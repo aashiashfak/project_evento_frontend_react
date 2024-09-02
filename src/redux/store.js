@@ -16,10 +16,18 @@ const persistConfig = {
   storage,
 };
 
+
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
+const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
-export const persistor = persistStore(store);
+const persistor = persistStore(store);
+
+export {store, persistor};

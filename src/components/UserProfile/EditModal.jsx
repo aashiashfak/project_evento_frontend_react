@@ -69,7 +69,6 @@ const EditModal = ({
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.data) {
-        
         setError(
           error.response.data.email ||
             error.response.data.phone_number ||
@@ -102,7 +101,7 @@ const EditModal = ({
           <>
             <button
               className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 transition"
-              onClick={onRequestClose}
+              onClick={()=>{onRequestClose(); setNewValue('')}}
             >
               <FaArrowLeft size={20} />
             </button>

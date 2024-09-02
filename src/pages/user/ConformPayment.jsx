@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import {useSelector} from "react-redux";
 import PageNotFound from "../../components/Error/PageNotFound";
 import {toast} from "react-toastify";
+import { Spinner } from "../../components/spinner/Spinner";
 
 const ConfirmPayment = () => {
   const location = useLocation();
@@ -120,7 +121,7 @@ const ConfirmPayment = () => {
   }
 
   if (!eventDetails || !foundTicketType) {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
   return (

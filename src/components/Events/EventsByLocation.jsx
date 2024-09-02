@@ -10,15 +10,18 @@ import "swiper/css/navigation";
 import "../../css/Global.css";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5";
 import axiosInstance from "../../utilities/axios/axiosInstance";
+import { Spinner } from "../spinner/Spinner";
 
 const EventsByLocation = ({locationID}) => {
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   const loc = events.length > 0 ? events[0].location : "";
   console.log("location is :.....", loc);
 
   useEffect(() => {
     const fetchEvents = async () => {
+      setIsLoading(true)
       try {
         const response = await axiosInstance.get(
           `events/by_location/${locationID}/`
@@ -27,6 +30,8 @@ const EventsByLocation = ({locationID}) => {
         console.log("eventsbylocation.....", response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
+      }finally{
+        setIsLoading(false)
       }
     };
 
@@ -34,6 +39,10 @@ const EventsByLocation = ({locationID}) => {
       fetchEvents();
     }
   }, [locationID]);
+
+  if (isLoading){
+    <Spinner/>
+  }
 
   return (
     <div className="mt-8 mb-10 px-4">

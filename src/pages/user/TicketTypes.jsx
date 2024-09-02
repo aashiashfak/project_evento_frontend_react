@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {FaPlus, FaMinus} from "react-icons/fa";
 import {useSelector} from "react-redux";
 import LoginModal from "../../components/Protecters/LoginRequireModal";
+import { Spinner } from "../../components/spinner/Spinner";
 
 const TicketTypes = () => {
   const {id: eventId} = useParams();
@@ -97,7 +98,7 @@ const TicketTypes = () => {
   };
 
   if (!ticketTypes) {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
   return (

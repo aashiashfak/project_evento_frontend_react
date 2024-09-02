@@ -2,22 +2,35 @@ import React, {useEffect, useState} from "react";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axiosInstance from "../../utilities/axios/axiosInstance";
+import {Spinner} from "../spinner/Spinner";
 
 const Banner = () => {
   const [banners, setBanners] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchBanners = async () => {
+      setIsLoading(true);
       try {
         const response = await axiosInstance.get("superuser/banners/");
         setBanners(response.data);
       } catch (error) {
         console.error("Error fetching banners:", error);
+      } finally {
+        setIsLoading(false); // Always set loading to false after fetching
       }
     };
 
     fetchBanners();
   }, []);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (banners.length === 0) {
+    return <div>No banners available.</div>;
+  }
 
   return (
     <div className="banner-carousel-container">
