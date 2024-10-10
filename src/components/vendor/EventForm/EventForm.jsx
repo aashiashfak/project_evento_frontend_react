@@ -32,10 +32,6 @@ const EventForm = ({
   const navigate = useNavigate();
   const [deleteObj, setDeleteObj] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  console.log(
-    "isLoading...............................................",
-    isLoading
-  );
 
   const date = new Date();
 

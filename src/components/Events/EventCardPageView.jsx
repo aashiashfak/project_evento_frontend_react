@@ -13,6 +13,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
 import "../../css/custom_toast.css";
 import {showToast} from "../../utilities/tostify/toastUtils";
+import { convert24To12Hour } from "../../utilities/convert24to12Hour";
 
 const EventCardPageView = ({event}) => {
   const {
@@ -92,14 +93,7 @@ const EventCardPageView = ({event}) => {
   };
   const formattedDate = eventDate.toLocaleDateString("en-US", dateOptions);
 
-  // Format the time to include AM/PM
-  const eventTime = new Date(`1970-01-01T${time}Z`);
-  const timeOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
-  const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
+   const formattedTime = convert24To12Hour(time);
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md max-h-[500px] w-[295px]">

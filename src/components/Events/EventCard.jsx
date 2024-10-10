@@ -9,6 +9,8 @@ import {TbBuildingCircus} from "react-icons/tb";
 import {PiCity} from "react-icons/pi";
 import {IoLocationSharp} from "react-icons/io5";
 import {showToast} from "../../utilities/tostify/toastUtils";
+import { convert24To12Hour } from "../../utilities/convert24to12Hour";
+
 
 const EventCard = ({event,setShowModal}) => {
   const {
@@ -78,14 +80,7 @@ const EventCard = ({event,setShowModal}) => {
   };
   const formattedDate = eventDate.toLocaleDateString("en-US", dateOptions);
 
-  // Format the time to include AM/PM
-  const eventTime = new Date(`1970-01-01T${time}Z`);
-  const timeOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  };
-  const formattedTime = eventTime.toLocaleTimeString("en-US", timeOptions);
+  const formattedTime = convert24To12Hour(time);
 
   const baseURL = "https://api.evento.ink";
 

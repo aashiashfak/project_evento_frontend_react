@@ -15,7 +15,8 @@ import "react-tooltip/dist/react-tooltip.css";
 import {Tooltip} from "react-tooltip";
 import Organizer from "../../components/Events/Organizer";
 import {showToast} from "../../utilities/tostify/toastUtils";
-import { Spinner } from "../../components/spinner/Spinner";
+import {Spinner} from "../../components/spinner/Spinner";
+import {convert24To12Hour} from "../../utilities/convert24to12Hour";
 
 const EventDetail = () => {
   const {eventID} = useParams();
@@ -59,7 +60,8 @@ const EventDetail = () => {
     const ID = parseInt(eventID);
     try {
       if (isWishlisted) {
-        await axiosInstance.delete(`events/wishlist/${ID}/`);
+        const response = await axiosInstance.delete(`events/wishlist/${ID}/`);
+        console.log('wishlist removed',response);
         setIsWishlisted(false);
         showToast(`${event_name} removed from wishlist`, "error");
         dispatch(
@@ -67,6 +69,7 @@ const EventDetail = () => {
         );
       } else {
         const response = await axiosInstance.post(`events/wishlist/${ID}/`);
+        console.log('wishlist added',response);
         setIsWishlisted(true);
         showToast(`${event_name} added to wishlist`, "success");
         dispatch(setWishListItems([...wishlistItems, response.data]));
@@ -103,7 +106,7 @@ const EventDetail = () => {
   };
 
   if (!eventDetails) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   const {
@@ -135,12 +138,8 @@ const EventDetail = () => {
     day: "numeric",
     weekday: "long",
   });
-  const eventTime = new Date(`1970-01-01T${time}Z`);
-  const formattedTime = eventTime.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+
+  const formattedTime = convert24To12Hour(time);
 
   const totalTickets = ticket_types.reduce(
     (acc, ticket) => acc + ticket.count,
