@@ -6,7 +6,7 @@ import Banner from "../../components/Banner/Banner";
 import TrendingEvents from "../../components/Events/TrendingEvents";
 import Categories from "../../components/Events/Categories";
 import SearchBar from "../../components/Header/SearchBar";
-import {setWishListItems} from "../../redux/WishListSlice";
+import {clearWishListItems, setWishListItems} from "../../redux/WishListSlice";
 import Promo from "../../components/PromoComponent/Promo";
 import {getWishlistItems} from "../../api/events/wishlist";
 import UserFooter from "../../components/userLayout/UserFooter";
@@ -21,14 +21,13 @@ const Homepage = () => {
 
   useEffect(() => {
     const fetchwishlist = async () => {
-      if (user && user.accessToken && wishlistItems.length === 0) {
+      dispatch(clearWishListItems())
         try {
           const responseData = await getWishlistItems();
           dispatch(setWishListItems(responseData));
         } catch (error) {
           console.log("error fetching wishlist", error);
         }
-      }
     };
     fetchwishlist();
   }, [user, wishlistItems.length, dispatch]);
