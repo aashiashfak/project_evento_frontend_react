@@ -27,7 +27,7 @@ const EventForm = ({
 }) => {
   const [isAddingVenue, setIsAddingVenue] = useState(false);
   const [formError, setFormError] = useState("");
-  const baseUrl = "http://localhost:8000/";
+  const baseUrl = "https://api.evento.ink";
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
   const [deleteObj, setDeleteObj] = useState({});
@@ -54,8 +54,6 @@ const EventForm = ({
     ),
   });
 
-  console.log("initaivalues in Event Form component", initialValues);
-  console.log("image previews", imagePreviews);
 
   const validationSchema = Yup.object({
     event_name: Yup.string()
@@ -149,6 +147,7 @@ const EventForm = ({
       // If no changes detected, show an error
       if (Object.keys(updatedFields).length === 0) {
         setFormError("No changes made");
+        setIsLoading(false)
         return;
       }
 
@@ -183,7 +182,6 @@ const EventForm = ({
           className="space-y-4"
           encType="multipart/form-data"
         >
-          {console.log("values in forms", values)}
           <div className="px-4 py-6">
             <div className="flex flex-col sm:flex-row sm:gap-4">
               {/* Event Name */}
@@ -787,11 +785,6 @@ const EventForm = ({
                 >
                   Delete
                 </Button>
-              )}
-              {console.log(
-                "values data of id and event name ",
-                values.id,
-                values.event_name
               )}
               <Button onClick={() => navigate("/vendor/events")}>Cancel</Button>
             </div>

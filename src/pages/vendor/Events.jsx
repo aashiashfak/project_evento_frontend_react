@@ -94,9 +94,9 @@ const Events = () => {
                   >
                     {event.event_name}
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 ">
                     <img
-                      className="min-w-20 min-h-20 rounded-md"
+                      className="w-20 h-20 rounded-md"
                       src={`${baseUrl}${event.event_img_1}`}
                       alt={event.event_name}
                     />

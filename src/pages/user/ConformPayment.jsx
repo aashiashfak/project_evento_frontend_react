@@ -60,6 +60,7 @@ const ConfirmPayment = () => {
 
       if (response.status === 200) {
         const {order_id, currency, amount, key} = response.data;
+        console.log("booking response value.........",response.data)
         const options = {
           key, // Razorpay Key ID
           amount, // Amount in paisa
@@ -157,10 +158,6 @@ const ConfirmPayment = () => {
               <div className="flex justify-between">
                 <div>Booking Fee</div>
                 <div>₹ {(price * quantity * 0.04).toFixed(2)}</div>
-              </div>
-              <div className="flex justify-between">
-                <div>Base Fee</div>
-                <div>₹ {(price * quantity * 0.1).toFixed(2)}</div>
               </div>
               <div className="flex justify-between">
                 <div>CGST</div>
