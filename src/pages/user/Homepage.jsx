@@ -29,8 +29,10 @@ const Homepage = () => {
           console.log("error fetching wishlist", error);
         }
     };
-    fetchwishlist();
-  }, [user, wishlistItems.length, dispatch]);
+    if (user.accessToken) {
+      fetchwishlist();
+    }
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);

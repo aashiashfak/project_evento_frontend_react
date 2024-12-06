@@ -11,12 +11,20 @@ export const dashboardItems = async () => {
 };
 
 
-export const getBookedTickets = async (search = "") => {
+export const getBookedTickets = async (
+  search = "",
+  page = 1,
+  pageSize = 10
+) => {
   try {
     const response = await axiosInstance.get(
       "vendors/vendor/booked-ticket-details/",
       {
-        params: {search},
+        params: {
+          search,
+          page,
+          page_size: pageSize, 
+        },
       }
     );
     return response.data;

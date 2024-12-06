@@ -37,9 +37,11 @@ const EventCard = ({event,setShowModal}) => {
       : null;
 
   useEffect(() => {
+    if (wishlistItems){
     setIsWishlisted(
       wishlistItems.some((wishlistItem) => wishlistItem.event.id === event.id)
     );
+  }
   }, [wishlistItems, event.id]);
 
   const handleWishlistClick = async () => {

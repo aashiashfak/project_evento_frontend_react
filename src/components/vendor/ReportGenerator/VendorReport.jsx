@@ -49,89 +49,100 @@ const VendorReport = () => {
     }
   };
 
- const downloadPDF = () => {
-   if (!reportData) return;
+  const downloadPDF = () => {
+    if (!reportData) return;
 
-   const doc = new jsPDF();
+    const doc = new jsPDF();
 
-   // Add the logo text "Evento" at the top left
-   doc.setFontSize(16);
-   doc.setTextColor(148, 0, 211); // Violet color
-   doc.text("Evento", 14, 15);
+    // Add the logo text "Evento" at the top left
+    doc.setFontSize(16);
+    doc.setTextColor(148, 0, 211); // Violet color
+    doc.text("Evento", 14, 15);
 
-   doc.setTextColor(0, 0, 0); // Reset color to black
-   doc.setFontSize(12);
-   doc.text("Ticket Booking Report", 14, 30);
-   doc.setFontSize(10);
-   doc.text(
-     `Date Range: ${reportData.start_date} to ${reportData.end_date}`,
-     14,
-     40
-   );
-   doc.text(`Total Tickets Sold: ${reportData.total_tickets}`, 14, 45);
-   doc.text(`Total Amount Collected: ${reportData.total_amount}`, 14, 50);
-   doc.text(`Total Canceled Tickets: ${totalCanceledTickets}`, 14, 55);
+    doc.setTextColor(0, 0, 0); // Reset color to black
+    doc.setFontSize(12);
+    doc.text("Ticket Booking Report", 14, 30);
+    doc.setFontSize(10);
+    doc.text(
+      `Date Range: ${reportData.start_date} to ${reportData.end_date}`,
+      14,
+      40
+    );
+    doc.text(`Total Tickets Sold: ${reportData.total_tickets}`, 14, 45);
+    doc.text(`Total Amount Collected: ${reportData.total_amount}`, 14, 50);
+    doc.text(`Total Canceled Tickets: ${totalCanceledTickets}`, 14, 55);
 
-   const headers = [
-     "Date",
-     "Event Name",
-     "Username",
-     "Email",
-     "Phone Number",
-     "Ticket Count",
-     "Ticket Price",
-     "Ticket Status",
-     "Ticket Type",
-   ];
+    const headers = [
+      "Date",
+      "Event Name",
+      "Username",
+      "Email",
+      "Phone Number",
+      "Ticket Count",
+      "Ticket Price",
+      "Ticket Status",
+      "Ticket Type",
+    ];
 
-   const dataRows = Object.keys(reportData.daily_bookings).flatMap((dateKey) =>
-     reportData.daily_bookings[dateKey].map((info) => [
-       info.date || "N/A",
-       info.ticket_type__event__event_name || "N/A",
-       info.user__username || "N/A",
-       info.user__email || "N/A",
-       info.user__phone_number || "N/A",
-       info.ticket_count || "N/A",
-       info.ticket_price || "N/A",
-       info.ticket_status || "N/A",
-       info.ticket_type__type_name || "N/A",
-     ])
-   );
+    // Extract and log data rows
+    const dataRows = Object.keys(reportData.daily_bookings).flatMap(
+      (dateKey) => {
+        console.log(`Processing date: ${dateKey}`);
+        const dateRows = reportData.daily_bookings[dateKey].map((info) => {
+          const row = [
+            info.date || "N/A",
+            info.event_name || "N/A",
+            info.username || "N/A",
+            info.email || "N/A",
+            info.phone_number || "N/A",
+            info.ticket_count || "N/A",
+            info.ticket_price || "N/A",
+            info.ticket_status || "N/A",
+            info.ticket_type || "N/A",
+          ];
+          console.log("Row data:", row);
+          return row;
+        });
+        return dateRows;
+      }
+    );
 
-   if (dataRows.length === 0) {
-     // Add "No data available" message if there are no data rows
-     doc.setFontSize(10);
-     doc.setTextColor(255, 0, 0); // Red color for the message
-     doc.text("No data available in this period", 14, 70);
-   } else {
-     doc.autoTable({
-       head: [headers],
-       body: dataRows,
-       startY: 70, // Adjust this to start after the text logo and report details
-       styles: {fontSize: 8},
-       theme: "striped",
-       columnStyles: {
-         0: {cellWidth: "auto"},
-         1: {cellWidth: "auto"},
-         2: {cellWidth: "auto"},
-         3: {cellWidth: "auto"},
-         4: {cellWidth: "auto"},
-         5: {cellWidth: "auto"},
-         6: {cellWidth: "auto"},
-         7: {cellWidth: "auto"},
-         8: {cellWidth: "auto"},
-       },
-       didParseCell: function (data) {
-         if (data.cell.raw === "canceled") {
-           data.cell.styles.textColor = [255, 0, 0]; 
-           data.cell.styles.fontStyle = "bold";
-         }
-       },
-     });
-   }
+    console.log("Total rows generated:", dataRows.length);
 
-   doc.save(`Ticket_Booking_Report_${date}.pdf`);
- };
+    if (dataRows.length === 0) {
+      // Add "No data available" message if there are no data rows
+      doc.setFontSize(10);
+      doc.setTextColor(255, 0, 0); // Red color for the message
+      doc.text("No data available in this period", 14, 70);
+    } else {
+      doc.autoTable({
+        head: [headers],
+        body: dataRows,
+        startY: 70, // Adjust this to start after the text logo and report details
+        styles: {fontSize: 8},
+        theme: "striped",
+        columnStyles: {
+          0: {cellWidth: "auto"},
+          1: {cellWidth: "auto"},
+          2: {cellWidth: "auto"},
+          3: {cellWidth: "auto"},
+          4: {cellWidth: "auto"},
+          5: {cellWidth: "auto"},
+          6: {cellWidth: "auto"},
+          7: {cellWidth: "auto"},
+          8: {cellWidth: "auto"},
+        },
+        didParseCell: function (data) {
+          if (data.cell.raw === "canceled") {
+            data.cell.styles.textColor = [255, 0, 0];
+            data.cell.styles.fontStyle = "bold";
+          }
+        },
+      });
+    }
+
+    doc.save(`Ticket_Booking_Report_${date}.pdf`);
+  };
 
   return (
     <div className="p-4 mt-6">
